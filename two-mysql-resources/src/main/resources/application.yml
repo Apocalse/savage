@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    db1:
+      url: jdbc:mysql://127.0.0.1:3306/my_two?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: 141592
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    db2:
+      url: jdbc:mysql://10.47.195.34:3306/db_test?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username: root
+      password: thinkCloud
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  #configuration:
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-column-underline: true
