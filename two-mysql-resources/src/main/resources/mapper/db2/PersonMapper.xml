@@ -3,7 +3,7 @@
 
 <mapper namespace="com.apocalse.mybatisplus.mapper.db2.PersonMapper">
 
-    <select id="getList" resultType="com.apocalse.mybatisplus.entity.db2.Person">
+    <select id="getList" resultType="com.apocalse.mybatisplus.entity.db2.PersonEntity">
         select  * from person
     </select>
 </mapper>

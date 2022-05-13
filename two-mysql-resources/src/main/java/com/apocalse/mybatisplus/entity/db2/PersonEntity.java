@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("person")
-public class Person {
+public class PersonEntity {
     @TableId(type = IdType.ASSIGN_ID) //主键
-    private Long id;
+    private String id;
     private String name;
     private Integer age;
 }

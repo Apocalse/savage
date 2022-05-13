@@ -11,9 +11,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("user")
-public class User {
+public class UserEntity {
     @TableId(type = IdType.ASSIGN_ID) //主键
-    private Long id;
+    private String id;
+
     private String name;
+
     private Integer age;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Date createDate;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateDate;
+
+    @TableLogic
+    private int delFlag;
 }
