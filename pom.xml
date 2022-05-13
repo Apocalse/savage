@@ -25,6 +25,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <mybatisplus.version>3.5.0</mybatisplus.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <fastjson.version>2.0.2</fastjson.version>
+        <p6spy.version>3.9.1</p6spy.version>
+        <mysql.version>8.0.26</mysql.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
         <skipTests>true</skipTests>
     </properties>
 
@@ -43,23 +48,40 @@
             <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
-                <version>3.9.1</version>
+                <version>${p6spy.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.76</version>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-annotations-api</artifactId>
+                <version>8.5.31</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.2.3</version>
             </dependency>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.26</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
