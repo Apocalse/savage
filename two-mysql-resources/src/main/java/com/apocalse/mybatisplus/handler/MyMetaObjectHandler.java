@@ -10,6 +10,8 @@ import java.util.Date;
 
 @Slf4j
 @Component
+
+//TODO 多源数据自动填充失败
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
@@ -22,6 +24,6 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("start update fill ....");
-        this.strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐)
+        this.setFieldValByName("createDate", new Date(), metaObject); // 起始版本 3.3.0(推荐)
     }
 }

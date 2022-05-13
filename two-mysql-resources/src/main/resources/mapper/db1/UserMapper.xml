@@ -6,4 +6,5 @@
     <select id="getList" resultType="com.apocalse.mybatisplus.entity.db1.UserEntity">
         select * from user
     </select>
+
 </mapper>

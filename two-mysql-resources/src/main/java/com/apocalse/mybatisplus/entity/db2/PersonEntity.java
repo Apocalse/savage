@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @TableName("person")
 public class PersonEntity {
     @TableId(type = IdType.ASSIGN_ID) //主键

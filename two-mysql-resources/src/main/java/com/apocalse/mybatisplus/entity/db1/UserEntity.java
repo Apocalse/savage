@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @TableName("user")
 public class UserEntity {
     @TableId(type = IdType.ASSIGN_ID) //主键
