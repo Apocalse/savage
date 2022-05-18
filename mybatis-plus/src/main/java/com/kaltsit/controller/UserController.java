@@ -4,18 +4,21 @@ import com.kaltsit.entity.UserEntity;
 import com.kaltsit.service.UserService;
 import com.kaltsit.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/test")
-    public JsonResult<List<UserEntity>> test() {
+    @CrossOrigin
+    @PostMapping("/login")
+    public JsonResult<List<UserEntity>> test(@RequestParam Map<String, Object> params) {
+
         return JsonResult.ok().put(userService.list());
     }
 
