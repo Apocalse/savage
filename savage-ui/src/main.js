@@ -17,6 +17,10 @@ Vue.prototype.$post = post; // http.post
 import VueCookies from "vue-cookies";
 Vue.use(VueCookies);
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI);
+
 window.SITE_CONFIG = {};
 window.SITE_CONFIG['baseUrl'] = "http://localhost:8823/kaltsit";
 

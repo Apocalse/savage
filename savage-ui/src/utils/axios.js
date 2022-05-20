@@ -60,20 +60,24 @@ httpCustom.interceptors.request.use(
  */
 httpCustom.interceptors.response.use(
     response => {
-        let res = response.data;
-        // 如果是返回的文件
-        if (response.config.responseType === 'blob') {
-            return res
+        if (response.data && response.data.code !== 200) {
+            console.log(`信息`, response);
+            // 错误信息统一在这里处理、页面代码只需要关系正常情况即可
+            Vue.prototype.$message.error(response.data.msg);
+            // return Promise.reject(response.data.msg)
+            throw new EipException(response.data.msg, response.data.code);
+        } else {
+            response.data = response.data.data;
+            return response;
         }
-        // 兼容服务端返回的字符串数据
-        if (typeof res === 'string') {
-            res = res ? JSON.parse(res) : res
-        }
-        return res;
     },
     error => {
-        console.log('err' + error) // for debug
-        return Promise.reject(error)
+        if (error.message && error.message === "Network Error") {
+            console.log(`错误`, error);
+            Vue.prototype.$message.error("无法访问");
+            return Promise.reject(error);
+        }
+        return Promise.reject(error);
     }
 );
 

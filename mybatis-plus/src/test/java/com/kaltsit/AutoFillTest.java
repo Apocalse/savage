@@ -28,7 +28,7 @@ public class AutoFillTest {
     public void insert() {
         UserEntity user = new UserEntity();
         user.setAge(18);
-        user.setName("AAA");
+
         user.setEmail("aaa@123.com");
         userService.save(user);
     }
@@ -37,7 +37,6 @@ public class AutoFillTest {
     public void update() {
         UserEntity user = userService.getById("1525024320316833794");
         user.setAge(12);
-        user.setName("DDD");
         user.setEmail("ddd@123.com");
         userService.updateById(user);
     }

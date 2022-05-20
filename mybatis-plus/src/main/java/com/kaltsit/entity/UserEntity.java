@@ -16,11 +16,19 @@ public class UserEntity {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
-    private String name;
+    private String username;
+
+    private String password;
+
+    private String userRealName;
 
     private Integer age;
 
     private String email;
+
+    private String mobile;
+
+    private String remarks;
 
     @TableField(fill = FieldFill.INSERT)
     private Date createDate;
