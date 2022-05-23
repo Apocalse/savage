@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public JsonResult<List<UserEntity>> test(@RequestBody UserEntity form) {
+    public JsonResult<List<UserEntity>> login(@RequestBody UserEntity form) {
         Map<String, Object> map = new HashMap<>();
         if (StringUtils.isEmpty(form.getUsername())) {
             return null;
@@ -36,6 +36,11 @@ public class UserController {
             return JsonResult.error("账号或密码错误");
         }
 
+    }
+
+    @GetMapping("/hello")
+    public JsonResult<List<UserEntity>> test(){
+        return JsonResult.ok().put("hello");
     }
 
 }

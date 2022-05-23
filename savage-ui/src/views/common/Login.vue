@@ -53,7 +53,7 @@ export default {
             Vue.$cookies.set('token', data.token)
             Vue.$cookies.set('username', data.username)
             Vue.$cookies.set('userId', data.userId)
-            this.$router.push({path: '/about'})
+            this.$router.push({path: '/index'})
           }).catch(err => {
             // this.$router.push({path: '/404'})
           })
@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
 #poster {
-  /*background: url("../../assets/mzl.png") no-repeat center;*/
+  background: url("../../../src/assets/mzl.png") no-repeat center;
   height: 100%;
   width: 100%;
   background-size: cover;
