@@ -28,7 +28,7 @@ public class UserEntity {
     private String userRealName;
 
     @ApiModelProperty(notes = "年龄")
-    private Integer age;
+    private int age;
 
     @ApiModelProperty(notes = "邮箱")
     private String email;

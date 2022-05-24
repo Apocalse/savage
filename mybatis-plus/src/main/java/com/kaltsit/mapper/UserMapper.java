@@ -1,6 +1,5 @@
 package com.kaltsit.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.kaltsit.base.LavaBaseMapper;
 import com.kaltsit.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;

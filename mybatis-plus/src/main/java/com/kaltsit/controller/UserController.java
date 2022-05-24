@@ -2,7 +2,7 @@ package com.kaltsit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kaltsit.entity.UserEntity;
-import com.kaltsit.service.UserService;
+import com.kaltsit.service.impl.UserServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 public class UserController {
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @PostMapping("/login")
     public JsonResult<List<UserEntity>> login(@RequestBody UserEntity form) {

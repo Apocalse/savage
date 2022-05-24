@@ -1,7 +1,11 @@
 package com.kaltsit;
 
-import com.kaltsit.service.UserService;
+import com.kaltsit.commons.MenuLevel;
+import com.kaltsit.commons.VisibleStatus;
+import com.kaltsit.entity.MenuEntity;
 import com.kaltsit.entity.UserEntity;
+import com.kaltsit.service.impl.MenuServiceImpl;
+import com.kaltsit.service.impl.UserServiceImpl;
 import com.kaltsit.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -22,47 +26,21 @@ import java.util.Date;
 public class AutoFillTest {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
+    @Autowired
+    private MenuServiceImpl menuService;
 
     @Test
     public void insert() {
-        UserEntity user = new UserEntity();
-        user.setAge(18);
-
-        user.setEmail("aaa@123.com");
-        userService.save(user);
-    }
-
-    @Test
-    public void deleteMy() {
-//        UserEntity user = new UserEntity();
-//        user.setId("1528948442902122497");
-        UserEntity user1 = userService.getById("1528948442902122497");
-        userService.getBaseMapper().deleteWithDelToken(user1);
-    }
-
-
-    @Test
-    public void update() {
-        UserEntity user = userService.getById("1525024320316833794");
-        user.setAge(12);
-        user.setEmail("ddd@123.com");
-        userService.updateById(user);
-    }
-
-    @Test
-    public void select() {
-//        System.out.println(userService.getBaseMapper().getList());
-        System.out.println(userService.list());
-    }
-
-    @Test
-    public void delete(){
-        userService.getBaseMapper().deleteById("1525024320316833794");
-    }
-
-    @Test void getNow(){
-        System.out.println(DateUtils.formatDateTime(new Date()));
+        MenuEntity menu = new MenuEntity();
+        menu.setName("菜单管理");
+        menu.setUrl("/menu");
+        menu.setParentId("1529138714366267394");
+        menu.setOrderNum(10);
+        menu.setType(MenuLevel.SECOND);
+        menu.setStatus(VisibleStatus.SHOW);
+        menu.setIcon("el-icon-menu");
+        menuService.save(menu);
     }
 
 
