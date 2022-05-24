@@ -60,10 +60,10 @@ export default {
 </script>
 
 <style scoped>
-.el-menu{
-  /*margin-left: -20px;*/
-  /*margin-right: -20px;*/
-}
+/*.el-menu{*/
+/*  !*margin-left: -20px;*!*/
+/*  !*margin-right: -20px;*!*/
+/*}*/
 /*a{*/
 /*  text-decoration: none;*/
 /*}*/

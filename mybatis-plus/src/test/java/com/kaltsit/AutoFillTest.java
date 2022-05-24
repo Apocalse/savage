@@ -34,6 +34,15 @@ public class AutoFillTest {
     }
 
     @Test
+    public void deleteMy() {
+//        UserEntity user = new UserEntity();
+//        user.setId("1528948442902122497");
+        UserEntity user1 = userService.getById("1528948442902122497");
+        userService.getBaseMapper().deleteWithDelToken(user1);
+    }
+
+
+    @Test
     public void update() {
         UserEntity user = userService.getById("1525024320316833794");
         user.setAge(12);

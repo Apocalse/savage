@@ -9,32 +9,35 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@TableName(value = "user")
+@TableName("menu")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class MenuEntity {
 
-    @TableId(type = IdType.ASSIGN_ID)
-    @ApiModelProperty(notes = "id")
-    private String id;
+    @TableId
+    @ApiModelProperty(notes = "菜单ID")
+    private Long id;
 
-    @ApiModelProperty(notes = "用户名（账号）")
-    private String username;
+    @ApiModelProperty(notes = "父菜单ID，一级菜单为0")
+    private Long parentId;
 
-    @ApiModelProperty(notes = "密码")
-    private String password;
+    @ApiModelProperty(notes = "菜单名称")
+    private String name;
 
-    @ApiModelProperty(notes = "真实姓名")
-    private String userRealName;
+    @ApiModelProperty(notes = "菜单URL")
+    private String url;
 
-    @ApiModelProperty(notes = "年龄")
-    private Integer age;
+    @ApiModelProperty(notes = "类型 0：目录 1：菜单 2：按钮")
+    private Integer type;
 
-    @ApiModelProperty(notes = "邮箱")
-    private String email;
+    @ApiModelProperty(notes = "菜单图标")
+    private String icon;
 
-    @ApiModelProperty(notes = "手机号")
-    private String mobile;
+    @ApiModelProperty(notes = "排序")
+    private Integer orderNum;
+
+    @ApiModelProperty(notes = "是否隐藏（隐藏后将不会在页面上显示）")
+    private Integer status;
 
     @ApiModelProperty(notes = "备注")
     private String remarks;
@@ -50,7 +53,4 @@ public class UserEntity {
     @TableLogic
     @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除")
     private int delFlag;
-
-    //private String delToken;
-
 }
