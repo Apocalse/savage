@@ -43,7 +43,7 @@ export default {
     login() {
       this.$refs['loginForm'].validate((valid) => {
         if (valid) {
-          this.$post('/login', {
+          this.$post('/user/login', {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(data => {

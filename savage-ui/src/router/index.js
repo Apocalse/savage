@@ -48,6 +48,11 @@ const routes = [
         component: () => import('../views/common/Login.vue')
     },
     {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/common/Register.vue')
+    },
+    {
         path: '/404',
         name: '400',
         component: () => import('../views/common/404.vue')

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,10 @@ public class MenuEntity {
     @ApiModelProperty(notes = "菜单URL")
     private String url;
 
-    @ApiModelProperty(notes = "类型 0：目录 1：菜单 2：按钮")
+    @ApiModelProperty(notes = "vue文件路径")
+    private String vuePath;
+
+    @ApiModelProperty(notes = "0：目录 1：一级菜单 2：二级菜单 3：按钮")
     private int type;
 
     @ApiModelProperty(notes = "菜单图标")
@@ -52,9 +56,9 @@ public class MenuEntity {
     private Date updateDate;
 
     @TableLogic
-    @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除")
+    @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除", hidden = true)
     private int delFlag;
 
     @TableField(exist = false)
-    private List<MenuEntity> children;
+    private List<MenuEntity> children = new ArrayList<>();
 }

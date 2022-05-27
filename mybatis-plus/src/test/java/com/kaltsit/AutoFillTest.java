@@ -1,5 +1,6 @@
 package com.kaltsit;
 
+import com.alibaba.fastjson.JSONObject;
 import com.kaltsit.commons.MenuLevel;
 import com.kaltsit.commons.VisibleStatus;
 import com.kaltsit.entity.MenuEntity;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 自动填充测试
@@ -33,14 +35,18 @@ public class AutoFillTest {
     @Test
     public void insert() {
         MenuEntity menu = new MenuEntity();
-        menu.setName("菜单管理");
-        menu.setUrl("/menu");
-        menu.setParentId("1529138714366267394");
-        menu.setOrderNum(10);
-        menu.setType(MenuLevel.SECOND);
-        menu.setStatus(VisibleStatus.SHOW);
-        menu.setIcon("el-icon-menu");
-        menuService.save(menu);
+        System.out.println(menu.toString());
+
+//        List<MenuEntity> list = menuService.list();
+
+//       System.out.println(JSONObject.toJSONString(list));
+
+//        System.out.println(JSONObject.toJSONString(menuService.getMenuTree("1529139209180860417")));
+    }
+
+    @Test
+    public void test(){
+        String s = "{\"Apikey\":\"65b4fa8dd7de4c61803cebccdf609826\",\"Connection\":\"Keep-Alive\",\"User-Agent\":\"Apache-HttpClient/4.5.2 (Java/1.8.0_191)\",\"fromip\":\"10.210.14.46\",\"Host\":\"10.210.0.20: 80\",\"nginx_ip\":\"10.210.0.22\",\"Content-Type\":\"application/json; charset=UTF-8\"}";
     }
 
 

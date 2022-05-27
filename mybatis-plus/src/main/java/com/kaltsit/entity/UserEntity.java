@@ -28,7 +28,7 @@ public class UserEntity {
     private String userRealName;
 
     @ApiModelProperty(notes = "年龄")
-    private int age;
+    private Integer age;
 
     @ApiModelProperty(notes = "邮箱")
     private String email;
@@ -48,9 +48,10 @@ public class UserEntity {
     private Date updateDate;
 
     @TableLogic
-    @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除")
+    @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除", hidden = true)
     private int delFlag;
 
-    //private String delToken;
+    @ApiModelProperty(notes = "删除的token,删除后将自动填充为该实体的主键值", hidden = true)
+    private String delToken;
 
 }

@@ -13,19 +13,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     @Resource
     private UserServiceImpl userService;
 
     @PostMapping("/login")
-    public JsonResult<List<UserEntity>> login(@RequestBody UserEntity form) {
+    public JsonResult<Map<String, Object>> login(@RequestBody UserEntity user) {
         Map<String, Object> map = new HashMap<>();
-        if (StringUtils.isEmpty(form.getUsername())) {
+        if (StringUtils.isEmpty(user.getUsername())) {
             return null;
         }
         LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserEntity::getUsername, form.getUsername());
-        queryWrapper.eq(UserEntity::getPassword, form.getPassword());
+        queryWrapper.eq(UserEntity::getUsername, user.getUsername());
+        queryWrapper.eq(UserEntity::getPassword, user.getPassword());
         UserEntity one = userService.getOne(queryWrapper);
         if(one != null){
             map.put("token", "123456");
@@ -35,7 +36,12 @@ public class UserController {
         }else{
             return JsonResult.error("账号或密码错误");
         }
+    }
 
+    @PostMapping("/register")
+    public JsonResult<String> register(@RequestBody UserEntity user){
+        userService.save(user);
+        return JsonResult.ok();
     }
 
     @GetMapping("/hello")

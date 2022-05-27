@@ -51,57 +51,12 @@ export default {
   data() {
     return {
       defaultRouteId: '',
-      menuList: [
-        {
-          id: '1',
-          url: '/index',
-          name: '测试',
-          icon: 'el-icon-document',
-          children: []
-        },
-        {
-          id: '2',
-          url: '',
-          name: '测试',
-          icon: 'el-icon-document',
-          children: [
-            {
-              id: '3',
-              url: '/manage',
-              name: '测试',
-              icon: 'el-icon-document',
-              children: []
-            }
-          ]
-        },
-        {
-          id: '4',
-          url: '',
-          name: '测试',
-          icon: 'el-icon-document',
-          children: [
-            {
-              id: '5',
-              url: '',
-              name: '测试',
-              icon: 'el-icon-document',
-              children: [
-                {
-                  id: '6',
-                  url: '/index',
-                  name: '测试',
-                  icon: 'el-icon-document',
-                  children: []
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      menuList: []
     }
   },
   mounted() {
     this.setRouteId()
+    this.getMenuList()
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -115,14 +70,24 @@ export default {
     },
     pushRoute(val){
       console.log('路由跳转至 => ' + val.url)
-      Vue.$cookies.set('routeId', val.id)
-      if (this.$route.path !== val.url) {
-        this.$router.push({path: val.url})
-      }
+      //TODO
+      // Vue.$cookies.set('routeId', val.id)
+      // if (this.$route.path !== val.url) {
+      //   this.$router.push({path: val.url})
+      // }
     },
     setRouteId(){
       // 将当前路径写入cookies，确保页面刷新时可以重更新定位
       this.defaultRouteId = Vue.$cookies.get('routeId')
+    },
+    getMenuList(){
+      this.$get('/menu/list', {
+        id: '0'
+      }).then(data => {
+        this.menuList = data
+      }).catch(err =>{
+
+      })
     }
   }
 }
