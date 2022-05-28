@@ -34,8 +34,8 @@ public class AutoFillTest {
 
     @Test
     public void insert() {
-        MenuEntity menu = new MenuEntity();
-        System.out.println(menu.toString());
+//        MenuEntity menu = new MenuEntity();
+//        System.out.println(menu.toString());
 
 //        List<MenuEntity> list = menuService.list();
 
@@ -46,7 +46,7 @@ public class AutoFillTest {
 
     @Test
     public void test(){
-        String s = "{\"Apikey\":\"65b4fa8dd7de4c61803cebccdf609826\",\"Connection\":\"Keep-Alive\",\"User-Agent\":\"Apache-HttpClient/4.5.2 (Java/1.8.0_191)\",\"fromip\":\"10.210.14.46\",\"Host\":\"10.210.0.20: 80\",\"nginx_ip\":\"10.210.0.22\",\"Content-Type\":\"application/json; charset=UTF-8\"}";
+//        String s = "{\"Apikey\":\"65b4fa8dd7de4c61803cebccdf609826\",\"Connection\":\"Keep-Alive\",\"User-Agent\":\"Apache-HttpClient/4.5.2 (Java/1.8.0_191)\",\"fromip\":\"10.210.14.46\",\"Host\":\"10.210.0.20: 80\",\"nginx_ip\":\"10.210.0.22\",\"Content-Type\":\"application/json; charset=UTF-8\"}";
     }
 
 

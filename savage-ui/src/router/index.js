@@ -70,6 +70,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // to 将要访问的路径  from 从哪个路径跳转过来  next 一个函数，表示放行
     if (to.path === '/login') return next()
+    if (to.path === '/register') return next()
     // 获取token
     // const usernameStr = sessionStorage.getItem('username')
     const usernameStr = Vue.$cookies.get('username')

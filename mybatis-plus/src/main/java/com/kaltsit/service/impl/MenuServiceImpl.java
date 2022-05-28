@@ -33,7 +33,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
         return menu;
     }
 
-    //建立树形结构
+    /**
+     * 通过传入用户所拥有的所有菜单权限
+     * @param menuList 菜单数组
+     * @return 菜单
+     */
     public List<MenuEntity> buildTree(List<MenuEntity> menuList) {
         List<MenuEntity> treeMenus = new ArrayList<>();
         for (MenuEntity menuNode : getRootNode(menuList)) {

@@ -2,6 +2,7 @@ package com.kaltsit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kaltsit.entity.UserEntity;
+import com.kaltsit.exception.SavageException;
 import com.kaltsit.service.impl.UserServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,7 @@ public class UserController {
     public JsonResult<Map<String, Object>> login(@RequestBody UserEntity user) {
         Map<String, Object> map = new HashMap<>();
         if (StringUtils.isEmpty(user.getUsername())) {
-            return null;
+            return JsonResult.error("请输入账号或密码");
         }
         LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(UserEntity::getUsername, user.getUsername());
