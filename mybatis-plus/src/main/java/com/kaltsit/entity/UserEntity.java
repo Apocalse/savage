@@ -24,6 +24,9 @@ public class UserEntity {
     @ApiModelProperty(notes = "密码")
     private String password;
 
+    @ApiModelProperty(notes = "盐值")
+    private String salt;
+
     @ApiModelProperty(notes = "真实姓名")
     private String userRealName;
 

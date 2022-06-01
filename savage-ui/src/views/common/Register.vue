@@ -38,23 +38,16 @@ export default {
   },
   methods: {
     register() {
-      const _this = this;
       this.$post('/user/register', {
         username: this.registerForm.username,
         password: this.registerForm.password,
         mobile: this.registerForm.mobile,
         email: this.registerForm.email
       }).then(resp => {
-        // if (resp.data.code === 200) {
-        //   this.$alert('注册成功', '提示', {
-        //     confirmButtonText: '确定'
-        //   })
-        //   _this.$router.replace('/login')
-        // } else {
-        //   this.$alert(resp.data.message, '提示', {
-        //     confirmButtonText: '确定'
-        //   })
-        // }
+        this.$alert('注册成功', '提示', {
+          confirmButtonText: '确定'
+        })
+        this.$router.push({path: '/login'})
       }).catch(failResponse => {
       })
     }
