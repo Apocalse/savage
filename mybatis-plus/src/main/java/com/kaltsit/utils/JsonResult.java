@@ -19,7 +19,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 成功
-     *
      * @return 结果
      */
     public static JsonResult ok() {
@@ -30,7 +29,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 失败
-     *
      * @param msg 失败信息
      * @return 结果
      */
@@ -43,7 +41,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 失败
-     *
      * @param code 状态码
      * @param msg  信息提示
      * @return 结果
@@ -57,7 +54,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 失败
-     *
      * @return 结果
      */
     public static JsonResult error() {
@@ -69,7 +65,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 添加返回的数据
-     *
      * @param data 数据
      * @return 结果
      */
@@ -80,7 +75,6 @@ public class JsonResult<T> implements Serializable {
 
     /**
      * 是否正常
-     *
      * @return 结果
      */
     @JsonIgnore
