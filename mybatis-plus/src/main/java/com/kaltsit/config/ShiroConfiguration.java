@@ -31,7 +31,6 @@ public class ShiroConfiguration {
         return securityManager;
     }
 
-
     @Bean
     public LavaRealm getWJRealm() {
         LavaRealm realm = new LavaRealm();
@@ -53,4 +52,5 @@ public class ShiroConfiguration {
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
+
 }

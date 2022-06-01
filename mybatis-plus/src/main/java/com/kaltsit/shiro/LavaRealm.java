@@ -1,9 +1,7 @@
 package com.kaltsit.shiro;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kaltsit.entity.UserEntity;
-import com.kaltsit.exception.SavageException;
 import com.kaltsit.service.impl.UserServiceImpl;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
