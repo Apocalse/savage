@@ -4,9 +4,8 @@
       default-active="2"
       class="el-menu-vertical-demo"
       :default-active="defaultRouteId"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b">
+      background-color="#262626"
+      text-color="#fff">
     <template v-for="(item, index) in menuList">
       <!-- 一级菜单 -->
       <template v-if="item.children.length===0">
@@ -94,4 +93,7 @@ export default {
 </script>
 
 <style scoped>
+.el_menu{
+
+}
 </style>

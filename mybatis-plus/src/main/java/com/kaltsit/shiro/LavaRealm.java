@@ -35,6 +35,7 @@ public class LavaRealm extends AuthorizingRealm {
         String passwordInDB = user.getPassword();
         String salt = user.getSalt();
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username, passwordInDB, ByteSource.Util.bytes(salt), getName());
+
         return info;
     }
 }

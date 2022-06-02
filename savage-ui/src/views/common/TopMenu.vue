@@ -1,22 +1,22 @@
 <template>
   <el-menu
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-        :default-active="$route.path"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b">
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+      :default-active="$route.path"
+      background-color="#0085d0"
+      text-color="#fff"
+      active-text-color="#ffd04b">
 <!--      <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">-->
-<!--        {{item.navItem}}-->
+<!--        {{ item.navItem }}-->
 <!--      </el-menu-item>-->
 
-    </el-menu>
+  </el-menu>
 </template>
 
 <script>
 export default {
-  name: 'NavMenu',
+  name: 'TopMenu',
   data() {
     return {
       defaultPath: '/index',
