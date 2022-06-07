@@ -1,9 +1,11 @@
 package com.kaltsit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kaltsit.entity.UserEntity;
 import com.kaltsit.exception.SavageException;
 import com.kaltsit.service.impl.UserServiceImpl;
+import com.kaltsit.utils.JWTUtil;
 import com.kaltsit.utils.JsonResult;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -11,9 +13,11 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,20 +34,17 @@ public class UserController {
         if (StringUtils.isEmpty(user.getUsername())) {
             return JsonResult.error("请输入账号或密码");
         }
-
-        String username = user.getUsername();
-        Subject subject = SecurityUtils.getSubject();
-//        subject.getSession().setTimeout(10000);
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, user.getPassword());
-
         try {
-            subject.login(usernamePasswordToken);
             LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(UserEntity::getUsername, user.getUsername());
+            queryWrapper.eq(UserEntity::getPassword, user.getPassword());
             UserEntity one = userService.getOne(queryWrapper);
-            map.put("token", "123456");
-            map.put("username", one.getUsername());
-            map.put("userId", one.getId());
+            if (one != null) {
+                String token = JWTUtil.createToken(user);
+                map.put("token", token);
+                map.put("username", one.getUsername());
+                map.put("userId", one.getId());
+            }
             return JsonResult.ok().put(map);
         } catch (Exception e) {
             throw new SavageException("登陆失败");
@@ -51,9 +52,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public JsonResult<String> register(@RequestBody UserEntity user){
+    public JsonResult<String> register(@RequestBody UserEntity user) {
         boolean isExist = userService.isExist(user.getUsername());
-        if(isExist){
+        if (isExist) {
             return JsonResult.error("账号已存在");
         }
         // 生成盐,默认长度 16 位
@@ -68,15 +69,15 @@ public class UserController {
         return JsonResult.ok();
     }
 
-    @GetMapping("/loginOut")
-    public JsonResult<String> logout() {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-        return JsonResult.ok();
-    }
+//    @GetMapping("/loginOut")
+//    public JsonResult<String> logout() {
+//        Subject subject = SecurityUtils.getSubject();
+//        subject.logout();
+//        return JsonResult.ok();
+//    }
 
     @GetMapping("/hello")
-    public JsonResult<List<UserEntity>> test(){
+    public JsonResult<List<UserEntity>> test() {
         return JsonResult.ok().put("hello");
     }
 
