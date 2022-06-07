@@ -68,6 +68,13 @@ public class UserController {
         return JsonResult.ok();
     }
 
+    @GetMapping("/loginOut")
+    public JsonResult<String> logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return JsonResult.ok();
+    }
+
     @GetMapping("/hello")
     public JsonResult<List<UserEntity>> test(){
         return JsonResult.ok().put("hello");

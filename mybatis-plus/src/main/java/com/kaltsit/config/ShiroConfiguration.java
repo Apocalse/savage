@@ -27,12 +27,12 @@ public class ShiroConfiguration {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(getWJRealm());
+        securityManager.setRealm(getLavaRealm());
         return securityManager;
     }
 
     @Bean
-    public LavaRealm getWJRealm() {
+    public LavaRealm getLavaRealm() {
         LavaRealm realm = new LavaRealm();
         realm.setCredentialsMatcher(hashedCredentialsMatcher());
         return realm;
