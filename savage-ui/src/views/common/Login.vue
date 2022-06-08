@@ -11,7 +11,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="login">登录</el-button>
-      <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="resetForm">重置</el-button>
+      <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="resetForm">注册</el-button>
     </el-form-item>
   </el-form>
   </body>
@@ -47,9 +47,9 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(data => {
-            sessionStorage.setItem('token', data.token)
-            sessionStorage.setItem('username', data.username)
-            sessionStorage.setItem('userId', data.userId)
+            // sessionStorage.setItem('token', data.token)
+            // sessionStorage.setItem('username', data.username)
+            // sessionStorage.setItem('userId', data.userId)
             Vue.$cookies.set('token', data.token)
             Vue.$cookies.set('username', data.username)
             Vue.$cookies.set('userId', data.userId)
@@ -62,7 +62,8 @@ export default {
     },
 
     resetForm() {
-      this.$refs['loginForm'].resetFields();
+      this.$router.push({path: '/register'})
+      // this.$refs['loginForm'].resetFields();
     }
 
   }

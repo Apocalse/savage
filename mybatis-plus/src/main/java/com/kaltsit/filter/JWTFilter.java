@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,6 +37,9 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return false;
     }
 
+    /**
+     * 无token时，会进入这个方法
+     */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -44,11 +48,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-
         httpServletResponse.getWriter().write("{\n" +
                 "    \"code\": 401,\n" +
-                "    \"msg\": null,\n" +
-                "    \"data\": \"无权限\"\n" +
+                "    \"msg\": \"未携带token或token失效\",\n" +
+                "    \"data\": null\n" +
                 "}");
         return false;
     }
@@ -61,7 +64,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
         // System.out.println("isLoginAttempt");
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("Authorization");
+        String token = req.getHeader("token");
         return token != null;
     }
 
@@ -71,10 +74,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      * 这也解释了我们为什么要自定义jwtToken，因为我们不再使用Shiro默认的UsernamePasswordToken了。
      */
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         // System.out.println("executeLogin");
         HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("Authorization");
+        String token = req.getHeader("token");
         JWTToken jwt = new JWTToken(token);
         //交给自定义的realm对象去登录，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(jwt);
@@ -98,18 +101,15 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     }
 
     /**
-     * 将非法请求跳转到 /unauthorized/**
+     * 非法请求，删除cookie
      */
     private void responseError(ServletResponse response, String message) {
-        System.out.println("responseError");
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            //设置编码，否则中文字符在重定向时会变为空字符串
-            message = URLEncoder.encode(message, "UTF-8");
-            httpServletResponse.sendRedirect("/unauthorized/" + message);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        //删除cookie中的token
+        Cookie cookie = new Cookie("token", null);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        httpServletResponse.addCookie(cookie);
     }
 
 }

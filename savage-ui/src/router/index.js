@@ -73,8 +73,8 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/register') return next()
     // 获取token
     // const usernameStr = sessionStorage.getItem('username')
-    const usernameStr = Vue.$cookies.get('username')
-    if (!usernameStr) return next('/login')
+    const tokenStr = Vue.$cookies.get('token')
+    if (!tokenStr) return next('/login')
     next()
 })
 

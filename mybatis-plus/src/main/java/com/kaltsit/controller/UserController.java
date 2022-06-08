@@ -31,24 +31,28 @@ public class UserController {
     @PostMapping("/login")
     public JsonResult<Map<String, Object>> login(@RequestBody UserEntity user) {
         Map<String, Object> map = new HashMap<>();
-        if (StringUtils.isEmpty(user.getUsername())) {
-            return JsonResult.error("请输入账号或密码");
-        }
-        try {
-            LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(UserEntity::getUsername, user.getUsername());
-            queryWrapper.eq(UserEntity::getPassword, user.getPassword());
-            UserEntity one = userService.getOne(queryWrapper);
-            if (one != null) {
+//        if (StringUtils.isEmpty(user.getUsername())) {
+//            return JsonResult.error("请输入账号或密码");
+//        }
+        LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserEntity::getUsername, user.getUsername());
+        UserEntity one = userService.getOne(queryWrapper);
+        if (one != null) {
+            // 得到 hash 后的密码
+            String encodedPassword = new SimpleHash("md5", user.getPassword(), one.getSalt(), 2).toString();
+            if (encodedPassword.equals(one.getPassword())) {
                 String token = JWTUtil.createToken(user);
                 map.put("token", token);
                 map.put("username", one.getUsername());
                 map.put("userId", one.getId());
+                return JsonResult.ok().put(map);
+            } else {
+                throw new SavageException("登陆失败");
             }
-            return JsonResult.ok().put(map);
-        } catch (Exception e) {
+        }else {
             throw new SavageException("登陆失败");
         }
+
     }
 
     @PostMapping("/register")

@@ -54,7 +54,7 @@ public class LavaRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        System.out.println("认证~~~~~~~");
+        //System.out.println("认证~~~~~~~");
         String jwt = (String) token.getCredentials();
         String username = null;
         try {

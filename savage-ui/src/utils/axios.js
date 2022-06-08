@@ -47,7 +47,7 @@ function EipException(message, code) {
  */
 httpCustom.interceptors.request.use(
     config => {
-        // config.headers["token"] = Vue.$cookies.get("token"); // 请求头带上token
+        config.headers["token"] = Vue.$cookies.get("token"); // 请求头带上token
         return config;
     },
     error => {
