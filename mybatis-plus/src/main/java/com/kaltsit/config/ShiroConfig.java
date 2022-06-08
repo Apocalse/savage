@@ -42,11 +42,9 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         // 添加自己的过滤器并且取名为jwt
         LinkedHashMap<String, Filter> filters = new LinkedHashMap<>();
+        factoryBean.setSecurityManager(securityManager);
         filters.put("jwt", new JWTFilter());
         factoryBean.setFilters(filters);
-        factoryBean.setSecurityManager(securityManager);
-        //factoryBean.setLoginUrl("/login");
-        //factoryBean.setUnauthorizedUrl("/savage/login");
         //自定义url规则 http://shiro.apache.org/web.html#urls-
         Map<String, String> filterRuleMap = new HashMap<>();
         // 所有请求通过我们自己的JWT Filter

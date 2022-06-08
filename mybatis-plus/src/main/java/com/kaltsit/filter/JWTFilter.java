@@ -1,9 +1,7 @@
 package com.kaltsit.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.kaltsit.exception.SavageException;
 import com.kaltsit.shiro.JWTToken;
-import com.kaltsit.utils.JsonResult;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -23,22 +21,19 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        //判断请求的请求头是否带上 "Token"
-        if (isLoginAttempt(request, response)) {
-            //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
-            try {
-                executeLogin(request, response);
-                return true;
-            } catch (Exception e) {
-                //token 错误
-                responseError(response, e.getMessage());
-            }
+        try {
+            executeLogin(request, response);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 认证失败时，清除token
+            delToken(response);
+            return false;
         }
-        return false;
     }
 
     /**
-     * 无token时，会进入这个方法
+     * 无token或false时，会进入这个方法
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
@@ -48,11 +43,12 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        httpServletResponse.getWriter().write("{\n" +
-                "    \"code\": 401,\n" +
-                "    \"msg\": \"未携带token或token失效\",\n" +
-                "    \"data\": null\n" +
-                "}");
+        JSONObject json = new JSONObject();
+        json.put("code", 401);
+        json.put("data", null);
+        json.put("msg", "token认证失效，重新登陆");
+        httpServletResponse.getWriter().write(json.toString());
+        httpServletResponse.getWriter().flush();
         return false;
     }
 
@@ -62,7 +58,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        // System.out.println("isLoginAttempt");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("token");
         return token != null;
@@ -75,7 +70,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) {
-        // System.out.println("executeLogin");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("token");
         JWTToken jwt = new JWTToken(token);
@@ -86,24 +80,27 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
-        // System.out.println("preHandle");
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        res.setHeader("Access-control-Allow-Origin", req.getHeader("Origin"));
-        res.setHeader("Access-control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-        res.setHeader("Access-control-Allow-Headers", req.getHeader("Access-Control-Request-Headers"));
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
-        if (req.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            res.setStatus(HttpStatus.OK.value());
+        if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+            httpServletResponse.setStatus(HttpStatus.OK.value());
             return false;
         }
+        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        //update-begin-author:scott date:20200907 for:issues/I1TAAP 前后端分离，shiro过滤器配置引起的跨域问题
+        // 是否允许发送Cookie，默认Cookie不包括在CORS请求之中。设为true时，表示服务器允许Cookie包含在请求中。
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
+        //update-end-author:scott date:20200907 for:issues/I1TAAP 前后端分离，shiro过滤器配置引起的跨域问题
         return super.preHandle(request, response);
     }
 
     /**
      * 非法请求，删除cookie
      */
-    private void responseError(ServletResponse response, String message) {
+    private void delToken(ServletResponse response) {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         //删除cookie中的token
         Cookie cookie = new Cookie("token", null);
