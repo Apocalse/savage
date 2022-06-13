@@ -1,23 +1,18 @@
 package com.kaltsit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kaltsit.entity.UserEntity;
 import com.kaltsit.exception.SavageException;
 import com.kaltsit.service.impl.UserServiceImpl;
+import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
 import com.kaltsit.utils.JsonResult;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.subject.Subject;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.ServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +26,6 @@ public class UserController {
     @PostMapping("/login")
     public JsonResult<Map<String, Object>> login(@RequestBody UserEntity user) {
         Map<String, Object> map = new HashMap<>();
-//        if (StringUtils.isEmpty(user.getUsername())) {
-//            return JsonResult.error("请输入账号或密码");
-//        }
         LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(UserEntity::getUsername, user.getUsername());
         UserEntity one = userService.getOne(queryWrapper);
@@ -41,7 +33,7 @@ public class UserController {
             // 得到 hash 后的密码
             String encodedPassword = new SimpleHash("md5", user.getPassword(), one.getSalt(), 2).toString();
             if (encodedPassword.equals(one.getPassword())) {
-                String token = JWTUtil.createToken(user);
+                String token = JWTUtil.createToken(one);
                 map.put("token", token);
                 map.put("username", one.getUsername());
                 map.put("userId", one.getId());
@@ -73,15 +65,18 @@ public class UserController {
         return JsonResult.ok();
     }
 
-//    @GetMapping("/loginOut")
-//    public JsonResult<String> logout() {
-//        Subject subject = SecurityUtils.getSubject();
-//        subject.logout();
-//        return JsonResult.ok();
-//    }
+    @GetMapping("/loginOut")
+    public JsonResult<String> logout(ServletResponse response) {
+        CookieUtils.delCookieByName(response, "token");
+        CookieUtils.delCookieByName(response, "username");
+        CookieUtils.delCookieByName(response, "userId");
+        return JsonResult.ok();
+    }
 
     @GetMapping("/hello")
     public JsonResult<List<UserEntity>> test() {
+        System.out.println(userService.getUserName());
+        System.out.println(userService.getUserId());
         return JsonResult.ok().put("hello");
     }
 

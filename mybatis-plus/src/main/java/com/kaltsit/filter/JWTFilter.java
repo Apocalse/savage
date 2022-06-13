@@ -2,17 +2,15 @@ package com.kaltsit.filter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.kaltsit.shiro.JWTToken;
+import com.kaltsit.utils.CookieUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -27,7 +25,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         } catch (Exception e) {
             e.printStackTrace();
             // 认证失败时，清除token
-            delToken(response);
+            CookieUtils.delCookieByName(response, "token");
             return false;
         }
     }
@@ -97,16 +95,6 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
-    /**
-     * 非法请求，删除cookie
-     */
-    private void delToken(ServletResponse response) {
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        //删除cookie中的token
-        Cookie cookie = new Cookie("token", null);
-        cookie.setPath("/");
-        cookie.setMaxAge(0);
-        httpServletResponse.addCookie(cookie);
-    }
+
 
 }

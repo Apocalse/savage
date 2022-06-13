@@ -9,10 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 
@@ -21,8 +18,10 @@ public class LavaRealm extends AuthorizingRealm {
     @Resource
     private UserServiceImpl userService;
 
-    //根据token判断此Authenticator是否使用该realm
-    //必须重写不然shiro会报错
+    /**
+     * 根据token判断此Authenticator是否使用该realm
+     * 必须重写不然shiro会报错
+     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;

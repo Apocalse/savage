@@ -29,6 +29,7 @@ public class JWTUtil {
         String token = JWT.create()
                 .withHeader(map)
                 .withClaim("username", user.getUsername())//私有声明
+                .withClaim("userId", user.getId())
                 .withExpiresAt(date)//过期时间
                 .withIssuedAt(new Date())//签发时间
                 .sign(Algorithm.HMAC256(SECRET));//签名
@@ -60,4 +61,14 @@ public class JWTUtil {
             return null;
         }
     }
+
+    public static String getUserId(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("userId").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
 }
