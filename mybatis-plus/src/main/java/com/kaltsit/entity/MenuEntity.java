@@ -30,7 +30,7 @@ public class MenuEntity {
     private String url;
 
     @ApiModelProperty(notes = "vue文件路径")
-    private String vuePath;
+    private String path;
 
     @ApiModelProperty(notes = "0：目录 1：一级菜单 2：二级菜单 3：按钮")
     private int type;

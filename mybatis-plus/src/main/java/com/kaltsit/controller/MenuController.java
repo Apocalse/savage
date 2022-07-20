@@ -18,7 +18,7 @@ public class MenuController {
     private MenuServiceImpl menuService;
 
     @GetMapping("/list")
-    public JsonResult<List<MenuEntity>> getMenuList(@RequestParam String id){
+    public JsonResult<List<MenuEntity>> getMenuList(@RequestParam(required = false) String id){
         return JsonResult.ok().put(menuService.getMenuTree(id).getChildren());
     }
 

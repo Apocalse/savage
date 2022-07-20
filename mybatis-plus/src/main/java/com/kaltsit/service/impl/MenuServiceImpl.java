@@ -1,7 +1,7 @@
 package com.kaltsit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kaltsit.entity.MenuEntity;
 import com.kaltsit.mapper.MenuMapper;
@@ -14,11 +14,15 @@ import java.util.List;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
 
     /**
-     * 递归-根据更节点获取菜单对象
+     * 递归-根据根节点获取菜单对象
      * @param rootId 根目录
      * @return 菜单
      */
     public MenuEntity getMenuTree(String rootId) {
+        if(StringUtils.isEmpty(rootId)){
+            rootId = "0";
+        }
+        //TODO SELECT * FROM menu t WHERE t.id = ? and t.id in (...)
         //根据rootId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
         MenuEntity menu = this.getBaseMapper().selectById(rootId);
         //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
@@ -34,7 +38,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
     }
 
     /**
-     * 通过传入用户所拥有的所有菜单权限
+     * 传入用户所拥有的所有菜单权限
      * @param menuList 菜单数组
      * @return 菜单
      */

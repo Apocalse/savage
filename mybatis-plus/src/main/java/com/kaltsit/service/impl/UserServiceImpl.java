@@ -19,14 +19,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> {
         return flag > 0;
     }
 
-    public String getUserName(){
+    public String getCurrentUserName(){
         Subject subject = SecurityUtils.getSubject();
         String token = subject.getPrincipal().toString();
         String username = JWTUtil.getUsername(token);
         return username;
     }
 
-    public String getUserId(){
+    public String getCurrentUserId(){
         Subject subject = SecurityUtils.getSubject();
         String token = subject.getPrincipal().toString();
         String userId = JWTUtil.getUserId(token);

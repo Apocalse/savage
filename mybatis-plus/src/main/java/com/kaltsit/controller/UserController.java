@@ -75,9 +75,14 @@ public class UserController {
 
     @GetMapping("/hello")
     public JsonResult<List<UserEntity>> test() {
-        System.out.println(userService.getUserName());
-        System.out.println(userService.getUserId());
+        System.out.println(userService.getCurrentUserName());
+        System.out.println(userService.getCurrentUserId());
         return JsonResult.ok().put("hello");
+    }
+
+    @GetMapping("/isExit")
+    public JsonResult<Boolean> isExit(String username) {
+        return JsonResult.ok().put(userService.isExist(username));
     }
 
 }

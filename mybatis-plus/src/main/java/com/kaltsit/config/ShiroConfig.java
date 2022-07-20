@@ -53,6 +53,7 @@ public class ShiroConfig {
         filterRuleMap.put("/401", "anon");
         filterRuleMap.put("/user/login", "anon");
         filterRuleMap.put("/user/register", "anon");
+        filterRuleMap.put("/user/isExit", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }
