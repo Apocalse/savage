@@ -1,12 +1,12 @@
 <template>
   <div class="index">
-    <h1>This is an manage page</h1>
+    <h1>user</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'manage',
+  name: 'User',
 }
 </script>
 
