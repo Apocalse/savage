@@ -1,21 +1,22 @@
 <template>
   <body id="paper">
-  <el-form class="login-container" label-position="left" label-width="0px" :loading="loading">
+  <el-form class="login-container" label-position="left" label-width="0px"
+           :loading="loading" :rules="dataRule" :model="registerForm">
     <h3 class="login_title">用户注册</h3>
-    <el-form-item>
-      <el-input type="text" v-model="registerForm.username" placeholder="账号" autocomplete="new-password"></el-input>
+    <el-form-item prop="username">
+      <el-input type="text" v-model="registerForm.username" autocomplete="new-password" placeholder="账号"></el-input>
     </el-form-item>
-    <el-form-item>
+    <el-form-item prop="password">
       <el-input type="password" v-model="registerForm.password" autocomplete="new-password" placeholder="密码"></el-input>
     </el-form-item>
-    <el-form-item>
+    <el-form-item prop="mobile">
       <el-input type="text" v-model="registerForm.mobile" autocomplete="new-password" placeholder="手机号"></el-input>
     </el-form-item>
-    <el-form-item>
+    <el-form-item prop="email">
       <el-input type="text" v-model="registerForm.email" autocomplete="new-password" placeholder="邮箱"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 40%;background: #505458;border: none" v-on:click="register">注册</el-button>
+      <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="register">注册</el-button>
     </el-form-item>
   </el-form>
   </body>
@@ -25,6 +26,20 @@
 export default {
   name: "Register",
   data() {
+    let checkUsername = (rule, value, callback) => {
+      this.$get('/user/isExit', {
+        username: value,
+      }).then(data =>{
+        if (data===true) {
+          callback(new Error('该用户已存在'))
+        } else {
+          callback()
+        }
+      }).catch(err => {
+        callback(new Error('未知异常'))
+      })
+    };
+
     return {
       checked: true,
       registerForm: {
@@ -33,7 +48,13 @@ export default {
         mobile: '',
         email: ''
       },
-      loading: false
+      loading: false,
+      dataRule:{
+        username:[
+          {required: true, message: '用户名不能为空', trigger: 'blur'},
+          {validator: checkUsername, trigger: 'blur'}
+        ]
+      }
     }
   },
   methods: {
@@ -66,7 +87,7 @@ export default {
 }
 
 body {
-  margin: -5px 0px;
+  margin: -5px 0;
 }
 
 .login-container {
