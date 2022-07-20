@@ -24,9 +24,17 @@ const routes = [
                 }
             },
             {
-                path: '/manage',
-                name: 'Manage',
-                component: () => import('../views/lava/Manage.vue'),
+                path: '/menu',
+                name: 'Menu',
+                component: () => import('../views/lava/Menu.vue'),
+                meta: {
+                    requireAuth: true
+                }
+            },
+            {
+                path: '/user',
+                name: 'User',
+                component: () => import('../views/lava/User.vue'),
                 meta: {
                     requireAuth: true
                 }

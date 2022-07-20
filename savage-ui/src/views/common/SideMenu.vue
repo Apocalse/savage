@@ -70,10 +70,10 @@ export default {
     pushRoute(val){
       console.log('路由跳转至 => ' + val.url)
       //TODO
-      // Vue.$cookies.set('routeId', val.id)
-      // if (this.$route.path !== val.url) {
-      //   this.$router.push({path: val.url})
-      // }
+      Vue.$cookies.set('routeId', val.id)
+      if (this.$route.path !== val.url) {
+        this.$router.push({path: val.url})
+      }
     },
     setRouteId(){
       // 将当前路径写入cookies，确保页面刷新时可以重更新定位
