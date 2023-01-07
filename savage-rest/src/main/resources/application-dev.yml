@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://150.158.145.167:3306/kaltsit?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: Qq1010110!
+
+mybatis-plus:
+  # mybatis xml配置文件扫描
+  mapper-locations: classpath*:mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.apocalse.*.entity
+  global-config:
+    db-column-underline: true
+    db-config:
+      # 逻辑已删除值(默认为 1)
+      logic-delete-value: 1
+      # 逻辑未删除值(默认为 0)
+      logic-not-delete-value: 0
+      #数据库大写下划线转换
+      #capital-mode: true
+      #驼峰下划线转换
+      db-column-underline: true
+  configuration:
+    #打印日志
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    #配置JdbcTypeForNull, oracle数据库必须配置
+    jdbc-type-for-null: 'null'
+
+logging:
+  level:
+    com.baomidou.samples.metainfo: debug
+
+es:
+  datasource:
+    db: test_1
+    hosts: 150.158.145.167:9200
+    scheme: http
+    username: xxx,
+    password: xxx,
+    useES: true
