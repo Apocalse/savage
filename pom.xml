@@ -11,6 +11,7 @@
     <modules>
 
         <module>savage-rest</module>
+        <module>two-mysql-resources</module>
     </modules>
 
     <parent>
