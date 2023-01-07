@@ -1,0 +1,65 @@
+{
+  "id": "3698171",
+  "name": "savage",
+  "font_family": "element-icons",
+  "css_prefix_text": "el-icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1462921",
+      "name": "stop",
+      "font_class": "stop",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "15777720",
+      "name": "continue",
+      "font_class": "continue",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "7711448",
+      "name": "tools-hardware",
+      "font_class": "tools-hardware",
+      "unicode": "e882",
+      "unicode_decimal": 59522
+    },
+    {
+      "icon_id": "7009059",
+      "name": "tools",
+      "font_class": "tools",
+      "unicode": "e762",
+      "unicode_decimal": 59234
+    },
+    {
+      "icon_id": "11488020",
+      "name": "clock",
+      "font_class": "clock",
+      "unicode": "e74b",
+      "unicode_decimal": 59211
+    },
+    {
+      "icon_id": "11488238",
+      "name": "clock-fill",
+      "font_class": "clock-fill",
+      "unicode": "e77b",
+      "unicode_decimal": 59259
+    },
+    {
+      "icon_id": "15838484",
+      "name": "hide",
+      "font_class": "hide",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    },
+    {
+      "icon_id": "24698576",
+      "name": "show",
+      "font_class": "show2",
+      "unicode": "e757",
+      "unicode_decimal": 59223
+    }
+  ]
+}
