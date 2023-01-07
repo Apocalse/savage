@@ -1,46 +1,49 @@
 <template>
   <div>
     <el-form :inline="true" :model="searchForm" @submit.native.prevent>
-      <el-form-item label="用户名:">
-        <el-select v-model="searchForm.userId" placeholder="请选择" clearable>
-          <el-option
-              v-for="item in userList"
-              :key="item.id"
-              :label="item.userRealName"
-              :value="item.id">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="类型:">
-        <el-select v-model="searchForm.type" placeholder="请选择" clearable>
-          <el-option
-              v-for="item in sysLogTypeList"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
-        <el-date-picker align="left"
-                        v-model="searchForm.startTime"
-                        type="datetime"
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="结束时间" prop="endTime">
-        <el-date-picker align="left"
-                        v-model="searchForm.endTime"
-                        ref="endTime"
-                        type="datetime"
-                        format="yyyy-MM-dd HH:mm:ss"
-                        value-format="yyyy-MM-dd HH:mm:ss">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="操作内容:">
-        <el-input v-model.trim="searchForm.searchKey" placeholder="操作内容" clearable></el-input>
-      </el-form-item>
+      <el-row>
+        <el-form-item label="用户名:">
+          <el-select v-model="searchForm.userId" placeholder="请选择" clearable>
+            <el-option
+                v-for="item in userList"
+                :key="item.id"
+                :label="item.userRealName"
+                :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="类型:">
+          <el-select v-model="searchForm.type" placeholder="请选择" clearable>
+            <el-option
+                v-for="item in sysLogTypeList"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="开始时间" prop="startTime">
+          <el-date-picker align="left"
+                          v-model="searchForm.startTime"
+                          type="datetime"
+                          format="yyyy-MM-dd HH:mm:ss"
+                          value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束时间" prop="endTime">
+          <el-date-picker align="left"
+                          v-model="searchForm.endTime"
+                          ref="endTime"
+                          type="datetime"
+                          format="yyyy-MM-dd HH:mm:ss"
+                          value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="操作内容:">
+          <el-input v-model.trim="searchForm.searchKey" placeholder="操作内容" clearable></el-input>
+        </el-form-item>
+      </el-row>
+      <el-row>
       <el-form-item style="float: right">
         <el-button type="primary" @click="doSearch">
           查询
@@ -51,6 +54,7 @@
           重置
         </el-button>
       </el-form-item>
+      </el-row>
     </el-form>
 
     <el-table

@@ -1,7 +1,7 @@
 <template>
   <body id="poster">
   <el-form :rules="loginRule" ref="loginForm" :model="loginForm" class="login-container" label-position="left"
-           label-width="0px" v-loading="loading">
+           label-width="0px" v-loading="loading" @submit.native.prevent>
     <h3 class="login-title">系统登录</h3>
     <el-form-item prop="username">
       <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="账号"></el-input>
@@ -10,7 +10,7 @@
       <el-input type="password" v-model="loginForm.password" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="login">登录</el-button>
+      <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="login" native-type=“submit” >登录</el-button>
       <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="goRegister">注册</el-button>
     </el-form-item>
   </el-form>
