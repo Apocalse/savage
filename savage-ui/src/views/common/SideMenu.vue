@@ -15,13 +15,14 @@
       </template>
       <!-- 二级菜单 -->
       <template v-if="item.children.length!==0">
-        <el-submenu :index="item.url" :key="index" >
+        <el-submenu :index="item.url" :key="index">
           <template slot="title">
-<!--            <i :class="item.icon"></i>-->
+            <!--            <i :class="item.icon"></i>-->
             <span slot="title" style="font-size: 16px">{{ item.nameZh }}</span>
           </template>
           <template v-for="(subItem, idx) in item.children">
-            <el-menu-item v-if="subItem.children.length===0" :index="subItem.url" :key="idx" @click="pushRoute(subItem)">
+            <el-menu-item v-if="subItem.children.length===0" :index="subItem.url" :key="idx"
+                          @click="pushRoute(subItem)">
               <i :class="subItem.icon"></i>
               <span slot="title">{{ subItem.nameZh }}</span>
             </el-menu-item>
@@ -30,7 +31,8 @@
               <template slot="title">
                 <span slot="title">{{ subItem.nameZh }}</span>
               </template>
-              <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i" @click="pushRoute(threeItem)">
+              <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i"
+                            @click="pushRoute(threeItem)">
                 {{ threeItem.nameZh }}
               </el-menu-item>
             </el-submenu>
@@ -38,7 +40,6 @@
         </el-submenu>
       </template>
     </template>
-
   </el-menu>
 </template>
 
@@ -68,32 +69,36 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    pushRoute(val){
-      if(val.path == null){
+    pushRoute(val) {
+      if (val.path == null) {
         return
       }
-      //TODO
       if (this.$route.path !== val.url) {
         console.log('路由跳转至 => ' + val.url)
         this.$router.push({path: val.url})
-      }else {
+      } else {
         console.log('刷新当前路由')
         this.reload()
       }
     },
-    setRouteId(){
+    setRouteId() {
       // 确保页面刷新时可以重更新定位
       this.defaultRoute = this.$route.path
     },
-    getMenuList(){
-      this.$get('/menu/list', {
-        id: '0'
-      }).then(data => {
-        console.log(data)
-        this.menuList = data
-      }).catch(err =>{
+    getMenuList() {
+      let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
+      if (localRoutes == null || localRoutes.length < 1) {
+        this.$get('/menu/list', {
+          id: '0'
+        }).then(data => {
+          localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
+          this.menuList = data
+        }).catch(err => {
 
-      })
+        })
+      } else {
+        this.menuList = localRoutes
+      }
     }
   }
 }

@@ -61,15 +61,14 @@ router.beforeEach((to, from, next) => {
             get('/menu/list', {
                 id: '0'
             }).then(data => {
-                // let temp = []
-                // temp = addDynamicMenuRoutes(data, temp)
-                localStorage.setItem("dynamicMenuRoutes", JSON.stringify(addDynamicMenuRoutes(data, [])))
+                localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
                 next({...to, replace: true})
             })
         } else {
             // routes为静态路由
             if (router.getRoutes().length <= routes.length) {
-                for (let item of localRoutes) {
+                let routeArr = addDynamicMenuRoutes(localRoutes, [])
+                for (let item of routeArr) {
                     router.addRoute('Main', {
                         path: item.path,
                         name: item.name,
