@@ -1,18 +1,31 @@
-// import Vue from 'vue'
-// import Vuex from 'vuex'
-//
-// Vue.use(Vuex)
-//
-// export default new Vuex.Store({
-//     state: {
-//         user: {
-//             username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
-//         }
-//     },
-//     mutations: {
-//         login (state, user) {
-//             state.user = user
-//             window.localStorage.setItem('user', JSON.stringify(user))
-//         }
-//     }
-// })
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+    //数据，相当于data
+    state: {
+        dynamicMenuRoutes: [],
+        name: ''
+    },
+    getters: {},
+    //里面定义方法，操作state方发
+    mutations: {
+        setDynamicMenuRoutes(state, dynamicMenuRoutes) {
+            state.dynamicMenuRoutes = dynamicMenuRoutes
+        },
+        clearDynamicMenuRoutes(state) {
+            state.dynamicMenuRoutes = []
+        },
+        setName(state, str){
+            state.name = str
+        },
+        clearName(state){
+            state.name = ''
+        }
+    },
+    // 操作异步操作mutation
+    actions: {},
+    modules: {},
+})

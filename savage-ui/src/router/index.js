@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { get } from '@/utils/axios'
+import {get} from '@/utils/axios'
+import store from "@/store"
 
 Vue.use(VueRouter)
 
@@ -30,11 +31,11 @@ const routes = [
         component: () => import('../views/AboutView.vue')
     },
     {
-    path: '/main',
-    name: 'Main',
-    redirect: '/index',
-    component: () => import('../views/common/MainContainer.vue')
-}
+        path: '/main',
+        name: 'Main',
+        redirect: '/index',
+        component: () => import('../views/common/MainContainer.vue')
+    }
 ]
 
 const router = new VueRouter({
@@ -54,26 +55,20 @@ router.beforeEach((to, from, next) => {
     if (!tokenStr) return next('/login')
     // 获取路由信息
     let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
+    // console.log(store.state.dynamicMenuRoutes)
     try {
-        if(localRoutes == null || localRoutes.length < 1){
+        if (localRoutes == null || localRoutes.length < 1) {
             get('/menu/list', {
                 id: '0'
             }).then(data => {
-                let temp = []
-                temp = addDynamicMenuRoutes(data, temp)
-                localStorage.setItem("dynamicMenuRoutes",JSON.stringify(temp))
-                // for (let item of temp) {
-                //     router.addRoute('Container', {
-                //         path: item.path,
-                //         name: item.name,
-                //         component: loadPageByRoutes(item.component),
-                //         meta: item.meta
-                //     })
-                // }
-                next({ ...to, replace: true })
+                // let temp = []
+                // temp = addDynamicMenuRoutes(data, temp)
+                localStorage.setItem("dynamicMenuRoutes", JSON.stringify(addDynamicMenuRoutes(data, [])))
+                next({...to, replace: true})
             })
-        }else{
-            if(router.getRoutes().length<=routes.length){
+        } else {
+            // routes为静态路由
+            if (router.getRoutes().length <= routes.length) {
                 for (let item of localRoutes) {
                     router.addRoute('Main', {
                         path: item.path,
@@ -83,13 +78,13 @@ router.beforeEach((to, from, next) => {
                     })
                 }
                 next({...to, replace: true})
-            }else{
+            } else {
                 next()
             }
         }
     } catch (error) {
         console.log('出错了')
-        next( { ...to} )
+        next({...to})
     }
 
 })
@@ -101,13 +96,13 @@ function loadPageByRoutes(str) {
 }
 
 // 用于处理动态菜单数据，将其转为 route 形式
-export function addDynamicMenuRoutes (menuList = [], routes = []) {
-    for(let i = 0; i < menuList.length; i++){
+export function addDynamicMenuRoutes(menuList = [], routes = []) {
+    for (let i = 0; i < menuList.length; i++) {
         let menu = menuList[i]
         if (menuList[i].children && menuList[i].children.length > 0) {
             addDynamicMenuRoutes(menuList[i].children, routes)
         }
-        if(menu.type === 1){
+        if (menu.type === 1) {
             const route = {
                 type: menu.type,
                 // 路由的路径
@@ -121,7 +116,7 @@ export function addDynamicMenuRoutes (menuList = [], routes = []) {
                     icon: menu.icon
                 }
             }
-            try{
+            try {
                 routes.push(route);
             } catch (e) {
                 console.error('加载菜单失败');

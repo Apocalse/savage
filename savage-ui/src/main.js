@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import App from '@/App.vue'
 import router from './router'
+import store from './store'
 import './assets/icons/iconfont.css'
+import {get, post} from './utils/axios'
+import VueCookies from "vue-cookies"
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
@@ -11,29 +16,19 @@ Vue.config.productionTip = false
 // axios.defaults.baseURL = 'http://localhost:8823/kaltsit'
 
 // 全局挂载
-//axios
-import { get, post } from './utils/axios'
+// axios
 Vue.prototype.$get = get; // http.get
 Vue.prototype.$post = post; // http.post
-
-//cookie
-import VueCookies from "vue-cookies";
+// cookie
 Vue.use(VueCookies);
-
 // element
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
-
-// 工具类
-// import {getSysLogTypeDesc, getSysLogTypeList} from "@/utils/savageUtils";
-// Vue.prototype.getSysLogTypeDesc = getSysLogTypeDesc;
-// Vue.prototype.getSysLogTypeList = getSysLogTypeList
 
 window.SITE_CONFIG = {};
 window.SITE_CONFIG['baseUrl'] = "http://localhost:8823/kaltsit";
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

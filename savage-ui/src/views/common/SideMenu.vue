@@ -89,6 +89,7 @@ export default {
       this.$get('/menu/list', {
         id: '0'
       }).then(data => {
+        console.log(data)
         this.menuList = data
       }).catch(err =>{
 
