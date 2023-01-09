@@ -79,7 +79,7 @@
           show-overflow-tooltip
           width="120"
           label="日志类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-if="scope.row.type === 1" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
           <el-tag v-else-if="scope.row.type === 2" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
           <el-tag v-else-if="scope.row.type === 3" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>

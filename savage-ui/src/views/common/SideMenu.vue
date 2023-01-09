@@ -16,7 +16,7 @@
       <!-- 二级菜单 -->
       <template v-if="item.children.length!==0">
         <el-submenu :index="item.url" :key="index">
-          <template slot="title">
+          <template>
             <!--            <i :class="item.icon"></i>-->
             <span slot="title" style="font-size: 16px">{{ item.nameZh }}</span>
           </template>
@@ -28,7 +28,7 @@
             </el-menu-item>
             <!--三级菜单-->
             <el-submenu v-if="subItem.children.length!==0" :index="subItem.url" :key="idx">
-              <template slot="title">
+              <template>
                 <span slot="title">{{ subItem.nameZh }}</span>
               </template>
               <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i"
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 
 export default {
   name: 'SideMenu',

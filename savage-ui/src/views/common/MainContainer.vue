@@ -17,6 +17,7 @@
 <script>
 import TopMenu from './TopMenu'
 import SideMenu from "./SideMenu"
+
 export default {
   name: "MainContainer",
   components: {TopMenu, SideMenu},
