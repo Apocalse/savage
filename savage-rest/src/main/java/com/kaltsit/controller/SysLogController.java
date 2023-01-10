@@ -1,6 +1,5 @@
 package com.kaltsit.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.entity.SysLogEntity;
 import com.kaltsit.service.impl.SysLogServiceImpl;
@@ -10,7 +9,6 @@ import com.kaltsit.utils.PageUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +41,6 @@ public class SysLogController {
     })
     public JsonResult<PageUtils<SysLogEntity>> list(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageUtils<SysLogEntity> page = sysLogService.queryPage(MapUtils.getInstance(params));
-        return JsonResult.ok().put(page);
+        return JsonResult.ok(page);
     }
 }

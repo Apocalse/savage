@@ -42,7 +42,7 @@ public class SysUserController {
                 map.put("token", token);
                 map.put("username", one.getUsername());
                 map.put("userId", one.getId());
-                return JsonResult.ok().put(map);
+                return JsonResult.ok(map);
             } else {
                 throw new SavageException("登陆失败，请检查账号或密码是否正确");
             }
@@ -83,13 +83,13 @@ public class SysUserController {
     @SysLog(value = "判断" + THIS_NAME + "是否存在")
     @GetMapping("/isExit")
     public JsonResult<Boolean> isExit(String username) {
-        return JsonResult.ok().put(userService.isExist(username));
+        return JsonResult.ok(userService.isExist(username));
     }
 
     @SysLog(value = "查询" + THIS_NAME + "列表")
     @GetMapping("/list")
     public JsonResult<List<SysUserEntity>> getUserList(){
-        return JsonResult.ok().put(userService.list());
+        return JsonResult.ok(userService.list());
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName(value = "user")
+@TableName(value = "sys_user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysUserEntity extends AbstractSysUser {

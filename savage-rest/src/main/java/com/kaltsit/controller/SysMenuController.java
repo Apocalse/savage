@@ -24,7 +24,7 @@ public class SysMenuController {
     @GetMapping("/list")
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
-        return JsonResult.ok().put(menuService.getMenuTree(map.getString("id")).getChildren());
+        return JsonResult.ok(menuService.getMenuTree(map.getString("id")).getChildren());
     }
 
     @SysLog(value = "删除" + THIS_NAME, type = SysLogType.DELETE)
@@ -35,8 +35,8 @@ public class SysMenuController {
     }
 
     @GetMapping("/info/{id}")
-    public JsonResult<List<SysMenuEntity>> getMenuInfo(@PathVariable String id){
-        return JsonResult.ok().put(menuService.getById(id));
+    public JsonResult<SysMenuEntity> getMenuInfo(@PathVariable String id){
+        return JsonResult.ok(menuService.getById(id));
     }
 
 }

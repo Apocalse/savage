@@ -34,7 +34,7 @@ public class ESController {
     public JsonResult<String> demo1(){
         try {
             String s = esUtils.requestGet(new JSONObject(), "/test_1" + "/_search");
-            return JsonResult.ok().put(JSONObject.parse(s));
+            return JsonResult.ok(JSONObject.parse(s).toString());
         } catch (IOException e) {
             e.printStackTrace();
             return JsonResult.error();
@@ -46,7 +46,7 @@ public class ESController {
     public JsonResult<GetIndexResponse> demo2() {
         try {
             GetIndexResponse test = esBeanConfig.elasticsearchClient().indices().get(getIndex -> getIndex.index("test_1"));
-            return JsonResult.ok().put(test);
+            return JsonResult.ok(test);
         } catch (IOException e) {
             e.printStackTrace();
             return JsonResult.error();
@@ -55,7 +55,7 @@ public class ESController {
 
     @GetMapping("/getById")
     @SysLog(THIS_NAME + "根据id获取数据")
-    public JsonResult<GetIndexResponse> getById(@RequestParam Map<String, Object> params) throws IOException {
+    public JsonResult<ESTestUser> getById(@RequestParam Map<String, Object> params) throws IOException {
         MapUtils map = MapUtils.getInstance(params);
         String id = map.getString("id");
         ElasticsearchClient client = esBeanConfig.elasticsearchClient();
@@ -64,6 +64,6 @@ public class ESController {
                         .id(id),
                 ESTestUser.class
         );
-        return JsonResult.ok().put(response.source());
+        return JsonResult.ok(response.source());
     }
 }
