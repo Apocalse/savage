@@ -3,9 +3,9 @@ package com.kaltsit.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
-import com.kaltsit.entity.UserEntity;
+import com.kaltsit.entity.SysUserEntity;
 import com.kaltsit.exception.SavageException;
-import com.kaltsit.service.impl.UserServiceImpl;
+import com.kaltsit.service.impl.SysUserServiceImpl;
 import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
 import com.kaltsit.utils.JsonResult;
@@ -21,19 +21,19 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class SysUserController {
     @Resource
-    private UserServiceImpl userService;
+    private SysUserServiceImpl userService;
 
     private static final String THIS_NAME = "用户";
 
     @SysLog(value = THIS_NAME + "登录", type = SysLogType.LOGIN)
     @PostMapping("/login")
-    public JsonResult<Map<String, Object>> login(@RequestBody UserEntity user) {
+    public JsonResult<Map<String, Object>> login(@RequestBody SysUserEntity user) {
         Map<String, Object> map = new HashMap<>();
-        LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserEntity::getUsername, user.getUsername());
-        UserEntity one = userService.getOne(queryWrapper);
+        LambdaQueryWrapper<SysUserEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserEntity::getUsername, user.getUsername());
+        SysUserEntity one = userService.getOne(queryWrapper);
         if (one != null) {
             // 得到 hash 后的密码
             String encodedPassword = new SimpleHash("md5", user.getPassword(), one.getSalt(), 2).toString();
@@ -54,7 +54,7 @@ public class UserController {
 
     @SysLog(value = THIS_NAME + "注册", type = SysLogType.ADD)
     @PostMapping("/register")
-    public JsonResult<String> register(@RequestBody UserEntity user) {
+    public JsonResult<String> register(@RequestBody SysUserEntity user) {
         boolean isExist = userService.isExist(user.getUsername());
         if (isExist) {
             return JsonResult.error("账号已存在");
@@ -88,7 +88,7 @@ public class UserController {
 
     @SysLog(value = "查询" + THIS_NAME + "列表")
     @GetMapping("/list")
-    public JsonResult<List<UserEntity>> getUserList(){
+    public JsonResult<List<SysUserEntity>> getUserList(){
         return JsonResult.ok().put(userService.list());
     }
 

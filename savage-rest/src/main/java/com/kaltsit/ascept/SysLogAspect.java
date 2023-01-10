@@ -4,9 +4,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
 import com.kaltsit.entity.SysLogEntity;
-import com.kaltsit.entity.UserEntity;
+import com.kaltsit.entity.SysUserEntity;
 import com.kaltsit.service.impl.SysLogServiceImpl;
-import com.kaltsit.service.impl.UserServiceImpl;
+import com.kaltsit.service.impl.SysUserServiceImpl;
 import com.kaltsit.utils.HttpContextUtils;
 import com.kaltsit.utils.IPUtils;
 import com.kaltsit.utils.UserUtils;
@@ -39,7 +39,7 @@ public class SysLogAspect {
     @Resource
     private SysLogServiceImpl sysLogService;
     @Resource
-    private UserServiceImpl userService;
+    private SysUserServiceImpl userService;
     @Value ("${server.servlet.context-path:#{''}}")
     private String contextPath;
     // 记录项目路径长度
@@ -80,10 +80,10 @@ public class SysLogAspect {
         Object[] args = joinPoint.getArgs();
         if (logAnnotation.type() == SysLogType.LOGIN) {
             if (args.length == 1) {
-                if (UserEntity.class.getName().equals(args[0].getClass().getName())) {
+                if (SysUserEntity.class.getName().equals(args[0].getClass().getName())) {
                     try {
-                        UserEntity userEntity = (UserEntity) args[0];
-                        UserEntity newLoginForm = new UserEntity();
+                        SysUserEntity userEntity = (SysUserEntity) args[0];
+                        SysUserEntity newLoginForm = new SysUserEntity();
                         BeanUtils.copyProperties(userEntity, newLoginForm);
                         // 避免密码泄露
                         newLoginForm.setPassword("******");

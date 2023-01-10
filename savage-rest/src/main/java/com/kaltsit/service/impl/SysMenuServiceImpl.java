@@ -3,8 +3,8 @@ package com.kaltsit.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kaltsit.entity.MenuEntity;
-import com.kaltsit.mapper.MenuMapper;
+import com.kaltsit.entity.SysMenuEntity;
+import com.kaltsit.mapper.SysMenuMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,29 +14,29 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> {
 
     /**
      * 递归-根据根节点获取菜单对象
      * @param rootId 根目录
      * @return 菜单
      */
-    public MenuEntity getMenuTree(String rootId) {
+    public SysMenuEntity getMenuTree(String rootId) {
         if(StringUtils.isEmpty(rootId)){
             rootId = "0";
         }
         //TODO SELECT * FROM menu t WHERE t.id = ? and t.id in (...)
         //根据rootId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
-        MenuEntity menu = this.getBaseMapper().selectById(rootId);
+        SysMenuEntity menu = this.getBaseMapper().selectById(rootId);
         //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
-        LambdaQueryWrapper<MenuEntity> lqw = new LambdaQueryWrapper<MenuEntity>()
-                .eq(MenuEntity::getParentId, rootId)
-                .orderByAsc(MenuEntity::getOrderNum);
-        List<MenuEntity> childTreeNodes = this.baseMapper.selectList(lqw);
+        LambdaQueryWrapper<SysMenuEntity> lqw = new LambdaQueryWrapper<SysMenuEntity>()
+                .eq(SysMenuEntity::getParentId, rootId)
+                .orderByAsc(SysMenuEntity::getOrderNum);
+        List<SysMenuEntity> childTreeNodes = this.baseMapper.selectList(lqw);
         //遍历子节点
-        for (MenuEntity child : childTreeNodes) {
+        for (SysMenuEntity child : childTreeNodes) {
             //递归
-            MenuEntity n = getMenuTree(child.getId());
+            SysMenuEntity n = getMenuTree(child.getId());
             menu.getChildren().add(n);
         }
         return menu;
@@ -47,9 +47,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
      * @param menuList 菜单数组
      * @return 菜单
      */
-    public List<MenuEntity> buildTree(List<MenuEntity> menuList) {
-        List<MenuEntity> treeMenus = new ArrayList<>();
-        for (MenuEntity menuNode : getRootNode(menuList)) {
+    public List<SysMenuEntity> buildTree(List<SysMenuEntity> menuList) {
+        List<SysMenuEntity> treeMenus = new ArrayList<>();
+        for (SysMenuEntity menuNode : getRootNode(menuList)) {
             buildChildTree(menuNode, menuList);
             treeMenus.add(menuNode);
         }
@@ -57,9 +57,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
     }
 
     //递归，建立子树形结构
-    public MenuEntity buildChildTree(MenuEntity pNode, List<MenuEntity> menuList) {
-        List<MenuEntity> childMenus = new ArrayList<>();
-        for (MenuEntity menuNode : menuList) {
+    public SysMenuEntity buildChildTree(SysMenuEntity pNode, List<SysMenuEntity> menuList) {
+        List<SysMenuEntity> childMenus = new ArrayList<>();
+        for (SysMenuEntity menuNode : menuList) {
             if (menuNode.getParentId().equals(pNode.getId())) {
                 childMenus.add(buildChildTree(menuNode, menuList));
             }
@@ -69,9 +69,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
     }
 
     //获取根节点
-    public List<MenuEntity> getRootNode(List<MenuEntity> menuList) {
-        List<MenuEntity> rootMenuLists = new ArrayList<>();
-        for (MenuEntity menuNode : menuList) {
+    public List<SysMenuEntity> getRootNode(List<SysMenuEntity> menuList) {
+        List<SysMenuEntity> rootMenuLists = new ArrayList<>();
+        for (SysMenuEntity menuNode : menuList) {
             if (menuNode.getParentId().equals("0")) {
                 rootMenuLists.add(menuNode);
             }
@@ -81,7 +81,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
 
     @Transactional
     public void deleteByMenuId(String id){
-        MenuEntity rootMenu = getMenuTree(id);
+        SysMenuEntity rootMenu = getMenuTree(id);
         Set<String> set = new HashSet<>();
         getAllChildrenIds(rootMenu, set);
         set.forEach(e -> {
@@ -89,9 +89,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> {
         });
     }
 
-    public void getAllChildrenIds(MenuEntity menu, Set<String> set){
+    public void getAllChildrenIds(SysMenuEntity menu, Set<String> set){
         if(menu.getChildren().size() > 0){
-            for (MenuEntity m : menu.getChildren()){
+            for (SysMenuEntity m : menu.getChildren()){
                 getAllChildrenIds(m, set);
             }
         }

@@ -3,7 +3,7 @@ package com.kaltsit.entity;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kaltsit.abstracts.AbstractUser;
+import com.kaltsit.abstracts.AbstractSysUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.util.Date;
 @TableName(value = "user")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity extends AbstractUser {
+public class SysUserEntity extends AbstractSysUser {
 
     @ApiModelProperty(notes = "密码")
     private String password;

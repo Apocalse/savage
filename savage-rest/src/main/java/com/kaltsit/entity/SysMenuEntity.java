@@ -1,7 +1,7 @@
 package com.kaltsit.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.kaltsit.abstracts.AbstractMenu;
+import com.kaltsit.abstracts.AbstractSysMenu;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +14,10 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("menu")
+@TableName("sys_menu")
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuEntity extends AbstractMenu {
+public class SysMenuEntity extends AbstractSysMenu {
 
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(notes = "创建时间")
@@ -32,5 +32,5 @@ public class MenuEntity extends AbstractMenu {
     private int delFlag;
 
     @TableField(exist = false)
-    private List<MenuEntity> children = new ArrayList<>();
+    private List<SysMenuEntity> children = new ArrayList<>();
 }

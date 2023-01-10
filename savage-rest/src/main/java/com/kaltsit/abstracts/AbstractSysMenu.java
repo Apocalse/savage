@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public abstract class AbstractMenu {
+public abstract class AbstractSysMenu {
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(notes = "菜单ID")
     private String id;

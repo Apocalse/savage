@@ -1,8 +1,8 @@
 package com.kaltsit.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kaltsit.entity.UserEntity;
-import com.kaltsit.service.impl.UserServiceImpl;
+import com.kaltsit.entity.SysUserEntity;
+import com.kaltsit.service.impl.SysUserServiceImpl;
 import com.kaltsit.utils.JWTUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 @Component
 public class LavaRealm extends AuthorizingRealm {
     @Resource
-    private UserServiceImpl userService;
+    private SysUserServiceImpl userService;
 
     /**
      * 根据token判断此Authenticator是否使用该realm
@@ -35,9 +35,9 @@ public class LavaRealm extends AuthorizingRealm {
         System.out.println("授权~~~~~");
         String token = principals.toString();
         String username = JWTUtil.getUsername(token);
-        QueryWrapper<UserEntity> qw = new QueryWrapper<>();
+        QueryWrapper<SysUserEntity> qw = new QueryWrapper<>();
         qw.eq("username", username);
-        UserEntity user = userService.getOne(qw);
+        SysUserEntity user = userService.getOne(qw);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //TODO
         //查询数据库来获取用户的角色
@@ -64,9 +64,9 @@ public class LavaRealm extends AuthorizingRealm {
         if (!JWTUtil.verify(jwt) || username == null) {
             throw new AuthenticationException("token认证失效，token错误或者过期，重新登陆");
         }
-        QueryWrapper<UserEntity> qw = new QueryWrapper<>();
+        QueryWrapper<SysUserEntity> qw = new QueryWrapper<>();
         qw.eq("username", username);
-        UserEntity user = userService.getOne(qw);
+        SysUserEntity user = userService.getOne(qw);
         if (user == null) {
             throw new AuthenticationException("[doGetAuthenticationInfo] 该用户不存在");
         }

@@ -1,7 +1,6 @@
 package com.kaltsit.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kaltsit.entity.UserEntity;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  */
 public interface LavaBaseMapper <T> extends BaseMapper<T> {
 
-    int deleteWithDelToken(T t);
+    void deleteWithDelToken(T t);
 
     default void deleteListWithFillDelToken(List<T> list) {
         for (T t : list) {

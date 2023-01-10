@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public abstract class AbstractUser {
+public abstract class AbstractSysUser {
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(notes = "id")
     private String id;

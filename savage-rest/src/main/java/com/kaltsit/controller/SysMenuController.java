@@ -2,8 +2,8 @@ package com.kaltsit.controller;
 
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
-import com.kaltsit.entity.MenuEntity;
-import com.kaltsit.service.impl.MenuServiceImpl;
+import com.kaltsit.entity.SysMenuEntity;
+import com.kaltsit.service.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +14,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
-public class MenuController {
+public class SysMenuController {
     @Resource
-    private MenuServiceImpl menuService;
+    private SysMenuServiceImpl menuService;
 
     private static final String THIS_NAME = "菜单";
 
     @SysLog("查询" + THIS_NAME)
     @GetMapping("/list")
-    public JsonResult<List<MenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
+    public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
         return JsonResult.ok().put(menuService.getMenuTree(map.getString("id")).getChildren());
     }
@@ -35,7 +35,7 @@ public class MenuController {
     }
 
     @GetMapping("/info/{id}")
-    public JsonResult<List<MenuEntity>> getMenuInfo(@PathVariable String id){
+    public JsonResult<List<SysMenuEntity>> getMenuInfo(@PathVariable String id){
         return JsonResult.ok().put(menuService.getById(id));
     }
 

@@ -4,13 +4,10 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kaltsit.config.ESBeanConfig;
 import com.kaltsit.entity.ESTestUser;
-import com.kaltsit.entity.MenuEntity;
-import com.kaltsit.entity.SysLogEntity;
-import com.kaltsit.service.impl.MenuServiceImpl;
+import com.kaltsit.entity.SysMenuEntity;
+import com.kaltsit.service.impl.SysMenuServiceImpl;
 import com.kaltsit.service.impl.SysLogServiceImpl;
 import com.kaltsit.utils.ESUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +33,7 @@ public class SimpleTest {
     @Autowired
     private ESUtils esUtils;
     @Autowired
-    private MenuServiceImpl menuService;
+    private SysMenuServiceImpl menuService;
     @Autowired
     private SysLogServiceImpl sysLogService;
 
@@ -70,7 +67,7 @@ public class SimpleTest {
 //        Page<SysLogEntity> page = new Page<>(1, 2);
 //        IPage<SysLogEntity> findList = sysLogService.page(page);
 //        System.out.println(findList);
-        menuService.save(new MenuEntity());
+        menuService.save(new SysMenuEntity());
     }
 
 

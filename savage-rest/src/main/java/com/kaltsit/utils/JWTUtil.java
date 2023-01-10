@@ -5,9 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.kaltsit.entity.UserEntity;
+import com.kaltsit.entity.SysUserEntity;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class JWTUtil {
     //token的密钥
     private static final String SECRET = "lava";
 
-    public static String createToken(UserEntity user){
+    public static String createToken(SysUserEntity user){
         //token过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE);
         //jwt的header部分
