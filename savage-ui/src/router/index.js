@@ -59,11 +59,13 @@ router.beforeEach((to, from, next) => {
     try {
         if (localRoutes == null) {
             get('/menu/list', {
-                id: '0'
+                id: '0',
+                status: '1,2'
             }).then(data => {
                 localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
                 next({...to, replace: true})
             })
+
         } else {
             // routes为静态路由
             if (router.getRoutes().length <= routes.length) {
@@ -78,7 +80,11 @@ router.beforeEach((to, from, next) => {
                 }
                 next({...to, replace: true})
             } else {
-                next()
+                if(to.matched.length === 0){
+                    next({path: '/404', replace: true})
+                }else{
+                    next()
+                }
             }
         }
     } catch (error) {

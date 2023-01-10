@@ -22,24 +22,30 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
      * @param rootId 根目录
      * @return 菜单
      */
-    public SysMenuEntity getMenuTree(String rootId) {
+    public SysMenuEntity getMenuTree(String rootId, String status) {
         if(StringUtils.isEmpty(rootId)){
             rootId = "0";
         }
+        String[] arr = status.split(",");
         //TODO SELECT * FROM menu t WHERE t.id = ? and t.id in (...)
         //根据rootId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
         SysMenuEntity menu = this.getBaseMapper().selectById(rootId);
         //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
         LambdaQueryWrapper<SysMenuEntity> lqw = new LambdaQueryWrapper<SysMenuEntity>()
                 .eq(SysMenuEntity::getParentId, rootId)
-                .and(wrapper -> wrapper.eq(SysMenuEntity::getStatus, VisibleStatus.SHOW.getKey())
-                        .or().eq(SysMenuEntity::getStatus, VisibleStatus.HIDDEN.getKey()))
+                .and(wrapper -> {
+                    for (int i = 0; i < arr.length; i++) {
+                        wrapper.eq(SysMenuEntity::getStatus, Integer.parseInt(arr[i]));
+                        if (i < status.length() - 1) // 只要不是最后一个，则追加一个 or 操作符
+                            wrapper.or();
+                    }
+                })
                 .orderByAsc(SysMenuEntity::getOrderNum);
         List<SysMenuEntity> childTreeNodes = this.baseMapper.selectList(lqw);
         //遍历子节点
         for (SysMenuEntity child : childTreeNodes) {
             //递归
-            SysMenuEntity n = getMenuTree(child.getId());
+            SysMenuEntity n = getMenuTree(child.getId(), status);
             menu.getChildren().add(n);
         }
         return menu;
@@ -84,7 +90,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     @Transactional
     public void deleteByMenuId(String id){
-        SysMenuEntity rootMenu = getMenuTree(id);
+        SysMenuEntity rootMenu = getMenuTree(id, "1,2,3");
         Set<String> set = new HashSet<>();
         getAllChildrenIds(rootMenu, set);
         set.forEach(e -> {

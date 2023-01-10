@@ -25,7 +25,7 @@ public class SysMenuController {
     @GetMapping("/list")
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
-        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("id"));
+        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("id"), map.getString("status"));
         return JsonResult.ok(menuTree.getChildren());
     }
 

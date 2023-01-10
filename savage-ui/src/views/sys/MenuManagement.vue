@@ -61,8 +61,9 @@
           :show-overflow-tooltip="true"
           label="可见">
         <template v-slot="scope">
-          <i class="el-icon-view" v-if="scope.row.status === 0"></i>
-          <i class="el-icon-hide" v-else></i>
+          <i class="el-icon-view" v-if="scope.row.status === 1"></i>
+          <i class="el-icon-hide" v-if="scope.row.status === 2"></i>
+          <i class="el-icon-circle-close" v-if="scope.row.status === 3"></i>
         </template>
       </el-table-column>
       <el-table-column
@@ -94,7 +95,7 @@
 </template>
 
 <script>
-import MenuAddOrUpdate from './MenuAddOrUpdate'
+import MenuAddOrUpdate from './models/MenuAddOrUpdate.vue'
 
 export default {
   name: "MenuManagement",
@@ -122,8 +123,9 @@ export default {
       this.dataListLoading = true
       this.loadingText = '正在查询数据...'
       this.$get('/menu/list',{
-        id: '0'}
-      ).then(data => {
+        id: '0',
+        status: '1,2,3'
+      }).then(data => {
         this.dataListLoading = false
         this.dataList = data
         if (data.length > 0 && openFirst) {

@@ -88,7 +88,8 @@ export default {
       let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
       if (localRoutes == null || localRoutes.length < 1) {
         this.$get('/menu/list', {
-          id: '0'
+          id: '0',
+          status: '1,2'
         }).then(data => {
           localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
           this.menuList = this.menuList = this.filterMenuList(data)
