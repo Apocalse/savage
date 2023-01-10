@@ -3,7 +3,8 @@ package com.kaltsit.commons;
 public enum VisibleStatus {
 
     SHOW(1, "显示"),
-    Hidden(2, "隐藏");
+    HIDDEN(2, "隐藏"),
+    FORBIDDEN(3, "禁用");
 
     private final int key;
 

@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
     let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
     // console.log(store.state.dynamicMenuRoutes)
     try {
-        if (localRoutes == null || localRoutes.length < 1) {
+        if (localRoutes == null) {
             get('/menu/list', {
                 id: '0'
             }).then(data => {
@@ -121,7 +121,6 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
                 console.error('加载菜单失败');
             }
         }
-
     }
     return routes
 }

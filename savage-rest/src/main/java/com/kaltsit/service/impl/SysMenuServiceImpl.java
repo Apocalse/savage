@@ -3,6 +3,7 @@ package com.kaltsit.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kaltsit.commons.VisibleStatus;
 import com.kaltsit.entity.SysMenuEntity;
 import com.kaltsit.mapper.SysMenuMapper;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
         LambdaQueryWrapper<SysMenuEntity> lqw = new LambdaQueryWrapper<SysMenuEntity>()
                 .eq(SysMenuEntity::getParentId, rootId)
+                .and(wrapper -> wrapper.eq(SysMenuEntity::getStatus, VisibleStatus.SHOW.getKey())
+                        .or().eq(SysMenuEntity::getStatus, VisibleStatus.HIDDEN.getKey()))
                 .orderByAsc(SysMenuEntity::getOrderNum);
         List<SysMenuEntity> childTreeNodes = this.baseMapper.selectList(lqw);
         //遍历子节点

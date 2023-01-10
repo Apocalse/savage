@@ -10,7 +10,7 @@
       <template v-if="item.children.length===0">
         <el-menu-item :index="item.url" :key="index" @click="pushRoute(item)">
           <i :class="item.icon"></i>
-          <span slot="title" style="font-size: 16px">{{ item.nameZh }}</span>
+          <span slot="title" style="font-size: 14px">{{ item.nameZh }}</span>
         </el-menu-item>
       </template>
       <!-- 二级菜单 -->
@@ -18,18 +18,18 @@
         <el-submenu :index="item.url" :key="index">
           <template>
             <!--            <i :class="item.icon"></i>-->
-            <span slot="title" style="font-size: 16px">{{ item.nameZh }}</span>
+            <span slot="title" style="font-size: 14px">{{ item.nameZh }}</span>
           </template>
           <template v-for="(subItem, idx) in item.children">
             <el-menu-item v-if="subItem.children.length===0" :index="subItem.url" :key="idx"
                           @click="pushRoute(subItem)">
               <i :class="subItem.icon"></i>
-              <span slot="title">{{ subItem.nameZh }}</span>
+              <span slot="title" style="font-size: 12px">{{ subItem.nameZh }}</span>
             </el-menu-item>
             <!--三级菜单-->
             <el-submenu v-if="subItem.children.length!==0" :index="subItem.url" :key="idx">
               <template>
-                <span slot="title">{{ subItem.nameZh }}</span>
+                <span slot="title" style="font-size: 12px">{{ subItem.nameZh }}</span>
               </template>
               <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i"
                             @click="pushRoute(threeItem)">
@@ -91,17 +91,33 @@ export default {
           id: '0'
         }).then(data => {
           localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
-          this.menuList = data
+          this.menuList = this.menuList = this.filterMenuList(data)
         }).catch(err => {
 
         })
       } else {
-        this.menuList = localRoutes
+        this.menuList = this.filterMenuList(localRoutes)
       }
+    },
+
+    // 递归过滤得到每一项的hidden为false的数据
+    filterMenuList(arr) {
+      return arr.filter(item => {
+        if (item.children) {
+          item.children = this.filterMenuList(item.children)
+        }
+        if (item.status === 1) {
+          return true
+        }
+      })
     }
+
   }
 }
 </script>
 
 <style scoped>
+/deep/.el-submenu .el-menu-item{
+  background: linear-gradient(270deg, #333333 0%, #333333 100%);
+}
 </style>

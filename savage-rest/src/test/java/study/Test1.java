@@ -1,5 +1,6 @@
 package study;
 
+import com.kaltsit.commons.MenuLevel;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -28,5 +29,10 @@ public class Test1 {
         list = list.stream().distinct().collect(Collectors.toList());
         list.forEach(System.out::print);
         System.out.println();
+    }
+
+    @Test
+    public void test1(){
+        System.out.println(MenuLevel.FIRST.getKey());
     }
 }

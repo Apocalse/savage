@@ -1,6 +1,7 @@
 package com.kaltsit.controller;
 
 import com.kaltsit.annotation.SysLog;
+import com.kaltsit.commons.MenuLevel;
 import com.kaltsit.commons.SysLogType;
 import com.kaltsit.entity.SysMenuEntity;
 import com.kaltsit.service.impl.SysMenuServiceImpl;
@@ -24,7 +25,8 @@ public class SysMenuController {
     @GetMapping("/list")
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
-        return JsonResult.ok(menuService.getMenuTree(map.getString("id")).getChildren());
+        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("id"));
+        return JsonResult.ok(menuTree.getChildren());
     }
 
     @SysLog(value = "删除" + THIS_NAME, type = SysLogType.DELETE)
