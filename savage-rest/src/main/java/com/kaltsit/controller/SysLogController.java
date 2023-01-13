@@ -28,7 +28,7 @@ public class SysLogController {
 
     private static final String THIS_NAME = "系统日志";
 
-    @SysLog("查询" + THIS_NAME)
+    @SysLog(THIS_NAME + " - 分页查询")
     @GetMapping("/list")
     @ApiOperation(value = "列表", notes = "分页查询" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({

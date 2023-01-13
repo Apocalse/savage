@@ -2,7 +2,8 @@
   <div class="mod-menu">
     <el-form>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-plus" @click="addOrUpdateHandle(-1)">新增</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="addOrUpdateHandle(null, 0)">新增</el-button>
+        <el-button type="primary" icon="el-icon-refresh-right" @click="reloadMenu">重载</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -59,7 +60,7 @@
           header-align="center"
           align="center"
           :show-overflow-tooltip="true"
-          label="可见">
+          label="状态">
         <template v-slot="scope">
           <i class="el-icon-view" v-if="scope.row.status === 1"></i>
           <i class="el-icon-hide" v-if="scope.row.status === 2"></i>
@@ -72,15 +73,12 @@
           label="操作"
           width="250"
       >
-<!--        <template class="header" v-slot="scope">-->
-<!--          <el-button type="text" icon="el-icon-plus">新增</el-button>-->
-<!--          <el-button type="text" icon="el-icon-refresh-right">刷新</el-button>-->
-<!--        </template>-->
         <template v-slot="scope">
-          <el-button v-if="scope.row.type===0" type="text" icon="el-icon-plus" @click="addOrUpdateHandle(scope.row.id, true)">
+          <el-button v-if="scope.row.type===0" type="text" icon="el-icon-plus"
+                     @click="addOrUpdateHandle(scope.row, 1)">
             新增
           </el-button>
-          <el-button type="text" icon="el-icon-edit" @click="addOrUpdateHandle(scope.row.id, false)">
+          <el-button type="text" icon="el-icon-edit" @click="addOrUpdateHandle(scope.row, 2)">
             修改
           </el-button>
           <el-button type="text" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">
@@ -90,12 +88,13 @@
       </el-table-column>
     </el-table>
 
-    <MenuAddOrUpdate v-if="menuAddOrUpdateVisible" ref="menuAddOrUpdate"></MenuAddOrUpdate>
+    <MenuAddOrUpdate v-if="menuAddOrUpdateVisible" ref="menuAddOrUpdate" @ok="getDataList"></MenuAddOrUpdate>
   </div>
 </template>
 
 <script>
 import MenuAddOrUpdate from './models/MenuAddOrUpdate.vue'
+import router from "@/router";
 
 export default {
   name: "MenuManagement",
@@ -122,7 +121,7 @@ export default {
     getDataList(openFirst = true) {
       this.dataListLoading = true
       this.loadingText = '正在查询数据...'
-      this.$get('/menu/list',{
+      this.$get('/menu/list', {
         id: '0',
         status: '1,2,3'
       }).then(data => {
@@ -138,11 +137,11 @@ export default {
       })
     },
     // 新增 / 修改
-    addOrUpdateHandle(id, status) {
+    addOrUpdateHandle(row, status) {
       // status用于区分主新增还是下级新增
       this.menuAddOrUpdateVisible = true
       this.$nextTick(() => {
-        this.$refs.menuAddOrUpdate.init(id, status)
+        this.$refs.menuAddOrUpdate.init(row, status)
       })
     },
     // 删除
@@ -164,7 +163,21 @@ export default {
         })
       }).catch(() => {
       })
+    },
+
+    reloadMenu() {
+      this.$get('/menu/list', {
+        id: '0',
+        status: '1,2'
+      }).then(data => {
+        localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
+        this.$router.go(0)
+      }).catch(err => {
+
+      })
     }
+
+
   }
 }
 </script>

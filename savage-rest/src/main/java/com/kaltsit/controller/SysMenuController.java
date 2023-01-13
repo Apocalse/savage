@@ -21,7 +21,7 @@ public class SysMenuController {
 
     private static final String THIS_NAME = "菜单";
 
-    @SysLog("查询" + THIS_NAME)
+    @SysLog(THIS_NAME + " - 查询")
     @GetMapping("/list")
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
@@ -29,16 +29,31 @@ public class SysMenuController {
         return JsonResult.ok(menuTree.getChildren());
     }
 
-    @SysLog(value = "删除" + THIS_NAME, type = SysLogType.DELETE)
+    @SysLog(value = THIS_NAME + " - 删除", type = SysLogType.DELETE)
     @PostMapping("/delete/{id}")
     public JsonResult<Void> deleteByMenuId(@PathVariable String id){
         menuService.deleteByMenuId(id);
         return JsonResult.ok();
     }
 
+    @SysLog(value = THIS_NAME + " - 详情", type = SysLogType.DELETE)
     @GetMapping("/info/{id}")
     public JsonResult<SysMenuEntity> getMenuInfo(@PathVariable String id){
         return JsonResult.ok(menuService.getById(id));
+    }
+
+    @SysLog(value = THIS_NAME + " - 保存", type = SysLogType.DELETE)
+    @PostMapping("/add")
+    public JsonResult<Void> saveMenu(@RequestBody SysMenuEntity sysMenuEntity){
+        menuService.saveOrUpdate(sysMenuEntity);
+        return JsonResult.ok();
+    }
+
+    @SysLog(value = THIS_NAME + " - 更新", type = SysLogType.DELETE)
+    @PostMapping("/update")
+    public JsonResult<Void> updateMenu(@RequestBody SysMenuEntity sysMenuEntity){
+        menuService.saveOrUpdate(sysMenuEntity);
+        return JsonResult.ok();
     }
 
 }

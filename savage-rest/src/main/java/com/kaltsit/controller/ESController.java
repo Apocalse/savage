@@ -30,7 +30,7 @@ public class ESController {
     private static final String THIS_NAME = "ES功能";
 
     @GetMapping("/demo1")
-    @SysLog(THIS_NAME + "查询全部-自定义方法")
+    @SysLog(THIS_NAME + " - 查询全部_自定义方法")
     public JsonResult<String> demo1(){
         try {
             String s = esUtils.requestGet(new JSONObject(), "/test_1" + "/_search");
@@ -42,7 +42,7 @@ public class ESController {
     }
 
     @GetMapping("/demo2")
-    @SysLog(THIS_NAME + "查询全部-封装方法")
+    @SysLog(THIS_NAME + " - 查询全部_封装方法")
     public JsonResult<GetIndexResponse> demo2() {
         try {
             GetIndexResponse test = esBeanConfig.elasticsearchClient().indices().get(getIndex -> getIndex.index("test_1"));
@@ -54,7 +54,7 @@ public class ESController {
     }
 
     @GetMapping("/getById")
-    @SysLog(THIS_NAME + "根据id获取数据")
+    @SysLog(THIS_NAME + " - 根据id获取数据")
     public JsonResult<ESTestUser> getById(@RequestParam Map<String, Object> params) throws IOException {
         MapUtils map = MapUtils.getInstance(params);
         String id = map.getString("id");

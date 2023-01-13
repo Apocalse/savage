@@ -92,7 +92,7 @@ export default {
           status: '1,2'
         }).then(data => {
           localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
-          this.menuList = this.menuList = this.filterMenuList(data)
+          this.menuList = this.filterMenuList(data)
         }).catch(err => {
 
         })
