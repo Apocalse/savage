@@ -3,8 +3,7 @@
              :close-on-click-modal="false"
              @close="close"
              :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" v-loading="dataFormLoading"
-             ref="dataForm" label-width="80px">
+    <el-form :model="dataForm" :rules="dataRule" v-loading="dataFormLoading" ref="dataForm" label-width="80px">
       <el-form-item label="类型" prop="type">
         <el-radio-group v-model="dataForm.type" :disabled="status!==0">
           <el-radio v-for="(type, index) in dataForm.typeList" :label="index" :key="index">{{ type }}
@@ -25,11 +24,11 @@
                    :expand-on-click-node="false">
           </el-tree>
         </el-popover>
-        <el-input v-model="dataForm.parentName" v-popover:menuListPopover
-                  :readonly="true" placeholder="点击选择上级菜单">
+        <el-input v-model="dataForm.parentName" v-popover:menuListPopover :readonly="true"
+                  placeholder="点击选择上级菜单">
         </el-input>
       </el-form-item>
-      <el-form-item :label="dataForm.typeList[dataForm.type] + '路由'" prop="url">
+      <el-form-item v-if="dataForm.type === 1" label="菜单路由" prop="url">
         <el-input v-model="dataForm.url"
                   :placeholder="dataForm.typeList[dataForm.type] + '路由, 如: /sys/menu'"></el-input>
       </el-form-item>
