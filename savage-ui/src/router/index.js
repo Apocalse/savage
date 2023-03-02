@@ -13,12 +13,18 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/common/UserLogin.vue')
+        component: () => import('../views/common/UserLogin.vue'),
+        meta:{
+            title:"登录"
+        }
     },
     {
         path: '/register',
         name: 'register',
-        component: () => import('../views/common/UserRegister.vue')
+        component: () => import('../views/common/UserRegister.vue'),
+        meta:{
+            title:"注册"
+        }
     },
     {
         path: '/404',
@@ -47,6 +53,8 @@ const router = new VueRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+    // 根据路由元信息设置文档标题
+    window.document.title = to.meta.title || 'savage'
     // to将要访问的路径 from从哪个路径跳转过来 next一个函数，表示放行
     if (to.path === '/login') return next()
     if (to.path === '/register') return next()
@@ -70,6 +78,7 @@ router.beforeEach((to, from, next) => {
             // routes为静态路由
             if (router.getRoutes().length <= routes.length) {
                 let routeArr = addDynamicMenuRoutes(localRoutes, [])
+                console.log(routeArr)
                 for (let item of routeArr) {
                     router.addRoute('Main', {
                         path: item.path,
@@ -118,7 +127,8 @@ export function addDynamicMenuRoutes(menuList = [], routes = []) {
                 component: menu.path,
                 meta: {
                     id: menu.id,
-                    icon: menu.icon
+                    icon: menu.icon,
+                    title: menu.nameZh
                 }
             }
             try {
