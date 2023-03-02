@@ -1,4 +1,4 @@
-package com.kaltsit.abstracts;
+package com.kaltsit.sys.abstracts;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

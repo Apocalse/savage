@@ -1,7 +1,7 @@
-package com.kaltsit.mapper;
+package com.kaltsit.sys.mapper;
 
 import com.kaltsit.base.LavaBaseMapper;
-import com.kaltsit.entity.SysMenuEntity;
+import com.kaltsit.sys.entity.SysMenuEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

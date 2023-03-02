@@ -1,4 +1,4 @@
-package com.kaltsit.config;//package com.kaltsit.config;
+package com.kaltsit.config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

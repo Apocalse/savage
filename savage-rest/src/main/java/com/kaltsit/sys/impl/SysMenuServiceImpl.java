@@ -1,11 +1,10 @@
-package com.kaltsit.service.impl;
+package com.kaltsit.sys.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kaltsit.commons.VisibleStatus;
-import com.kaltsit.entity.SysMenuEntity;
-import com.kaltsit.mapper.SysMenuMapper;
+import com.kaltsit.sys.entity.SysMenuEntity;
+import com.kaltsit.sys.mapper.SysMenuMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

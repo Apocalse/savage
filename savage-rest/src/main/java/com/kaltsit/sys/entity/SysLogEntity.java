@@ -1,4 +1,4 @@
-package com.kaltsit.entity;
+package com.kaltsit.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;

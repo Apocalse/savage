@@ -1,7 +1,7 @@
-package com.kaltsit.entity;
+package com.kaltsit.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.kaltsit.abstracts.AbstractSysMenu;
+import com.kaltsit.sys.abstracts.AbstractSysMenu;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

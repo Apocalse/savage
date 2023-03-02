@@ -17,7 +17,7 @@ https://www.iconfont.cn
 ```
 ### 版本
 ```agsl
-node   v18.12.1
+node   v18.12.1 || v19.0.1
 java   1.8
 mysql  8.0.30
 ```

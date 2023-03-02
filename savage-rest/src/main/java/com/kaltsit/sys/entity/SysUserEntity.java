@@ -1,9 +1,9 @@
-package com.kaltsit.entity;
+package com.kaltsit.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kaltsit.abstracts.AbstractSysUser;
+import com.kaltsit.sys.abstracts.AbstractSysUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -54,6 +54,15 @@ public class ShiroConfig {
         filterRuleMap.put("/user/login", "anon");
         filterRuleMap.put("/user/register", "anon");
         filterRuleMap.put("/user/isExit", "anon");
+        //swagger配置放行
+        filterRuleMap.put("/swagger-ui.html", "anon");
+        filterRuleMap.put("/swagger-resources/**", "anon");
+        filterRuleMap.put("/v2/**", "anon");
+        filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/","anon");
+        filterRuleMap.put("/csrf","anon");
+
+
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

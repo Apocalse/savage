@@ -31,7 +31,8 @@
         <p6spy.version>3.9.1</p6spy.version>
         <mysql.version>8.0.26</mysql.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
-        <springfox.swagger.version>2.10.0</springfox.swagger.version>
+        <!-- swagger其他版本兼容有问题，使用2.8.0最佳-->
+        <springfox.swagger.version>2.8.0</springfox.swagger.version>
         <shiro.version>1.7.1</shiro.version>
         <jwt.version>3.19.2</jwt.version>
         <skipTests>true</skipTests>
