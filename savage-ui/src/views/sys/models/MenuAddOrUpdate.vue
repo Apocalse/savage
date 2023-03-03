@@ -3,7 +3,13 @@
              :close-on-click-modal="false"
              @close="close"
              :visible.sync="visible">
-    <el-form :model="dataForm" :rules="dataRule" v-loading="dataFormLoading" ref="dataForm" label-width="80px">
+    <el-form
+        :model="dataForm"
+        :rules="dataRule"
+        v-loading="dataFormLoading"
+        ref="dataForm"
+        label-width="80px"
+    >
       <el-form-item label="类型" prop="type">
         <el-radio-group v-model="dataForm.type" :disabled="status!==0">
           <el-radio v-for="(type, index) in dataForm.typeList" :label="index" :key="index">{{ type }}
@@ -33,7 +39,10 @@
                   :placeholder="dataForm.typeList[dataForm.type] + '路由, 如: /sys/menu'"></el-input>
       </el-form-item>
       <el-form-item v-if="dataForm.type !== 3" label="排序" prop="orderNum">
-        <el-input-number v-model="dataForm.orderNum" controls-position="right" :min="0" label="排序"></el-input-number>
+        <el-input-number
+            v-model="dataForm.orderNum"
+            controls-position="right"
+            :min="0" label="排序"></el-input-number>
       </el-form-item>
       <el-form-item label="状态" prop="status" v-if="dataForm.type !== 3">
         <el-radio-group v-model="dataForm.status">
@@ -45,8 +54,15 @@
     </el-form>
     <span slot="footer">
       <el-button @click="close" icon="el-icon-close">取消</el-button>
-      <el-button type="primary" icon="el-icon-check" @click="dataFormSubmit()" v-loading="submitLoading"
-                 :disabled="submitDisabled">确定</el-button>
+      <el-button
+          type="primary"
+          icon="el-icon-check"
+          @click="dataFormSubmit()"
+          v-loading="submitLoading"
+          :disabled="submitDisabled"
+      >
+        确定
+      </el-button>
     </span>
   </el-dialog>
 </template>
@@ -107,25 +123,18 @@ export default {
   methods: {
     close() {
       this.visible = false
-      const that = this
       this.$nextTick(() => {
-        that.$refs['dataForm'].resetFields()
+        this.$refs['dataForm'].resetFields()
       })
     },
-    init(row, status) {
+    init(row, status, menuList) {
+      let that = this
       this.status = status
       this.defaultExpandedKeys = []
-      this.$get('/menu/list', {
-        id: '0',
-        status: '1,2,3'
-      }).then(data => {
-        this.menuList = data
-      }).then(() => {
-        this.visible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].resetFields()
-        })
-      }).then(() => {
+      this.visible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].resetFields()
+        this.menuList = menuList
         if (status === 0) {
           // 新增
           this.dataForm.parentId = 0
@@ -136,7 +145,9 @@ export default {
           this.dataForm.parentId = row.id
           this.dataForm.status = row.status
           this.title = '新增子菜单'
-          this.menuListTreeSetCurrentNode()
+          this.$nextTick(() => {
+            this.menuListTreeSetCurrentNode()
+          })
         } else {
           //修改
           this.dataForm.id = row.id
@@ -148,9 +159,12 @@ export default {
           //this.dataForm.icon = data.icon
           this.dataForm.status = row.status
           this.title = '修改'
-          this.menuListTreeSetCurrentNode()
+          if (this.dataForm.type === 1 && this.dataForm.parentId !== '0') {
+            this.$nextTick(() => {
+              this.menuListTreeSetCurrentNode()
+            })
+          }
         }
-
       })
     },
     // 菜单树设置当前选中节点

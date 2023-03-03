@@ -140,8 +140,9 @@ export default {
     addOrUpdateHandle(row, status) {
       // status用于区分主新增还是下级新增
       this.menuAddOrUpdateVisible = true
+      let that = this
       this.$nextTick(() => {
-        this.$refs.menuAddOrUpdate.init(row, status)
+        this.$refs.menuAddOrUpdate.init(row, status, that.dataList)
       })
     },
     // 删除

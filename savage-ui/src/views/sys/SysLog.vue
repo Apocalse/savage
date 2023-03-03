@@ -18,7 +18,8 @@
                 v-for="item in sysLogTypeList"
                 :key="item.key"
                 :label="item.value"
-                :value="item.key">
+                :value="item.key"
+            >
             </el-option>
           </el-select>
         </el-form-item>
