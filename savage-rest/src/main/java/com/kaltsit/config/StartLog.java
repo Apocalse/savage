@@ -16,7 +16,6 @@ public class StartLog implements CommandLineRunner {
                 " |___/\\__,_|\\___\\___\\___||___/___/\n" +
                 "                                  \n" +
                 "swagger文档: http://localhost:8823/kaltsit/swagger-ui.html\n";
-
         System.out.println(commandLog);
     }
 }

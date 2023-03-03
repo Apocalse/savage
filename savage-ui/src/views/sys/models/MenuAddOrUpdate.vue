@@ -161,11 +161,11 @@ export default {
     // 菜单树选中
     menuListTreeCurrentChangeHandle(data, node) {
       // 修改的时候上级菜单不能为自身
-      if (this.dataForm.id && this.dataForm.id === data.menuId) {
+      if (this.dataForm.id && this.dataForm.id === data.id) {
         this.$message.error('上级菜单不能为自身')
         return
       }
-      this.dataForm.parentId = data.menuId
+      this.dataForm.parentId = data.id
       this.dataForm.parentName = data.nameZh
       this.menuVisible = false
     },
