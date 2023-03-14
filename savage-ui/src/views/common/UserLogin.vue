@@ -49,10 +49,10 @@ export default {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(data => {
-            this.loading = false
             Vue.$cookies.set('token', data.token)
             Vue.$cookies.set('username', data.username)
             Vue.$cookies.set('userId', data.userId)
+            this.loading = false
             this.$router.push({path: '/index'}).catch(err => ({}))
           }).catch(err => {
             this.loading = false
