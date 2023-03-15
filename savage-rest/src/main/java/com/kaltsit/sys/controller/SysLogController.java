@@ -2,7 +2,7 @@ package com.kaltsit.sys.controller;
 
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.sys.entity.SysLogEntity;
-import com.kaltsit.sys.impl.SysLogServiceImpl;
+import com.kaltsit.sys.service.impl.SysLogServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import com.kaltsit.utils.PageUtils;

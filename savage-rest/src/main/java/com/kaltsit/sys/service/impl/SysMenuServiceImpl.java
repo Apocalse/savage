@@ -1,4 +1,4 @@
-package com.kaltsit.sys.impl;
+package com.kaltsit.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

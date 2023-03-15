@@ -5,7 +5,7 @@ import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
 import com.kaltsit.sys.entity.SysUserEntity;
 import com.kaltsit.exception.SavageException;
-import com.kaltsit.sys.impl.SysUserServiceImpl;
+import com.kaltsit.sys.service.impl.SysUserServiceImpl;
 import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
 import com.kaltsit.utils.JsonResult;

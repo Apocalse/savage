@@ -3,7 +3,7 @@ package com.kaltsit.sys.controller;
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
 import com.kaltsit.sys.entity.SysMenuEntity;
-import com.kaltsit.sys.impl.SysMenuServiceImpl;
+import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import org.springframework.web.bind.annotation.*;

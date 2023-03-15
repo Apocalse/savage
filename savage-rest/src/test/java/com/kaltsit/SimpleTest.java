@@ -4,15 +4,13 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.util.ListUtils;
 import com.alibaba.fastjson2.JSONObject;
-import com.kaltsit.annotation.ExcelVaild;
 import com.kaltsit.config.ESBeanConfig;
 import com.kaltsit.es.ESTestUser;
 import com.kaltsit.sys.entity.DemoData;
 import com.kaltsit.sys.entity.SysLogEntity;
-import com.kaltsit.sys.impl.SysMenuServiceImpl;
-import com.kaltsit.sys.impl.SysLogServiceImpl;
+import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
+import com.kaltsit.sys.service.impl.SysLogServiceImpl;
 import com.kaltsit.utils.ESUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,11 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * 自动填充测试
