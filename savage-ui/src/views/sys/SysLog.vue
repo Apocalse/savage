@@ -45,16 +45,16 @@
         </el-form-item>
       </el-row>
       <el-row>
-      <el-form-item style="float: right">
-        <el-button type="primary" @click="doSearch">
-          查询
-        </el-button>
-      </el-form-item>
-      <el-form-item style="float: right">
-        <el-button @click="reSet">
-          重置
-        </el-button>
-      </el-form-item>
+        <el-form-item style="float: right">
+          <el-button type="primary" @click="doSearch">
+            查询
+          </el-button>
+        </el-form-item>
+        <el-form-item style="float: right">
+          <el-button @click="reSet">
+            重置
+          </el-button>
+        </el-form-item>
       </el-row>
     </el-form>
 
@@ -216,12 +216,12 @@ export default {
       })
     },
 
-    doSearch(){
+    doSearch() {
       this.pageIndex = 1
       this.getDateList()
     },
 
-    reSet(){
+    reSet() {
       this.searchForm.startTime = null
       this.searchForm.endTime = null
       this.searchForm.userId = null
