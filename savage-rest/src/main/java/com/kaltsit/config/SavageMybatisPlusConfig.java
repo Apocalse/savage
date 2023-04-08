@@ -3,22 +3,22 @@ package com.kaltsit.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.kaltsit.base.LavaSqlInjector;
+import com.kaltsit.base.SavageSqlInjector;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("com.kaltsit.*.mapper")
-public class LavaMybatisPlusConfig {
+public class SavageMybatisPlusConfig {
 
     /**
      * 自定义的sql注入
-     * @return LavaSqlInjector
+     * @return SavageSqlInjector
      */
     @Bean
-    public LavaSqlInjector sqlInjector() {
-        return new LavaSqlInjector();
+    public SavageSqlInjector sqlInjector() {
+        return new SavageSqlInjector();
     }
 
     @Bean

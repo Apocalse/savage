@@ -7,7 +7,7 @@ import com.kaltsit.base.mothods.DeleteWithDelToken;
 
 import java.util.List;
 
-public class LavaSqlInjector extends DefaultSqlInjector {
+public class SavageSqlInjector extends DefaultSqlInjector {
 
     @Override
     public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {

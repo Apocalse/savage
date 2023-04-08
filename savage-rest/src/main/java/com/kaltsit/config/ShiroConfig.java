@@ -1,7 +1,7 @@
 package com.kaltsit.config;
 
 import com.kaltsit.filter.JWTFilter;
-import com.kaltsit.shiro.LavaRealm;
+import com.kaltsit.shiro.SavageRealm;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -21,10 +21,10 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager securityManager(LavaRealm lavaRealm) {
+    public DefaultWebSecurityManager securityManager(SavageRealm savageRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //设置自定义realm
-        securityManager.setRealm(lavaRealm);
+        securityManager.setRealm(savageRealm);
         //关闭session
         DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator sessionStorageEvaluator = new DefaultSessionStorageEvaluator();

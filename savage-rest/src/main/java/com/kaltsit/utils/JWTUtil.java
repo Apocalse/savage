@@ -15,7 +15,7 @@ public class JWTUtil {
     //token有效时长
     private static final long EXPIRE = 120 * 60 * 1000L;
     //token的密钥
-    private static final String SECRET = "lava";
+    private static final String SECRET = "savage";
 
     public static String createToken(SysUserEntity user){
         //token过期时间

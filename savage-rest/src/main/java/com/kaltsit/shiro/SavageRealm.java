@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class LavaRealm extends AuthorizingRealm {
+public class SavageRealm extends AuthorizingRealm {
     @Resource
     private SysUserServiceImpl userService;
 
@@ -70,6 +70,6 @@ public class LavaRealm extends AuthorizingRealm {
         if (user == null) {
             throw new AuthenticationException("[doGetAuthenticationInfo] 该用户不存在");
         }
-        return new SimpleAuthenticationInfo(jwt, jwt, "LavaRealm");
+        return new SimpleAuthenticationInfo(jwt, jwt, "SavageRealm");
     }
 }

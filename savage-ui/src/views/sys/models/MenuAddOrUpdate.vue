@@ -38,6 +38,23 @@
         <el-input v-model="dataForm.url"
                   :placeholder="dataForm.typeList[dataForm.type] + '路由, 如: /sys/menu'"></el-input>
       </el-form-item>
+
+<!--      <div style="width:200px;height:40px;" class="chooseIcons">-->
+<!--        <el-popover-->
+<!--            placement="bottom"-->
+<!--            width="450"-->
+<!--            trigger="click">-->
+<!--       <span slot="reference" style="display:inline-block;width:200px;height:40px;line-height:40px;">-->
+<!--           <i :class="userChooseIcon"></i>-->
+<!--           {{chooseIcons}}-->
+<!--       </span>-->
+<!--          请选择图标-->
+<!--          <div class="iconList">-->
+<!--            <i v-for="item in iconList" :key="item" :class="item" @click="setIcon(item)" style="font-size:20px"></i>-->
+<!--          </div>-->
+<!--        </el-popover>-->
+<!--      </div>-->
+
       <el-form-item v-if="dataForm.type !== 3" label="排序" prop="orderNum">
         <el-input-number
             v-model="dataForm.orderNum"
@@ -68,6 +85,8 @@
 </template>
 
 <script>
+import {elementIcons} from '@/utils/utils'
+
 export default {
   data() {
     const validateUrl = (rule, value, callback) => {
@@ -116,8 +135,15 @@ export default {
         label: 'nameZh',
         children: 'children'
       },
-      defaultExpandedKeys: []
+      defaultExpandedKeys: [],
+      iconList: [],
+      chooseIcons: '',
+      userChooseIcon: ''
     }
+  },
+
+  created() {
+    this.iconList = elementIcons
   },
 
   methods: {
@@ -189,6 +215,13 @@ export default {
     //   this.dataForm.icon = iconName
     //   this.iconVisible = false
     // },
+    //给icon绑定的点击事件
+    setIcon(icon){
+      console.log(icon)
+      this.userChooseIcon = icon;//将i的样式设为选中的样式el-icon-xxx
+      this.chooseIcons = ''
+    },
+
     // 获取默认展开的key
     // getDefaultExpandedKeys(list) {
     //   if (!list) {
@@ -228,7 +261,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

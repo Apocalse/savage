@@ -1,15 +1,15 @@
 package com.kaltsit.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.kaltsit.sys.abstracts.AbstractSysMenu;
+import com.kaltsit.commons.SavageEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,19 +17,34 @@ import java.util.List;
 @TableName("sys_menu")
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysMenuEntity extends AbstractSysMenu {
+public class SysMenuEntity extends SavageEntity implements Serializable {
 
-    @TableField(fill = FieldFill.INSERT)
-    @ApiModelProperty(notes = "创建时间")
-    private Date createDate;
+    @ApiModelProperty(notes = "父菜单ID，一级菜单为0")
+    private String parentId;
 
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(notes = "更新时间")
-    private Date updateDate;
+    @ApiModelProperty(notes = "菜单名称")
+    private String name;
 
-    @TableLogic
-    @ApiModelProperty(notes = "删除标记，0-未删除，1-已删除", hidden = true)
-    private int delFlag;
+    @ApiModelProperty(notes = "菜单名称-中文")
+    private String nameZh;
+
+    @ApiModelProperty(notes = "菜单URL")
+    private String url;
+
+    @ApiModelProperty(notes = "vue文件路径")
+    private String path;
+
+    @ApiModelProperty(notes = "0：目录 1：一级菜单 2：二级菜单 3：按钮")
+    private int type;
+
+    @ApiModelProperty(notes = "菜单图标")
+    private String icon;
+
+    @ApiModelProperty(notes = "排序")
+    private int orderNum;
+
+    @ApiModelProperty(notes = "是否隐藏（隐藏后将不会在页面上显示）")
+    private int status;
 
     @TableField(exist = false)
     private List<SysMenuEntity> children = new ArrayList<>();

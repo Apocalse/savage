@@ -28,7 +28,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         String[] arr = status.split(",");
         //TODO SELECT * FROM menu t WHERE t.id = ? and t.id in (...)
         //根据rootId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
-        SysMenuEntity menu = this.getBaseMapper().selectById(rootId);
+        SysMenuEntity menu = this.baseMapper.selectById(rootId);
         //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
         LambdaQueryWrapper<SysMenuEntity> lqw = new LambdaQueryWrapper<SysMenuEntity>()
                 .eq(SysMenuEntity::getParentId, rootId)
@@ -93,7 +93,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         Set<String> set = new HashSet<>();
         getAllChildrenIds(rootMenu, set);
         set.forEach(e -> {
-            this.getBaseMapper().deleteWithDelToken(this.getById(e));
+            this.baseMapper.deleteWithDelToken(this.getById(e));
         });
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
  * 删除时添加删除token(id)，可用于数据库unique去重
  * @param <T>
  */
-public interface LavaBaseMapper <T> extends BaseMapper<T> {
+public interface SavegeBaseMapper<T> extends BaseMapper<T> {
 
     void deleteWithDelToken(T t);
 
