@@ -36,7 +36,11 @@
       </el-form-item>
       <el-form-item v-if="dataForm.type === 1" label="菜单路由" prop="url">
         <el-input v-model="dataForm.url"
-                  :placeholder="dataForm.typeList[dataForm.type] + '路由, 如: /sys/menu'"></el-input>
+                  placeholder="菜单路由, 如: /sys/menu"></el-input>
+      </el-form-item>
+      <el-form-item v-if="dataForm.type === 1" label="vue路径" prop="path">
+        <el-input v-model="dataForm.path"
+                  placeholder="vue路径, 如: /sys/menu.vue，默认为菜单路由拼接'.vue'"></el-input>
       </el-form-item>
 
 <!--      <div style="width:200px;height:40px;" class="chooseIcons">-->
@@ -113,6 +117,7 @@ export default {
         parentId: 0,
         parentName: '',
         url: '',
+        path: '',
         perms: '',
         orderNum: 0,
         icon: '',
@@ -150,7 +155,7 @@ export default {
     close() {
       this.visible = false
       this.$nextTick(() => {
-        this.$refs['dataForm'].resetFields()
+        this.$refs.dataForm.resetFields()
       })
     },
     init(row, status, menuList) {
@@ -159,7 +164,7 @@ export default {
       this.defaultExpandedKeys = []
       this.visible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].resetFields()
+        this.$refs.dataForm.resetFields()
         this.menuList = menuList
         if (status === 0) {
           // 新增
@@ -170,6 +175,7 @@ export default {
           this.dataForm.type = row.type + 1
           this.dataForm.parentId = row.id
           this.dataForm.status = row.status
+          this.dataForm.url = ''
           this.title = '新增子菜单'
           this.$nextTick(() => {
             this.menuListTreeSetCurrentNode()
@@ -184,6 +190,7 @@ export default {
           this.dataForm.orderNum = row.orderNum
           //this.dataForm.icon = data.icon
           this.dataForm.status = row.status
+          this.dataForm.path = row.path
           this.title = '修改'
           if (this.dataForm.type === 1 && this.dataForm.parentId !== '0') {
             this.$nextTick(() => {
@@ -244,6 +251,7 @@ export default {
             'nameZh': this.dataForm.nameZh,
             'parentId': this.dataForm.parentId,
             'url': this.dataForm.url,
+            'path': this.dataForm.path === '' ? this.dataForm.url+'.vue' : this.dataForm.path,
             'orderNum': this.dataForm.orderNum,
             //'icon': this.dataForm.icon,
             'status': this.dataForm.status
