@@ -36,7 +36,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
             qw.eq("type", type);
         }
         qw.orderByDesc("create_date");
-        Page<SysLogEntity> hashMapPage = new Page<>(Integer.parseInt((String) params.get("page")), Integer.parseInt((String) params.get("limit")));
+        Page<SysLogEntity> hashMapPage = new Page<>(params.getInteger("page"), params.getInteger("size"));
         IPage<SysLogEntity> page = this.page(hashMapPage, qw);
         return new PageUtils<>(page);
     }

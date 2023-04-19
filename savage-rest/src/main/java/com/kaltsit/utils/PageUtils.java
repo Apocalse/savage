@@ -12,15 +12,20 @@ import java.util.List;
 @Data
 public class PageUtils<T> implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 3289563224598899318L;
+
     @ApiModelProperty(notes = "总记录数")
     private long totalCount;
+
     @ApiModelProperty(notes = "每页记录数")
     private long pageSize;
+
     @ApiModelProperty(notes = "总页数")
     private long totalPage;
+
     @ApiModelProperty(notes = "当前页数")
-    private long currPage;
+    private long currentPage;
+
     @ApiModelProperty(notes = "列表数据")
     private List<T> list;
 
@@ -30,13 +35,13 @@ public class PageUtils<T> implements Serializable {
      * @param list       列表数据
      * @param totalCount 总记录数
      * @param pageSize   每页记录数
-     * @param currPage   当前页数
+     * @param currentPage   当前页数
      */
-    public PageUtils(List<T> list, int totalCount, int pageSize, int currPage) {
+    public PageUtils(List<T> list, int totalCount, int pageSize, int currentPage) {
         this.list = list;
         this.totalCount = totalCount;
         this.pageSize = pageSize;
-        this.currPage = currPage;
+        this.currentPage = currentPage;
         this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
     }
 
@@ -47,7 +52,7 @@ public class PageUtils<T> implements Serializable {
         this.list = page.getRecords();
         this.totalCount = page.getTotal();
         this.pageSize = page.getSize();
-        this.currPage = page.getCurrent();
+        this.currentPage = page.getCurrent();
         this.totalPage = page.getPages();
     }
 

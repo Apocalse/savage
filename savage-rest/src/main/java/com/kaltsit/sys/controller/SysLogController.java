@@ -29,17 +29,18 @@ public class SysLogController {
     private static final String THIS_NAME = "系统日志";
 
     @SysLog(THIS_NAME + " - 分页查询")
-    @GetMapping("/list")
+    @GetMapping("/pageList")
     @ApiOperation(value = "列表", notes = "分页查询" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "limit", value = "每页条数", paramType = "query", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "sidx", value = "排序字段", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "order", value = "排序方式，如：asc、desc", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "status", value = "审核状态", paramType = "query", dataType = "string")
+            @ApiImplicitParam(name = "size", value = "每页条数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "userId", value = "用户id", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "type", value = "类型，0-未知 1-新增 2-删除 3-修改 4-查询 5-登录/登出", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "startDate", value = "开始时间", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string")
     })
-    public JsonResult<PageUtils<SysLogEntity>> list(@ApiIgnore @RequestParam Map<String, Object> params) {
+    public JsonResult<PageUtils<SysLogEntity>> pageList(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageUtils<SysLogEntity> page = sysLogService.queryPage(MapUtils.getInstance(params));
         return JsonResult.ok(page);
     }

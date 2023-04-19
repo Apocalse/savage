@@ -15,6 +15,9 @@ import java.util.Date;
 @Data
 @ApiModel
 public class SysLogEntity implements Serializable {
+
+    private static final long serialVersionUID = -5611841317593786349L;
+
     @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(notes = "ID")
     @ExcelIgnore

@@ -19,6 +19,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class SysUserEntity extends SavageEntity implements Serializable {
 
+    private static final long serialVersionUID = -5145159610224767847L;
+
     @ApiModelProperty(notes = "用户名（账号）")
     private String username;
 

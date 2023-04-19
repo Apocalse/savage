@@ -14,7 +14,7 @@ public abstract class SavageEntity {
     private String id;
 
     @ApiModelProperty(notes = "备注")
-    private String remarks;
+    private String remark;
 
     @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(notes = "创建时间")

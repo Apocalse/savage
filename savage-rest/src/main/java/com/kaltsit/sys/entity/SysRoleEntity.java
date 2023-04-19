@@ -13,6 +13,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class SysRoleEntity extends SavageEntity implements Serializable {
 
+    private static final long serialVersionUID = 9125092817202707098L;
+
     @ApiModelProperty(notes = "角色代码")
     private String roleCode;
 

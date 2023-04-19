@@ -39,6 +39,17 @@ public class JsonResult<T> {
 
     /**
      * 失败
+     * @return 结果
+     */
+    public static <T> JsonResult<T> error() {
+        JsonResult<T> result = new JsonResult<>();
+        result.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        result.setMsg("未知异常，请联系管理员");
+        return result;
+    }
+
+    /**
+     * 失败
      * @param msg 失败信息
      * @return 结果
      */
@@ -61,17 +72,6 @@ public class JsonResult<T> {
         result.setCode(code);
         msg = msg==null||"null".equals(msg) ? "未知异常，请联系管理员":msg;
         result.setMsg(msg);
-        return result;
-    }
-
-    /**
-     * 失败
-     * @return 结果
-     */
-    public static <T> JsonResult<T> error() {
-        JsonResult<T> result = new JsonResult<>();
-        result.setCode(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-        result.setMsg("未知异常，请联系管理员");
         return result;
     }
 

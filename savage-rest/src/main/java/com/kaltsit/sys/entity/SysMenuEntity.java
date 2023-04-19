@@ -19,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SysMenuEntity extends SavageEntity implements Serializable {
 
+    private static final long serialVersionUID = -309815164974878678L;
+
     @ApiModelProperty(notes = "父菜单ID，一级菜单为0")
     private String parentId;
 

@@ -173,7 +173,7 @@ export default {
       dataList: [],
       dataListLoading: false,
       loadingText: '',
-      currentPage4: 1,
+      currentPage: 1,
       pageIndex: 1,
       pageSize: 10,
       totalPage: 0,
@@ -199,8 +199,8 @@ export default {
         }
       }
       this.dataListLoading = true
-      this.$get('/sysLog/list', {
-        limit: this.pageSize,
+      this.$get('/sysLog/pageList', {
+        size: this.pageSize,
         page: this.pageIndex,
         startDate: this.searchForm.startTime,
         endDate: this.searchForm.endTime,
