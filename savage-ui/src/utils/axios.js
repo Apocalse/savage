@@ -1,35 +1,17 @@
-// //在官方的axios的基础上封装一个添加拦截器的axios
-// import axios from 'axios'
-//
-// //配置默认的路由地址头
-// axios.defaults.baseURL = 'http://localhost:8823/kaltsit'
-// //全局添加拦截器的作用是可以在每个api前面加上headers的token验证
-// axios.interceptors.request.use(config => {
-//     // 判断token是否存在和是否需要token验证的路由
-//     if (sessionStorage.getItem('token')) {
-//         config.headers.Authorization = sessionStorage.getItem('token');
-//     }
-//     return config;
-// })
-// export default axios
+import axios from 'axios'
+import Vue from 'vue'
+import router from '@/router'
+import { Notification } from 'element-ui';
 
-import axios from "axios"
-import Vue from "vue";
-
-/**
- * 统一进行异常输出
- * 如果异常只是弹框显示即可，可使用该实例
- */
 const httpCustom = axios.create({
     timeout: 1000 * 30,
     // withCredentials: true,
     // baseURL: 'http://localhost:8823/kaltsit',
     baseURL: '/api',
     headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        'Content-Type': 'application/json; charset=utf-8'
     }
 });
-
 
 /**
  * 封装的异常对象
@@ -37,7 +19,7 @@ const httpCustom = axios.create({
  * @param code
  * @constructor
  */
-function EipException(message, code) {
+function SavageException(message, code) {
     this.message = message;
     this.code = code;
 }
@@ -47,7 +29,7 @@ function EipException(message, code) {
  */
 httpCustom.interceptors.request.use(
     config => {
-        config.headers["token"] = Vue.$cookies.get("token"); // 请求头带上token
+        config.headers['token'] = Vue.$cookies.get('token'); // 请求头带上token
         return config;
     },
     error => {
@@ -62,19 +44,27 @@ httpCustom.interceptors.response.use(
     response => {
         if (response.data && response.data.code !== 200) {
             console.log(`信息`, response);
-            // 错误信息统一在这里处理、页面代码只需要关系正常情况即可
-            Vue.prototype.$message.error(response.data.msg);
-            // return Promise.reject(response.data.msg)
-            throw new EipException(response.data.msg, response.data.code);
+            if (response.data.code === 400 || response.data.code === 401) {
+                router.push('/login').then((r) => {})
+                Notification.error({
+                    title: '登录过期',
+                    message: '登录过期，请重新登录',
+                    duration: 3000
+                });
+            }else{
+                // 错误信息统一在这里处理、页面代码只需要关系正常情况即可
+                Vue.prototype.$message.error(response.data.msg);
+                throw new SavageException(response.data.msg, response.data.code);
+            }
         } else {
             response.data = response.data.data;
             return response;
         }
     },
     error => {
-        if (error.message && error.message === "Network Error") {
+        if (error.message && error.message === 'Network Error') {
             console.log(`错误`, error);
-            Vue.prototype.$message.error("无法访问");
+            Vue.prototype.$message.error('无法访问');
             return Promise.reject(error);
         }
         return Promise.reject(error);

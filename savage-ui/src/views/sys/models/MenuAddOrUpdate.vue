@@ -42,23 +42,31 @@
         <el-input v-model="dataForm.path"
                   placeholder="vue路径, 如: /sys/menu.vue，默认为菜单路由拼接'.vue'"></el-input>
       </el-form-item>
-
-<!--      <div style="width:200px;height:40px;" class="chooseIcons">-->
-<!--        <el-popover-->
-<!--            placement="bottom"-->
-<!--            width="450"-->
-<!--            trigger="click">-->
-<!--       <span slot="reference" style="display:inline-block;width:200px;height:40px;line-height:40px;">-->
-<!--           <i :class="userChooseIcon"></i>-->
-<!--           {{chooseIcons}}-->
-<!--       </span>-->
-<!--          请选择图标-->
-<!--          <div class="iconList">-->
-<!--            <i v-for="item in iconList" :key="item" :class="item" @click="setIcon(item)" style="font-size:20px"></i>-->
-<!--          </div>-->
-<!--        </el-popover>-->
-<!--      </div>-->
-
+      <el-form-item v-if="dataForm.type === 1" label='菜单图标' prop='icon'>
+        <el-popover placement="right" width="735" trigger="click">
+        <span slot="reference">
+          <el-button v-if="dataForm.icon===''||dataForm.icon==null" type="primary" size="small">选择图标</el-button>
+          <el-button v-else :class="dataForm.icon" ></el-button>
+        </span>
+          <div class="iconList">
+            <el-tabs v-model="activeName" type="card" >
+              <el-tab-pane
+                  v-for="item in iconList"
+                  :key="item.id"
+                  :label="item.label"
+                  :name="item.id"
+                  style="max-height:300px; overflow:auto"
+              >
+                <el-button v-for="(item, index) in item.list"
+                   :key="index"
+                   :class="item"
+                   @click="setIcon(item)"
+                   style="font-size:20px;margin: 5px"></el-button>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+        </el-popover>
+      </el-form-item>
       <el-form-item v-if="dataForm.type !== 3" label="排序" prop="orderNum">
         <el-input-number
             v-model="dataForm.orderNum"
@@ -109,6 +117,8 @@ export default {
       submitDisabled: false,
       title: '',
       status: 0,
+      activeName: 'first',
+      iconList: [],
       dataForm: {
         id: 0,
         type: 1,
@@ -141,7 +151,6 @@ export default {
         children: 'children'
       },
       defaultExpandedKeys: [],
-      iconList: [],
       chooseIcons: '',
       userChooseIcon: ''
     }
@@ -188,7 +197,7 @@ export default {
           this.dataForm.parentId = row.parentId
           this.dataForm.url = row.url
           this.dataForm.orderNum = row.orderNum
-          //this.dataForm.icon = data.icon
+          this.dataForm.icon = row.icon
           this.dataForm.status = row.status
           this.dataForm.path = row.path
           this.title = '修改'
@@ -216,35 +225,17 @@ export default {
       this.dataForm.parentName = data.nameZh
       this.menuVisible = false
     },
-
-    // 图标选中
-    // iconActiveHandle(iconName) {
-    //   this.dataForm.icon = iconName
-    //   this.iconVisible = false
-    // },
     //给icon绑定的点击事件
-    setIcon(icon){
-      console.log(icon)
-      this.userChooseIcon = icon;//将i的样式设为选中的样式el-icon-xxx
-      this.chooseIcons = ''
+    setIcon(icon) {
+      this.dataForm.icon = icon
     },
-
-    // 获取默认展开的key
-    // getDefaultExpandedKeys(list) {
-    //   if (!list) {
-    //     return
-    //   }
-    //   if (list.length > 0) {
-    //     this.defaultExpandedKeys.push(list[0].menuId)
-    //     this.getDefaultExpandedKeys(list[0].children)
-    //   }
-    // },
     // 表单提交
     dataFormSubmit() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.submitLoading = true
           this.submitDisabled = true
+          const nameLength = this.dataForm.url.split('/').length
           this.$post(`/menu/${!this.dataForm.id ? 'add' : 'update'}`, {
             'id': this.dataForm.id || undefined,
             'type': this.dataForm.type,
@@ -252,8 +243,9 @@ export default {
             'parentId': this.dataForm.parentId,
             'url': this.dataForm.url,
             'path': this.dataForm.path === '' ? this.dataForm.url+'.vue' : this.dataForm.path,
+            'name': this.dataForm.url.split('/')[nameLength - 1],
             'orderNum': this.dataForm.orderNum,
-            //'icon': this.dataForm.icon,
+            'icon': this.dataForm.icon,
             'status': this.dataForm.status
           }).then(data => {
             this.visible = false
@@ -269,3 +261,6 @@ export default {
   }
 }
 </script>
+<style>
+
+</style>

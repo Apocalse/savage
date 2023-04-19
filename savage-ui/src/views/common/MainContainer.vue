@@ -23,7 +23,7 @@ export default {
   components: {TopMenu, SideMenu},
   computed: {
     siteContentViewHeight() {
-      let height = 900;
+      let height = window.screen.availHeight - 66;
       return {minHeight: height + 'px'}
     },
   },
