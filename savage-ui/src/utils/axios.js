@@ -45,6 +45,7 @@ httpCustom.interceptors.response.use(
         if (response.data && response.data.code !== 200) {
             console.log(`信息`, response);
             if (response.data.code === 400 || response.data.code === 401) {
+                localStorage.removeItem("dynamicMenuRoutes")
                 router.push('/login').then((r) => {})
                 Notification.error({
                     title: '登录过期',
@@ -70,7 +71,6 @@ httpCustom.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
 
 /**
  * get请求

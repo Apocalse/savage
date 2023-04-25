@@ -63,7 +63,6 @@ router.beforeEach((to, from, next) => {
     if (!tokenStr) return next('/login')
     // 获取路由信息
     let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
-    // console.log(store.state.dynamicMenuRoutes)
     try {
         if (localRoutes == null) {
             get('/menu/list', {
@@ -73,7 +72,6 @@ router.beforeEach((to, from, next) => {
                 localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
                 next({...to, replace: true})
             })
-
         } else {
             // routes为静态路由
             if (router.getRoutes().length <= routes.length) {
