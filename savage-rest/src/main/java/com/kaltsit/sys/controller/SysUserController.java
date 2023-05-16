@@ -9,8 +9,11 @@ import com.kaltsit.sys.service.impl.SysUserServiceImpl;
 import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
 import com.kaltsit.utils.JsonResult;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,13 +25,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class SysUserController {
-    @Resource
-    private SysUserServiceImpl userService;
 
     private static final String THIS_NAME = "用户";
 
-    @SysLog(value = THIS_NAME + "登录", type = SysLogType.LOGIN)
+    @Resource
+    private SysUserServiceImpl userService;
+
     @PostMapping("/login")
+    @SysLog(value = THIS_NAME + "登录", type = SysLogType.LOGIN)
+    @ApiOperation(value = "登录", notes = "登录" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Map<String, Object>> login(@RequestBody SysUserEntity user) {
         Map<String, Object> map = new HashMap<>();
         LambdaQueryWrapper<SysUserEntity> queryWrapper = new LambdaQueryWrapper<>();
@@ -52,8 +57,9 @@ public class SysUserController {
 
     }
 
-    @SysLog(value = THIS_NAME + "注册", type = SysLogType.ADD)
     @PostMapping("/register")
+    @SysLog(value = THIS_NAME + "注册", type = SysLogType.ADD)
+    @ApiOperation(value = "注册", notes = "注册" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<String> register(@RequestBody SysUserEntity user) {
         boolean isExist = userService.isExist(user.getUsername());
         if (isExist) {
@@ -71,8 +77,9 @@ public class SysUserController {
         return JsonResult.ok();
     }
 
-    @SysLog(value = THIS_NAME + "登出", type = SysLogType.LOGIN)
     @PostMapping("/loginOut")
+    @SysLog(value = THIS_NAME + "登出", type = SysLogType.LOGIN)
+    @ApiOperation(value = "注销", notes = "注销" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<String> logout(ServletResponse response) {
         CookieUtils.delCookieByName(response, "token");
         CookieUtils.delCookieByName(response, "username");
@@ -80,14 +87,16 @@ public class SysUserController {
         return JsonResult.ok();
     }
 
-    @SysLog(value = "判断" + THIS_NAME + "是否存在")
     @GetMapping("/isExit")
+    @SysLog(value = "判断" + THIS_NAME + "是否存在")
+    @ApiOperation(value = "判断", notes = "判断" + THIS_NAME + "是否存在", produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Boolean> isExit(String username) {
         return JsonResult.ok(userService.isExist(username));
     }
 
-    @SysLog(value = "查询" + THIS_NAME + "列表")
     @GetMapping("/list")
+    @SysLog(value = "查询" + THIS_NAME + "列表")
+    @ApiOperation(value = "查询", notes = "查询" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<List<SysUserEntity>> getUserList(){
         return JsonResult.ok(userService.list());
     }

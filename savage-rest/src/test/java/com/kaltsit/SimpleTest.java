@@ -3,26 +3,19 @@ package com.kaltsit;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
-import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSONObject;
 import com.kaltsit.config.ESBeanConfig;
 import com.kaltsit.es.ESTestUser;
-import com.kaltsit.sys.entity.DemoData;
-import com.kaltsit.sys.entity.SysLogEntity;
-import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
 import com.kaltsit.sys.service.impl.SysLogServiceImpl;
+import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.ESUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
 
 /**
  * 自动填充测试
@@ -67,9 +60,9 @@ public class SimpleTest {
     }
 
     @Test
-    public void MenuTest01(){
+    public void MenuTest01() {
         String fileName = "C:\\Users\\20201236\\Desktop\\新建文件夹\\test.xlsx";
-        EasyExcel.write(fileName, SysLogEntity.class).sheet("模板").doWrite(sysLogService.list());
+        //EasyExcel.write(fileName, SysLogEntity.class).sheet("模板").doWrite(sysLogService.list());
     }
 
 //    private static List converDict(Class objectClass, List data){
@@ -103,7 +96,6 @@ public class SimpleTest {
 //
 //        return data;
 //    }
-
 
 
 }

@@ -23,13 +23,13 @@ import java.util.Map;
 @RequestMapping("/sysLog")
 public class SysLogController {
 
+    private static final String THIS_NAME = "系统日志";
+
     @Resource
     private SysLogServiceImpl sysLogService;
 
-    private static final String THIS_NAME = "系统日志";
-
-    @SysLog(THIS_NAME + " - 分页查询")
     @GetMapping("/pageList")
+    @SysLog(THIS_NAME + " - 分页查询")
     @ApiOperation(value = "列表", notes = "分页查询" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", paramType = "query", required = true, dataType = "int"),
@@ -41,7 +41,8 @@ public class SysLogController {
             @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string")
     })
     public JsonResult<PageUtils<SysLogEntity>> pageList(@ApiIgnore @RequestParam Map<String, Object> params) {
-        PageUtils<SysLogEntity> page = sysLogService.queryPage(MapUtils.getInstance(params));
-        return JsonResult.ok(page);
+        PageUtils<SysLogEntity> pageList = sysLogService.queryPage(MapUtils.getInstance(params));
+        return JsonResult.ok(pageList);
     }
+
 }

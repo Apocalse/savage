@@ -1,5 +1,6 @@
 package com.kaltsit.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -22,23 +23,23 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
         Integer type = params.getInteger("type");
         String startDate = params.getString("startDate");
         String endDate = params.getString("endDate");
-        QueryWrapper<SysLogEntity> qw = QueryWrapperUtils.wrapperLike(new QueryWrapper<>(), searchKey, "operation");
+        LambdaQueryWrapper<SysLogEntity> lqw = QueryWrapperUtils.like(new LambdaQueryWrapper<>(), searchKey, SysLogEntity::getOperation);
         if(StringUtils.isNotEmpty(userId)){
-            qw.eq("create_user_id", userId);
+            lqw.eq(SysLogEntity::getCreateUserId, userId);
         }
         if(StringUtils.isNotEmpty(startDate)){
-            qw.ge("create_date", startDate);
+            lqw.ge(SysLogEntity::getCreateDate, startDate);
         }
         if(StringUtils.isNotEmpty(endDate)){
-            qw.le("create_date", endDate);
+            lqw.le(SysLogEntity::getCreateDate, endDate);
         }
         if(type != null){
-            qw.eq("type", type);
+            lqw.eq(SysLogEntity::getType, type);
         }
-        qw.orderByDesc("create_date");
-        Page<SysLogEntity> hashMapPage = new Page<>(params.getInteger("page"), params.getInteger("size"));
-        IPage<SysLogEntity> page = this.page(hashMapPage, qw);
-        return new PageUtils<>(page);
+        lqw.orderByDesc(SysLogEntity::getCreateDate);
+        Page<SysLogEntity> page = new Page<>(params.getInteger("page", 1), params.getInteger("size", 10));
+        IPage<SysLogEntity> result = this.page(page, lqw);
+        return new PageUtils<>(result);
     }
 
 }

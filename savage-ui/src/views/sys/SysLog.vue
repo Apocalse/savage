@@ -57,110 +57,46 @@
         </el-form-item>
       </el-row>
     </el-form>
+    <savage-table :table-column="tableColumn" :table-data="dataList" :page-config="pageConfig">
 
-    <el-table
-        v-loading="dataListLoading"
-        border style="width: 100%;margin-bottom: 10px"
-        :data="dataList"
-        :element-loading-text="loadingText"
-        ref="dataTable"
-    >
-      <el-table-column
-          prop="username"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          width="150"
-          label="用户名">
-      </el-table-column>
-      <el-table-column
-          prop="type"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          width="120"
-          label="日志类型">
-        <template v-slot="scope">
-          <el-tag v-if="scope.row.type === 1" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 2" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 3" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 4" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
-          <el-tag v-else-if="scope.row.type === 5" type="primary">{{ sysLogTypeMap[scope.row.type] }}</el-tag>
-          <el-tag v-else type="info">未知</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="operation"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          label="操作内容">
-      </el-table-column>
-      <el-table-column
-          prop="requestUri"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          label="请求uri">
-      </el-table-column>
-      <el-table-column
-          prop="method"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          label="请求方法">
-      </el-table-column>
-      <el-table-column
-          prop="params"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          width="300"
-          label="请求参数">
-      </el-table-column>
-      <el-table-column
-          prop="time"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          width="100"
-          label="时延/ms">
-      </el-table-column>
-      <el-table-column
-          prop="ip"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          label="ip地址">
-      </el-table-column>
-      <el-table-column
-          prop="createDate"
-          header-align="center"
-          align="center"
-          show-overflow-tooltip
-          width="200"
-          label="调用时间">
-      </el-table-column>
-    </el-table>
-    <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="pageIndex"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="pageSize"
-        :total="totalPage"
-        background
-        layout="->, total, sizes, prev, pager, next, jumper">
-    </el-pagination>
+    </savage-table>
+<!--      <el-table-column-->
+<!--          prop="type"-->
+<!--          header-align="center"-->
+<!--          align="center"-->
+<!--          show-overflow-tooltip-->
+<!--          width="120"-->
+<!--          label="日志类型">-->
+<!--        <template v-slot="scope">-->
+<!--          <el-tag v-if="scope.row.type === 1" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
+<!--          <el-tag v-else-if="scope.row.type === 2" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
+<!--          <el-tag v-else-if="scope.row.type === 3" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
+<!--          <el-tag v-else-if="scope.row.type === 4" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
+<!--          <el-tag v-else-if="scope.row.type === 5" type="primary">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
+<!--          <el-tag v-else type="info">未知</el-tag>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--    <el-pagination-->
+<!--        @size-change="handleSizeChange"-->
+<!--        @current-change="handleCurrentChange"-->
+<!--        :current-page="pageIndex"-->
+<!--        :page-sizes="[10, 20, 50, 100]"-->
+<!--        :page-size="pageSize"-->
+<!--        :total="totalPage"-->
+<!--        background-->
+<!--        layout="->, total, sizes, prev, pager, next, jumper">-->
+<!--    </el-pagination>-->
   </div>
 </template>
 
 <script>
 import {getSysLogTypeList, getSysLogTypeMap} from "@/utils/savageUtils";
 import moment from 'moment'
+import SavageTable from "@/views/common/models/SavageTable.vue";
 
 export default {
   name: "SysLog",
+  components: {SavageTable},
 
   mounted() {
     this.getDateList()
@@ -173,10 +109,55 @@ export default {
       dataList: [],
       dataListLoading: false,
       loadingText: '',
-      currentPage: 1,
-      pageIndex: 1,
-      pageSize: 10,
-      totalPage: 0,
+
+
+      pageConfig: {
+        visible: true,
+        currentPage: 1,
+        pageIndex: 1,
+        pageSize: 10,
+        totalPage: 0,
+      },
+
+      tableColumn: [
+        {
+          prop: 'username',
+          label: '用户名'
+        },
+        {
+          prop: 'type',
+          label: '日志类型'
+        },
+        {
+          prop: 'operation',
+          label: '操作内容'
+        },
+        {
+          prop: 'requestUri',
+          label: '请求uri'
+        },
+        {
+          prop: 'method',
+          label: '请求方法'
+        },
+        {
+          prop: 'params',
+          label: '请求参数'
+        },
+        {
+          prop: 'time',
+          label: '时延/ms'
+        },
+        {
+          prop: 'ip',
+          label: 'ip地址'
+        },
+        {
+          prop: 'createDate',
+          label: '调用时间'
+        }
+      ],
+
       searchForm: {
         startTime: null,
         endTime: null,
@@ -200,8 +181,8 @@ export default {
       }
       this.dataListLoading = true
       this.$get('/sysLog/pageList', {
-        size: this.pageSize,
-        page: this.pageIndex,
+        size: this.pageConfig.pageSize,
+        page: this.pageConfig.pageIndex,
         startDate: this.searchForm.startTime,
         endDate: this.searchForm.endTime,
         searchKey: this.searchForm.searchKey,
@@ -209,7 +190,7 @@ export default {
         userId: this.searchForm.userId
       }).then(data => {
         this.dataListLoading = false
-        this.totalPage = data.totalCount
+        this.pageConfig.totalPage = data.totalCount
         this.dataList = data.list
       }).catch(e => {
         this.dataListLoading = false

@@ -122,7 +122,7 @@ export default {
       this.dataListLoading = true
       this.loadingText = '正在查询数据...'
       this.$get('/menu/list', {
-        id: '0',
+        rootId: '0',
         status: '1,2,3'
       }).then(data => {
         this.dataListLoading = false
@@ -168,7 +168,7 @@ export default {
 
     reloadMenu() {
       this.$get('/menu/list', {
-        id: '0',
+        rootId: '0',
         status: '1,2'
       }).then(data => {
         localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))
@@ -177,7 +177,6 @@ export default {
 
       })
     }
-
 
   }
 }

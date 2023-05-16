@@ -6,6 +6,10 @@ import com.kaltsit.sys.entity.SysMenuEntity;
 import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,41 +19,51 @@ import java.util.Map;
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController {
-    @Resource
-    private SysMenuServiceImpl menuService;
 
     private static final String THIS_NAME = "菜单";
 
-    @SysLog(THIS_NAME + " - 查询")
+    @Resource
+    private SysMenuServiceImpl menuService;
+
     @GetMapping("/list")
+    @SysLog(THIS_NAME + " - 查询")
+    @ApiOperation(value = "菜单树", notes = "查询" + THIS_NAME + "树", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "rootId", value = "根目录id", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "状态", paramType = "query", dataType = "string")
+    })
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
-        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("id"), map.getString("status"));
+        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("rootId"), map.getString("status"));
         return JsonResult.ok(menuTree.getChildren());
     }
 
-    @SysLog(value = THIS_NAME + " - 删除", type = SysLogType.DELETE)
     @PostMapping("/delete/{id}")
+    @SysLog(value = THIS_NAME + " - 删除", type = SysLogType.DELETE)
+    @ApiOperation(value = "删除菜单", notes = "删除" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> deleteByMenuId(@PathVariable String id){
         menuService.deleteByMenuId(id);
         return JsonResult.ok();
     }
 
-    @SysLog(value = THIS_NAME + " - 详情", type = SysLogType.DELETE)
     @GetMapping("/info/{id}")
+    @SysLog(value = THIS_NAME + " - 详情", type = SysLogType.DELETE)
+    @ApiOperation(value = "菜单详情", notes = THIS_NAME + "详情", produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<SysMenuEntity> getMenuInfo(@PathVariable String id){
         return JsonResult.ok(menuService.getById(id));
     }
 
-    @SysLog(value = THIS_NAME + " - 保存", type = SysLogType.DELETE)
     @PostMapping("/add")
+    @SysLog(value = THIS_NAME + " - 保存", type = SysLogType.DELETE)
+    @ApiOperation(value = "新增", notes = "新增" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> saveMenu(@RequestBody SysMenuEntity sysMenuEntity){
         menuService.saveOrUpdate(sysMenuEntity);
         return JsonResult.ok();
     }
 
-    @SysLog(value = THIS_NAME + " - 更新", type = SysLogType.DELETE)
     @PostMapping("/update")
+    @SysLog(value = THIS_NAME + " - 更新", type = SysLogType.DELETE)
+    @ApiOperation(value = "更新", notes = "更新" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> updateMenu(@RequestBody SysMenuEntity sysMenuEntity){
         menuService.saveOrUpdate(sysMenuEntity);
         return JsonResult.ok();

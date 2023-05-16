@@ -175,12 +175,14 @@ export default {
       this.$nextTick(() => {
         this.$refs.dataForm.resetFields()
         this.menuList = menuList
+        console.log(this.dataForm)
         if (status === 0) {
           // 新增
           this.dataForm.parentId = 0
           this.title = '新增'
         } else if (status === 1) {
           //下级新增
+          this.dataForm.id = null
           this.dataForm.type = row.type + 1
           this.dataForm.parentId = row.id
           this.dataForm.status = row.status
@@ -237,7 +239,7 @@ export default {
           this.submitDisabled = true
           const nameLength = this.dataForm.url.split('/').length
           this.$post(`/menu/${!this.dataForm.id ? 'add' : 'update'}`, {
-            'id': this.dataForm.id || undefined,
+            'id': this.dataForm.id || null,
             'type': this.dataForm.type,
             'nameZh': this.dataForm.nameZh,
             'parentId': this.dataForm.parentId,
