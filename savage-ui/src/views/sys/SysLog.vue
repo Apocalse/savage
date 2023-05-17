@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-form :inline="true" :model="searchForm" @submit.native.prevent>
+    <el-form :inline="true" :model="searchForm" ref="searchForm" @submit.native.prevent>
       <el-row>
-        <el-form-item label="用户名:">
+        <el-form-item label="用户名:" prop="userId">
           <el-select v-model="searchForm.userId" placeholder="请选择" clearable>
             <el-option
                 v-for="item in userList"
@@ -12,7 +12,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="类型:">
+        <el-form-item label="类型:" prop="type">
           <el-select v-model="searchForm.type" placeholder="请选择" clearable>
             <el-option
                 v-for="item in sysLogTypeList"
@@ -40,7 +40,7 @@
                           value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="操作内容:">
+        <el-form-item label="操作内容:" prop="searchKey">
           <el-input v-model.trim="searchForm.searchKey" placeholder="操作内容" clearable></el-input>
         </el-form-item>
       </el-row>
@@ -51,14 +51,21 @@
           </el-button>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button @click="reSet">
+          <el-button @click="resetForm('searchForm')">
             重置
           </el-button>
         </el-form-item>
       </el-row>
     </el-form>
-    <savage-table :table-column="tableColumn" :table-data="dataList" :page-config="pageConfig">
 
+    <savage-table
+        :table-column="tableColumn"
+        :table-order="tableOrder"
+        :table-data="dataList"
+        :page-config="pageConfig"
+        :data-loading="dataLoading"
+        :loading-text="loadingText"
+    >
     </savage-table>
 <!--      <el-table-column-->
 <!--          prop="type"-->
@@ -76,16 +83,6 @@
 <!--          <el-tag v-else type="info">未知</el-tag>-->
 <!--        </template>-->
 <!--      </el-table-column>-->
-<!--    <el-pagination-->
-<!--        @size-change="handleSizeChange"-->
-<!--        @current-change="handleCurrentChange"-->
-<!--        :current-page="pageIndex"-->
-<!--        :page-sizes="[10, 20, 50, 100]"-->
-<!--        :page-size="pageSize"-->
-<!--        :total="totalPage"-->
-<!--        background-->
-<!--        layout="->, total, sizes, prev, pager, next, jumper">-->
-<!--    </el-pagination>-->
   </div>
 </template>
 
@@ -107,18 +104,19 @@ export default {
   data() {
     return {
       dataList: [],
-      dataListLoading: false,
+      dataLoading: false,
       loadingText: '',
-
-
       pageConfig: {
-        visible: true,
+        show: true,
         currentPage: 1,
         pageIndex: 1,
         pageSize: 10,
         totalPage: 0,
       },
-
+      tableOrder: {
+        column: null,
+        order: null
+      },
       tableColumn: [
         {
           prop: 'username',
@@ -146,7 +144,8 @@ export default {
         },
         {
           prop: 'time',
-          label: '时延/ms'
+          label: '时延/ms',
+          sort: 'custom'
         },
         {
           prop: 'ip',
@@ -154,7 +153,8 @@ export default {
         },
         {
           prop: 'createDate',
-          label: '调用时间'
+          label: '调用时间',
+          sort: 'custom'
         }
       ],
 
@@ -179,7 +179,7 @@ export default {
           return
         }
       }
-      this.dataListLoading = true
+      this.dataLoading = true
       this.$get('/sysLog/pageList', {
         size: this.pageConfig.pageSize,
         page: this.pageConfig.pageIndex,
@@ -187,13 +187,15 @@ export default {
         endDate: this.searchForm.endTime,
         searchKey: this.searchForm.searchKey,
         type: this.searchForm.type,
-        userId: this.searchForm.userId
+        userId: this.searchForm.userId,
+        column: this.tableOrder.column,
+        order: this.tableOrder.order
       }).then(data => {
-        this.dataListLoading = false
+        this.dataLoading = false
         this.pageConfig.totalPage = data.totalCount
         this.dataList = data.list
       }).catch(e => {
-        this.dataListLoading = false
+        this.dataLoading = false
       })
     },
 
@@ -202,12 +204,8 @@ export default {
       this.getDateList()
     },
 
-    reSet() {
-      this.searchForm.startTime = null
-      this.searchForm.endTime = null
-      this.searchForm.userId = null
-      this.searchForm.searchKey = null
-      this.searchForm.type = null
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
     },
 
     getUserList() {

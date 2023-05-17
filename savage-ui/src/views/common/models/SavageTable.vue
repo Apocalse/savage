@@ -1,10 +1,11 @@
 <template>
   <div>
     <el-table
-        v-loading="dataListLoading"
-        border style="width: 100%;margin-bottom: 10px"
-        :data="tableData"
+        v-loading="dataLoading"
         :element-loading-text="loadingText"
+        :data="tableData"
+        border style="width: 100%;margin-bottom: 10px"
+        @sort-change="changeTableSort"
         ref="dataTable"
     >
       <template v-for="(item, index) in tableColumn">
@@ -15,13 +16,14 @@
             :header-align="item.headerAlign || 'center'"
             :align="item.align || 'center'"
             :width="item.width"
+            :sortable="item.sort"
             show-overflow-tooltip
         >
         </el-table-column>
       </template>
       <slot></slot>
     </el-table>
-    <el-pagination v-if="pageConfig.visible"
+    <el-pagination v-if="pageConfig.show"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageConfig.pageIndex"
@@ -64,23 +66,31 @@ export default {
         }
       },
     },
-    config: {
+    tableOrder: {
       type: [Object],
       required: false
     },
-    search: {
-      type: [String],
-      required: false
+    dataLoading: {
+      type: [Boolean],
+      required: false,
+      default(){
+        return false
+      }
     },
+    loadingText: {
+      type: [String],
+      required: false,
+      default(){
+        return ''
+      }
+    }
   },
   mounted() {
-    console.log(this.pageConfig)
+    //console.log(this.pageConfig)
   },
   data() {
     return {
-      dataList: [],
-      dataListLoading: false,
-      loadingText: '',
+
     }
   },
   methods: {
@@ -92,6 +102,16 @@ export default {
     handleCurrentChange(val) {
       this.pageConfig.pageIndex = val
       this.$parent.getDateList()
+    },
+    changeTableSort(column){
+      if(column.column.sortable === 'custom'){
+        this.tableOrder.order = column.order;
+        this.tableOrder.column = column.prop;
+        this.$parent.getDateList()
+      }else {
+        this.tableOrder.order = null;
+        this.tableOrder.column = null;
+      }
     }
   }
 

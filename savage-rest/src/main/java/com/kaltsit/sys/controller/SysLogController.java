@@ -38,7 +38,9 @@ public class SysLogController {
             @ApiImplicitParam(name = "type", value = "类型，0-未知 1-新增 2-删除 3-修改 4-查询 5-登录/登出", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startDate", value = "开始时间", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "endDate", value = "结束时间", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string")
+            @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "order", value = "排序规则", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "column", value = "排序字段", paramType = "query", dataType = "string"),
     })
     public JsonResult<PageUtils<SysLogEntity>> pageList(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageUtils<SysLogEntity> pageList = sysLogService.queryPage(MapUtils.getInstance(params));

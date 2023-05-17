@@ -23,7 +23,10 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
         Integer type = params.getInteger("type");
         String startDate = params.getString("startDate");
         String endDate = params.getString("endDate");
-        LambdaQueryWrapper<SysLogEntity> lqw = QueryWrapperUtils.like(new LambdaQueryWrapper<>(), searchKey, SysLogEntity::getOperation);
+        String order = params.getString("order");
+        String column = params.getString("column");
+        QueryWrapper<SysLogEntity> qw = new QueryWrapper<>();
+        LambdaQueryWrapper<SysLogEntity> lqw = QueryWrapperUtils.like(qw.lambda(), searchKey, SysLogEntity::getOperation);
         if(StringUtils.isNotEmpty(userId)){
             lqw.eq(SysLogEntity::getCreateUserId, userId);
         }
@@ -36,9 +39,9 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
         if(type != null){
             lqw.eq(SysLogEntity::getType, type);
         }
-        lqw.orderByDesc(SysLogEntity::getCreateDate);
+        QueryWrapperUtils.order(qw, column, order);
         Page<SysLogEntity> page = new Page<>(params.getInteger("page", 1), params.getInteger("size", 10));
-        IPage<SysLogEntity> result = this.page(page, lqw);
+        IPage<SysLogEntity> result = this.page(page, qw);
         return new PageUtils<>(result);
     }
 
