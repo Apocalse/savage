@@ -47,6 +47,18 @@ public class SysUserController {
                 map.put("token", token);
                 map.put("username", one.getUsername());
                 map.put("userId", one.getId());
+
+                //TODO 字典数据
+//                Map<String, String> dict = new HashMap<>();
+//                dict.put("0", "未知");
+//                dict.put("1", "新增");
+//                dict.put("2", "删除");
+//                dict.put("3", "修改");
+//                dict.put("4", "查询");
+//                dict.put("5", "登录/登出");
+//                Map<String, Object> sysLogTypeDict = new HashMap<>();
+//                sysLogTypeDict.put("sysLogTypeDict", dict);
+//                map.put("savageDictObject", sysLogTypeDict);
                 return JsonResult.ok(map);
             } else {
                 throw new SavageException("登陆失败，请检查账号或密码是否正确");

@@ -3,7 +3,7 @@
     <el-table
         v-loading="dataLoading"
         :element-loading-text="loadingText"
-        :data="tableData"
+        :data="dataList"
         border style="width: 100%;margin-bottom: 10px"
         @sort-change="changeTableSort"
         ref="dataTable"
@@ -19,11 +19,22 @@
             :sortable="item.sort"
             show-overflow-tooltip
         >
+<!--            <template v-if="scope.row.type !== null">-->
+
+<!--            </template>-->
+<!--            <el-tag v-if="scope.row.type === 1" type="success">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
+<!--            <el-tag v-else-if="scope.row.type === 2" type="danger">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
+<!--            <el-tag v-else-if="scope.row.type === 3" type="danger">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
+<!--            <el-tag v-else-if="scope.row.type === 4" type="success">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
+<!--            <el-tag v-else-if="scope.row.type === 5" type="primary">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
+<!--            <el-tag v-else type="info">未知</el-tag>-->
+<!--          </template>-->
         </el-table-column>
       </template>
       <slot></slot>
     </el-table>
-    <el-pagination v-if="pageConfig.show"
+    <el-pagination
+        v-if="pageConfig.visible"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageConfig.pageIndex"
@@ -31,7 +42,8 @@
         :page-size="pageConfig.pageSize"
         :total="pageConfig.totalPage"
         background
-        layout="->, total, sizes, prev, pager, next, jumper">
+        layout="->, total, sizes, prev, pager, next, jumper"
+    >
     </el-pagination>
   </div>
 </template>
@@ -40,13 +52,6 @@
 export default {
   name: "SavageTable",
   props: {
-    tableData: {
-      type: [Array, Object],
-      required: true,
-      default() {
-        return []
-      }
-    },
     tableColumn: {
       type: [Array, Object],
       required: true,
@@ -54,63 +59,100 @@ export default {
         return []
       }
     },
+    tableData: {
+      type: [Array, Object],
+      required: false,
+      default() {
+        return undefined
+      }
+    },
+    searchUrl: {
+      type: [String],
+      required: false,
+      default() {
+        return undefined
+      }
+    },
+    queryForm: {
+      type: [Array, Object],
+      required: false,
+      default() {
+        return undefined
+      }
+    },
     pageConfig: {
       type: [Object],
       required: false,
       default() {
         return {
-          visible: false,
+          visible: true,
           pageIndex: 1,
           pageSize: 10,
           totalPage: 10
         }
       },
-    },
-    tableOrder: {
-      type: [Object],
-      required: false
-    },
-    dataLoading: {
-      type: [Boolean],
-      required: false,
-      default(){
-        return false
-      }
-    },
-    loadingText: {
-      type: [String],
-      required: false,
-      default(){
-        return ''
-      }
     }
   },
+
   mounted() {
-    //console.log(this.pageConfig)
+    this.getDateList()
   },
+
   data() {
     return {
-
+      dataLoading: false,
+      loadingText: '',
+      dataList: [],
+      tableOrder: {
+        orderColumn: null,
+        sortRule: null
+      }
     }
   },
+
   methods: {
+    getDateList() {
+      // 传入已有的数组，不进行分页处理
+      if(this.tableData !== undefined){
+        this.pageConfig.visible = false
+        this.dataList = this.tableData
+      }else{ // 根据接口获取分页列表
+        this.dataLoading = true
+        let params = this.queryForm !== undefined ? this.queryForm : this.$parent.queryForm
+        let url = this.searchUrl !== undefined ? this.searchUrl : this.$parent.url.search
+        params['size'] = this.pageConfig.pageSize
+        params['page'] = this.pageConfig.pageIndex
+        params['orderColumn'] = this.tableOrder.orderColumn
+        params['sortRule'] = this.tableOrder.sortRule
+        this.$get(url, params).then(data => {
+          this.dataLoading = false
+          this.pageConfig.totalPage = data.totalCount
+          this.dataList = data.list
+        }).catch(e => {
+          this.dataLoading = false
+        })
+      }
+    },
+
     handleSizeChange(val) {
       this.pageConfig.pageSize = val
       this.pageConfig.pageIndex = 1
-      this.$parent.getDateList()
+      this.getDateList()
     },
+
     handleCurrentChange(val) {
       this.pageConfig.pageIndex = val
-      this.$parent.getDateList()
+      this.getDateList()
     },
-    changeTableSort(column){
-      if(column.column.sortable === 'custom'){
-        this.tableOrder.order = column.order;
-        this.tableOrder.column = column.prop;
-        this.$parent.getDateList()
-      }else {
-        this.tableOrder.order = null;
-        this.tableOrder.column = null;
+
+    changeTableSort(column) {
+      if (column.column.sortable === 'custom') {
+        this.tableOrder.sortRule = column.order;
+        this.tableOrder.orderColumn = column.prop;
+        this.getDateList()
+      } else {
+        this.tableOrder.sortRule = null;
+        this.tableOrder.orderColumn = null;
       }
     }
   }

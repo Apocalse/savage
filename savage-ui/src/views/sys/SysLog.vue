@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-form :inline="true" :model="searchForm" ref="searchForm" @submit.native.prevent>
+    <el-form :inline="true" :model="queryForm" ref="searchForm" @submit.native.prevent>
       <el-row>
         <el-form-item label="用户名:" prop="userId">
-          <el-select v-model="searchForm.userId" placeholder="请选择" clearable>
+          <el-select v-model="queryForm.userId" placeholder="请选择" clearable>
             <el-option
                 v-for="item in userList"
                 :key="item.id"
@@ -13,7 +13,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="类型:" prop="type">
-          <el-select v-model="searchForm.type" placeholder="请选择" clearable>
+          <el-select v-model="queryForm.type" placeholder="请选择" clearable>
             <el-option
                 v-for="item in sysLogTypeList"
                 :key="item.key"
@@ -25,7 +25,7 @@
         </el-form-item>
         <el-form-item label="开始时间" prop="startTime">
           <el-date-picker align="left"
-                          v-model="searchForm.startTime"
+                          v-model="queryForm.startDate"
                           type="datetime"
                           format="yyyy-MM-dd HH:mm:ss"
                           value-format="yyyy-MM-dd HH:mm:ss">
@@ -33,7 +33,7 @@
         </el-form-item>
         <el-form-item label="结束时间" prop="endTime">
           <el-date-picker align="left"
-                          v-model="searchForm.endTime"
+                          v-model="queryForm.endDate"
                           ref="endTime"
                           type="datetime"
                           format="yyyy-MM-dd HH:mm:ss"
@@ -41,7 +41,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="操作内容:" prop="searchKey">
-          <el-input v-model.trim="searchForm.searchKey" placeholder="操作内容" clearable></el-input>
+          <el-input v-model.trim="queryForm.searchKey" placeholder="操作内容" clearable></el-input>
         </el-form-item>
       </el-row>
       <el-row>
@@ -59,12 +59,8 @@
     </el-form>
 
     <savage-table
+        ref="savageTable"
         :table-column="tableColumn"
-        :table-order="tableOrder"
-        :table-data="dataList"
-        :page-config="pageConfig"
-        :data-loading="dataLoading"
-        :loading-text="loadingText"
     >
     </savage-table>
 <!--      <el-table-column-->
@@ -96,26 +92,19 @@ export default {
   components: {SavageTable},
 
   mounted() {
-    this.getDateList()
     this.getUserList()
-    // this.sysLogType = getSysLogTypeList()
   },
-
   data() {
     return {
-      dataList: [],
-      dataLoading: false,
-      loadingText: '',
-      pageConfig: {
-        show: true,
-        currentPage: 1,
-        pageIndex: 1,
-        pageSize: 10,
-        totalPage: 0,
+      url: {
+        search: '/sysLog/pageList'
       },
-      tableOrder: {
-        column: null,
-        order: null
+      queryForm: {
+        startDate: null,
+        endDate: null,
+        userId: null,
+        searchKey: null,
+        type: null,
       },
       tableColumn: [
         {
@@ -124,7 +113,10 @@ export default {
         },
         {
           prop: 'type',
-          label: '日志类型'
+          label: '日志类型',
+          //tag: {1: 'success', 2: 'danger', 3: 'danger'}
+          // type: 'tag',
+          // dict: 'sysLogTypeDict'
         },
         {
           prop: 'operation',
@@ -157,14 +149,6 @@ export default {
           sort: 'custom'
         }
       ],
-
-      searchForm: {
-        startTime: null,
-        endTime: null,
-        userId: null,
-        searchKey: null,
-        type: null,
-      },
       sysLogTypeList: getSysLogTypeList() === null || undefined ? [] : getSysLogTypeList(),
       sysLogTypeMap: getSysLogTypeMap(),
       userList: []
@@ -172,36 +156,15 @@ export default {
   },
 
   methods: {
-    getDateList() {
-      if (this.searchForm.startTime !== '' && this.searchForm.endTime !== '') {
-        if (moment(this.searchForm.endTime).isBefore(this.searchForm.startTime)) {
+    doSearch() {
+      if (this.queryForm.startDate !== '' && this.queryForm.endDate !== '') {
+        if (moment(this.queryForm.endDate).isBefore(this.queryForm.startDate)) {
           this.$message.warning('结束时间不能小于开始时间');
           return
         }
       }
-      this.dataLoading = true
-      this.$get('/sysLog/pageList', {
-        size: this.pageConfig.pageSize,
-        page: this.pageConfig.pageIndex,
-        startDate: this.searchForm.startTime,
-        endDate: this.searchForm.endTime,
-        searchKey: this.searchForm.searchKey,
-        type: this.searchForm.type,
-        userId: this.searchForm.userId,
-        column: this.tableOrder.column,
-        order: this.tableOrder.order
-      }).then(data => {
-        this.dataLoading = false
-        this.pageConfig.totalPage = data.totalCount
-        this.dataList = data.list
-      }).catch(e => {
-        this.dataLoading = false
-      })
-    },
-
-    doSearch() {
-      this.pageIndex = 1
-      this.getDateList()
+      this.pageConfig.pageIndex = 1
+      this.$refs.savageTable.getDateList()
     },
 
     resetForm(formName) {
@@ -214,16 +177,6 @@ export default {
       })
     },
 
-    handleSizeChange(val) {
-      this.pageSize = val
-      this.pageIndex = 1
-      this.getDateList()
-    },
-
-    handleCurrentChange(val) {
-      this.pageIndex = val
-      this.getDateList()
-    }
   }
 }
 </script>

@@ -20,7 +20,7 @@ public class SysLogEntity implements Serializable {
     private String id;
 
     @ApiModelProperty(notes = "日志类型")
-    private Integer type;
+    private String type;
 
     @ApiModelProperty(notes = "用户名")
     private String username;

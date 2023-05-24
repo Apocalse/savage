@@ -16,7 +16,7 @@ public @interface SysLog {
      * <p>
      * 参考 {@link SysLogType}
      */
-    int type() default SysLogType.SELECT;
+    String type() default SysLogType.SELECT;
 
     /**
      * 需要排除的字段名称、该字段不会持久化到数据库参数中
