@@ -19,19 +19,17 @@
             :sortable="item.sort"
             show-overflow-tooltip
         >
-<!--            <template v-if="scope.row.type !== null">-->
-
-<!--            </template>-->
-<!--            <el-tag v-if="scope.row.type === 1" type="success">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
-<!--            <el-tag v-else-if="scope.row.type === 2" type="danger">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
-<!--            <el-tag v-else-if="scope.row.type === 3" type="danger">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
-<!--            <el-tag v-else-if="scope.row.type === 4" type="success">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
-<!--            <el-tag v-else-if="scope.row.type === 5" type="primary">{{ getDictMap('sysLogType')[scope.row.type] }}</el-tag>-->
-<!--            <el-tag v-else type="info">未知</el-tag>-->
-<!--          </template>-->
+          <template v-if="item.tag" v-slot="scope">
+            <el-tag v-if="scope.row.type === 1" type="success">{{ scope.row.type }}</el-tag>
+            <el-tag v-else-if="scope.row.type === 2" type="danger">{{ scope.row.type }}</el-tag>
+            <el-tag v-else-if="scope.row.type === 3" type="danger">{{ scope.row.type }}</el-tag>
+            <el-tag v-else-if="scope.row.type === 4" type="success">{{ scope.row.type }}</el-tag>
+            <el-tag v-else-if="scope.row.type === 5" type="primary">{{ scope.row.type }}</el-tag>
+            <el-tag v-else type="info">未知</el-tag>
+          </template>
         </el-table-column>
       </template>
-      <slot></slot>
+      <slot name="action"></slot>
     </el-table>
     <el-pagination
         v-if="pageConfig.visible"
@@ -66,8 +64,8 @@ export default {
         return undefined
       }
     },
-    searchUrl: {
-      type: [String],
+    url: {
+      type: [Object],
       required: false,
       default() {
         return undefined
@@ -111,7 +109,10 @@ export default {
   },
 
   methods: {
-    getDateList() {
+    getDateList(page) {
+      if(page){
+        this.pageConfig.pageIndex = page
+      }
       // 传入已有的数组，不进行分页处理
       if(this.tableData !== undefined){
         this.pageConfig.visible = false
@@ -119,7 +120,7 @@ export default {
       }else{ // 根据接口获取分页列表
         this.dataLoading = true
         let params = this.queryForm !== undefined ? this.queryForm : this.$parent.queryForm
-        let url = this.searchUrl !== undefined ? this.searchUrl : this.$parent.url.search
+        let url = this.url !== undefined ? this.url.search : this.$parent.url.search
         params['size'] = this.pageConfig.pageSize
         params['page'] = this.pageConfig.pageIndex
         params['orderColumn'] = this.tableOrder.orderColumn

@@ -62,23 +62,16 @@
         ref="savageTable"
         :table-column="tableColumn"
     >
+      <template v-slot:action="action">
+        <el-table-column  header-align="center" align="center" label="操作" width="250">
+          <template v-slot="scope">
+            <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">
+              编辑
+            </el-button>
+          </template>
+        </el-table-column>
+      </template>
     </savage-table>
-<!--      <el-table-column-->
-<!--          prop="type"-->
-<!--          header-align="center"-->
-<!--          align="center"-->
-<!--          show-overflow-tooltip-->
-<!--          width="120"-->
-<!--          label="日志类型">-->
-<!--        <template v-slot="scope">-->
-<!--          <el-tag v-if="scope.row.type === 1" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
-<!--          <el-tag v-else-if="scope.row.type === 2" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
-<!--          <el-tag v-else-if="scope.row.type === 3" type="danger">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
-<!--          <el-tag v-else-if="scope.row.type === 4" type="success">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
-<!--          <el-tag v-else-if="scope.row.type === 5" type="primary">{{ sysLogTypeMap[scope.row.type] }}</el-tag>-->
-<!--          <el-tag v-else type="info">未知</el-tag>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
   </div>
 </template>
 
@@ -97,7 +90,7 @@ export default {
   data() {
     return {
       url: {
-        search: '/sysLog/pageList'
+        search: '/sysLog/pageList',
       },
       queryForm: {
         startDate: null,
@@ -114,7 +107,7 @@ export default {
         {
           prop: 'type',
           label: '日志类型',
-          //tag: {1: 'success', 2: 'danger', 3: 'danger'}
+          tag: {1: 'success', 2: 'danger', 3: 'danger', 4: 'success', 5: 'primary'}
           // type: 'tag',
           // dict: 'sysLogTypeDict'
         },
@@ -163,8 +156,10 @@ export default {
           return
         }
       }
-      this.pageConfig.pageIndex = 1
-      this.$refs.savageTable.getDateList()
+      this.$refs.savageTable.getDateList(1)
+    },
+    edit(row){
+      this.$refs.savageTable.edit(row)
     },
 
     resetForm(formName) {
