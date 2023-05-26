@@ -107,7 +107,7 @@ export default {
         {
           prop: 'type',
           label: '日志类型',
-          tag: {1: 'success', 2: 'danger', 3: 'danger', 4: 'success', 5: 'primary'}
+          // tag: {1: 'success', 2: 'danger', 3: 'danger', 4: 'success', 5: 'primary'}
           // type: 'tag',
           // dict: 'sysLogTypeDict'
         },

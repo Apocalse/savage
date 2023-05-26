@@ -1,7 +1,7 @@
 <template>
   <div>
-
     <el-form :inline="true" :model="searchForm" @submit.native.prevent>
+
     </el-form>
 
     <savage-table
@@ -9,16 +9,15 @@
         :table-data="tableData"
     >
       <template v-slot:action="scope">
-      <el-table-column  header-align="center" align="center" label="操作" width="250">
-        <template v-slot="scope">
-          <el-button type="text" icon="el-icon-plus" @click="handle(scope.row)">
-            新增
-          </el-button>
-        </template>
-      </el-table-column>
+        <el-table-column  header-align="center" align="center" label="操作" width="250">
+          <template v-slot="scope">
+            <el-button type="text" icon="el-icon-edit" @click="handle(scope.row)">
+              编辑
+            </el-button>
+          </template>
+        </el-table-column>
       </template>
     </savage-table>
-
   </div>
 </template>
 
