@@ -33,7 +33,8 @@ public class Test1 {
 
     @Test
     public void test1() {
-        System.out.println(MenuLevel.FIRST.getKey());
+        char[] a = {'1','2','3'};
+        System.out.println(a);
     }
 
     @Test

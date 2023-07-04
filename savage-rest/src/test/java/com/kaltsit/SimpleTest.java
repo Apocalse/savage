@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ public class SimpleTest {
     private SysMenuServiceImpl menuService;
     @Autowired
     private SysLogServiceImpl sysLogService;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Test
     public void ESTest1() throws IOException {
@@ -64,6 +67,14 @@ public class SimpleTest {
         String fileName = "C:\\Users\\20201236\\Desktop\\新建文件夹\\test.xlsx";
         //EasyExcel.write(fileName, SysLogEntity.class).sheet("模板").doWrite(sysLogService.list());
     }
+
+    @Test
+    void redisTest() {
+        redisTemplate.opsForValue().set("name","卷心菜");
+        String name = redisTemplate.opsForValue().get("name");
+        System.out.println(name); //卷心菜
+    }
+
 
 //    private static List converDict(Class objectClass, List data){
 //        HashMap<String, Field> map = new HashMap();
