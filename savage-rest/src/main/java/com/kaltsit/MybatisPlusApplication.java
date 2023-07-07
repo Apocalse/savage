@@ -54,6 +54,7 @@ public class MybatisPlusApplication {
         filterRuleMap.put("/webjars/**", "anon");
         filterRuleMap.put("/","anon");
         filterRuleMap.put("/csrf","anon");
+        filterRuleMap.put("/captcha.jpg","anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }

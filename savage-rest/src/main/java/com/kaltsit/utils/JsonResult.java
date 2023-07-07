@@ -38,6 +38,19 @@ public class JsonResult<T> {
     }
 
     /**
+     * 成功
+     * @param data 返回数据
+     * @return 结果
+     */
+    public static <T> JsonResult<T> ok(String msg, T data) {
+        JsonResult<T> result = new JsonResult<>();
+        result.setCode(200);
+        result.setMsg(msg);
+        result.setData(data);
+        return result;
+    }
+
+    /**
      * 失败
      * @return 结果
      */
