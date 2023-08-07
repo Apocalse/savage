@@ -1,5 +1,9 @@
-import {request} from '@/utils/axios'
+import {get, post} from '@/utils/axios'
 
-export function sysLog_pageList(params){
-    return request( 'get', '/sysLog/pageList', params)
+export function getMenuList(params){
+    return get( '/menu/list', params)
+}
+
+export function getUserList(params={}){
+    return get( '/user/list', params)
 }

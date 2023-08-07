@@ -94,7 +94,7 @@
 
 <script>
 import MenuAddOrUpdate from './models/MenuAddOrUpdate.vue'
-import router from "@/router";
+import {getMenuList} from "@/api/sys";
 
 export default {
   name: "MenuManagement",
@@ -121,7 +121,7 @@ export default {
     getDataList(openFirst = true) {
       this.dataListLoading = true
       this.loadingText = '正在查询数据...'
-      this.$get('/menu/list', {
+      getMenuList({
         rootId: '0',
         status: '1,2,3'
       }).then(data => {
@@ -167,7 +167,7 @@ export default {
     },
 
     reloadMenu() {
-      this.$get('/menu/list', {
+      getMenuList({
         rootId: '0',
         status: '1,2'
       }).then(data => {

@@ -24,8 +24,8 @@ Vue.use(VueCookies);
 // element
 Vue.use(ElementUI);
 
-window.SITE_CONFIG = {};
-window.SITE_CONFIG['baseUrl'] = "http://localhost:8823/kaltsit";
+// window.SITE_CONFIG = {};
+// window.SITE_CONFIG['baseUrl'] = "http://localhost:8823/kaltsit";
 
 new Vue({
     router,

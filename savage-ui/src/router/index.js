@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {get} from '@/utils/axios'
-import store from "@/store"
+import {getMenuList} from "@/api/sys";
 
 Vue.use(VueRouter)
 
@@ -65,7 +64,7 @@ router.beforeEach((to, from, next) => {
     let localRoutes = JSON.parse(localStorage.getItem('dynamicMenuRoutes'))
     try {
         if (localRoutes == null) {
-            get('/menu/list', {
+            getMenuList({
                 rootId: '0',
                 status: '1,2'
             }).then(data => {

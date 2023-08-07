@@ -6,7 +6,7 @@ import { Notification } from 'element-ui';
 const httpCustom = axios.create({
     timeout: 1000 * 30,
     // withCredentials: true,
-    // baseURL: 'http://localhost:8823/kaltsit',
+    // baseURL: 'http://localhost:8833/savage',
     baseURL: '/api',
     headers: {
         'Content-Type': 'application/json; charset=utf-8'
@@ -122,14 +122,6 @@ export function del(url, data = {}) {
             reject(err);
         });
     });
-}
-
-export function request(method, url, params = {}, data = {}){
-    if(method === 'get'){
-        return get(url, params)
-    }else if(method === 'post') {
-        return post(url, data)
-    }
 }
 
 
