@@ -238,7 +238,7 @@ export default {
           this.submitLoading = true
           this.submitDisabled = true
           const nameLength = this.dataForm.url.split('/').length
-          this.$post(`/menu/${!this.dataForm.id ? 'add' : 'update'}`, {
+          this.$post('/menu/saveOrUpdate', {
             'id': this.dataForm.id || null,
             'type': this.dataForm.type,
             'nameZh': this.dataForm.nameZh,

@@ -59,4 +59,17 @@ es:
     password: xxx,
     useES: true
 
+#management:
+#  endpoints:
+#    web:
+#      base-path: /savage
+#      #作为默认路径，不配置默认路径为/actuator
+#  endpoint:
+#    health:
+#      show-details: always
+#      #显示健康具体信息  默认不会显示详细信息
+#
+#management:
+#  security:
+#    enabled: false
 

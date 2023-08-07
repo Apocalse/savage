@@ -53,18 +53,10 @@ public class SysMenuController {
         return JsonResult.ok(menuService.getById(id));
     }
 
-    @PostMapping("/add")
+    @PostMapping("/saveOrUpdate")
     @SysLog(value = THIS_NAME + " - 保存", type = SysLogType.DELETE)
     @ApiOperation(value = "新增", notes = "新增" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> saveMenu(@RequestBody SysMenuEntity sysMenuEntity){
-        menuService.saveOrUpdate(sysMenuEntity);
-        return JsonResult.ok();
-    }
-
-    @PostMapping("/update")
-    @SysLog(value = THIS_NAME + " - 更新", type = SysLogType.DELETE)
-    @ApiOperation(value = "更新", notes = "更新" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JsonResult<Void> updateMenu(@RequestBody SysMenuEntity sysMenuEntity){
         menuService.saveOrUpdate(sysMenuEntity);
         return JsonResult.ok();
     }

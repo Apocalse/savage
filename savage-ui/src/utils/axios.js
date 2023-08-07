@@ -124,4 +124,12 @@ export function del(url, data = {}) {
     });
 }
 
+export function request(method, url, params = {}, data = {}){
+    if(method === 'get'){
+        return get(url, params)
+    }else if(method === 'post') {
+        return post(url, data)
+    }
+}
+
 
