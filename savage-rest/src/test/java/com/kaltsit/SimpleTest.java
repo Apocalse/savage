@@ -9,6 +9,7 @@ import com.kaltsit.es.ESTestUser;
 import com.kaltsit.sys.service.impl.SysLogServiceImpl;
 import com.kaltsit.sys.service.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.ESUtils;
+import com.kaltsit.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 自动填充测试
@@ -38,6 +41,9 @@ public class SimpleTest {
     private SysLogServiceImpl sysLogService;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Test
     public void ESTest1() throws IOException {
@@ -70,9 +76,15 @@ public class SimpleTest {
 
     @Test
     void redisTest() {
-        redisTemplate.opsForValue().set("name","卷心菜");
-        String name = redisTemplate.opsForValue().get("name");
-        System.out.println(name); //卷心菜
+        Map<String, Object> dict = new HashMap<>();
+        dict.put("0", "未知");
+        dict.put("1", "新增");
+        dict.put("2", "删除");
+        dict.put("3", "修改");
+        dict.put("4", "查询");
+        dict.put("5", "登录/登出");
+        redisUtil.add("SYS:LOG_TYPE", dict);
+        System.out.println(redisUtil.getHashEntries("SYS:LOG_TYPE"));
     }
 
 

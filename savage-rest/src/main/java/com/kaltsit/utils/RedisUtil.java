@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,15 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @className: RedisUtil
- * @description:
- * @author: sh.Liu
- * @date: 2022-03-09 14:07
  */
 @Component
 public class RedisUtil {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 给一个指定的 key 值附加过期时间
@@ -29,7 +28,7 @@ public class RedisUtil {
      * @return
      */
     public boolean expire(String key, long time) {
-        return redisTemplate.expire(key, time, TimeUnit.SECONDS);
+        return Boolean.TRUE.equals(redisTemplate.expire(key, time, TimeUnit.SECONDS));
     }
 
     /**
@@ -38,7 +37,7 @@ public class RedisUtil {
      * @param key
      * @return
      */
-    public long getTime(String key) {
+    public Long getTime(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
@@ -49,7 +48,7 @@ public class RedisUtil {
      * @return
      */
     public boolean hasKey(String key) {
-        return redisTemplate.hasKey(key);
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 
     /**
@@ -59,7 +58,7 @@ public class RedisUtil {
      * @return
      */
     public boolean persist(String key) {
-        return redisTemplate.boundValueOps(key).persist();
+        return Boolean.TRUE.equals(redisTemplate.boundValueOps(key).persist());
     }
 
     //- - - - - - - - - - - - - - - - - - - - -  String类型 - - - - - - - - - - - - - - - - - - - -
@@ -238,7 +237,7 @@ public class RedisUtil {
      * @return
      */
     public boolean move(String key, String value, String destKey) {
-        return redisTemplate.opsForSet().move(key, value, destKey);
+        return Boolean.TRUE.equals(redisTemplate.opsForSet().move(key, value, destKey));
     }
 
     /**
@@ -260,7 +259,7 @@ public class RedisUtil {
      * @return
      */
     public Set<Set> difference(String key, String destKey) {
-        return redisTemplate.opsForSet().difference(key, destKey);
+        return Collections.singleton(redisTemplate.opsForSet().difference(key, destKey));
     }
 
 
@@ -273,7 +272,7 @@ public class RedisUtil {
      * @param map 键
      * @return
      */
-    public void add(String key, Map<String, String> map) {
+    public void add(String key, Map<String, Object> map) {
         redisTemplate.opsForHash().putAll(key, map);
     }
 
