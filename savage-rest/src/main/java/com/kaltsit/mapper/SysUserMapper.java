@@ -1,7 +1,7 @@
-package com.kaltsit.sys.mapper;
+package com.kaltsit.mapper;
 
 import com.kaltsit.base.SavegeBaseMapper;
-import com.kaltsit.sys.entity.SysUserEntity;
+import com.kaltsit.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -88,16 +88,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.6.8</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>1.6.8</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.jeecgframework/autopoi-web -->
         <dependency>
             <groupId>org.jeecgframework</groupId>

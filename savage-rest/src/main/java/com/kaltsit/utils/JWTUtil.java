@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.kaltsit.sys.entity.SysUserEntity;
+import com.kaltsit.entity.SysUserEntity;
 
 import java.util.Date;
 import java.util.HashMap;

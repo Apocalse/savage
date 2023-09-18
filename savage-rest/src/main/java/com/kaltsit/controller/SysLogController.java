@@ -1,11 +1,12 @@
-package com.kaltsit.sys.controller;
+package com.kaltsit.controller;
 
 import com.kaltsit.annotation.SysLog;
-import com.kaltsit.sys.entity.SysLogEntity;
-import com.kaltsit.sys.service.impl.SysLogServiceImpl;
+import com.kaltsit.service.impl.SysLogServiceImpl;
+import com.kaltsit.entity.SysLogEntity;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import com.kaltsit.utils.PageUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.annotation.Resource;
 import java.util.Map;
 
+@Api("系统日志API")
 @RestController
 @RequestMapping("/sysLog")
 public class SysLogController {

@@ -35,26 +35,58 @@ public class ShiroConfig {
         return securityManager;
     }
 
+//    /**
+//     * 添加注解支持，如果不加的话很有可能注解失效
+//     */
+//    @Bean
+//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+//        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+//        return defaultAdvisorAutoProxyCreator;
+//    }
+//
+//    @Bean
+//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+//        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+//        advisor.setSecurityManager(securityManager);
+//        return advisor;
+//    }
+//
+//    @Bean
+//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+//        return new LifecycleBeanPostProcessor();
+//    }
+
     /**
-     * 添加注解支持，如果不加的话很有可能注解失效
+     * filter过滤
      */
     @Bean
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
-        return defaultAdvisorAutoProxyCreator;
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(securityManager);
-        return advisor;
-    }
-
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
+    public ShiroFilterFactoryBean factory(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
+        // 添加自己的过滤器并且取名为jwt
+        LinkedHashMap<String, Filter> filters = new LinkedHashMap<>();
+        factoryBean.setSecurityManager(securityManager);
+        filters.put("jwt", new JWTFilter());
+        factoryBean.setFilters(filters);
+        //自定义url规则 http://shiro.apache.org/web.html#urls-
+        Map<String, String> filterRuleMap = new HashMap<>();
+        // 所有请求通过我们自己的JWT Filter
+        filterRuleMap.put("/**", "jwt");
+        // 访问401和404页面不通过我们的Filter
+        filterRuleMap.put("/401", "anon");
+        filterRuleMap.put("/user/login", "anon");
+        filterRuleMap.put("/user/register", "anon");
+        filterRuleMap.put("/user/isExit", "anon");
+        //swagger配置放行
+        filterRuleMap.put("/swagger-ui.html", "anon");
+        filterRuleMap.put("/swagger-resources/**", "anon");
+        filterRuleMap.put("/v2/**", "anon");
+        filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/","anon");
+        filterRuleMap.put("/csrf","anon");
+        filterRuleMap.put("/captcha.jpg","anon");
+        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
+        return factoryBean;
     }
 
 }
