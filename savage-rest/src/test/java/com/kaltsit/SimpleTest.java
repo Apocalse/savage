@@ -6,8 +6,8 @@ import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import com.alibaba.fastjson2.JSONObject;
 import com.kaltsit.config.ESBeanConfig;
 import com.kaltsit.es.ESTestUser;
-import com.kaltsit.service.impl.SysLogServiceImpl;
-import com.kaltsit.service.impl.SysMenuServiceImpl;
+import com.kaltsit.service.sys.impl.SysLogServiceImpl;
+import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.ESUtils;
 import com.kaltsit.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -42,8 +42,8 @@ public class SimpleTest {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    @Autowired
-    private RedisUtil redisUtil;
+//    @Autowired
+//    private RedisUtil redisUtil;
 
     @Test
     public void ESTest1() throws IOException {
@@ -83,8 +83,8 @@ public class SimpleTest {
         dict.put("3", "修改");
         dict.put("4", "查询");
         dict.put("5", "登录/登出");
-        redisUtil.add("SYS:LOG_TYPE", dict);
-        System.out.println(redisUtil.getHashEntries("SYS:LOG_TYPE"));
+        //RedisUtil.add("SYS:LOG_TYPE", dict);
+        //System.out.println(RedisUtil.getHashEntries("SYS:LOG_TYPE"));
     }
 
 

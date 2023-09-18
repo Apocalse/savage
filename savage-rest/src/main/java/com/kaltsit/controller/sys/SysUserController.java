@@ -1,10 +1,10 @@
-package com.kaltsit.controller;
+package com.kaltsit.controller.sys;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
-import com.kaltsit.service.impl.SysUserServiceImpl;
-import com.kaltsit.entity.SysUserEntity;
+import com.kaltsit.service.sys.impl.SysUserServiceImpl;
+import com.kaltsit.entity.sys.SysUserEntity;
 import com.kaltsit.exception.SavageException;
 import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api("用户API")
+@Api(tags = "用户API")
 @RestController
 @RequestMapping("/user")
 public class SysUserController {

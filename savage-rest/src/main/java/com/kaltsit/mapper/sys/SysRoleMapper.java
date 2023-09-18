@@ -1,7 +1,7 @@
-package com.kaltsit.mapper;
+package com.kaltsit.mapper.sys;
 
 import com.kaltsit.base.SavegeBaseMapper;
-import com.kaltsit.entity.SysRoleEntity;
+import com.kaltsit.entity.sys.SysRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

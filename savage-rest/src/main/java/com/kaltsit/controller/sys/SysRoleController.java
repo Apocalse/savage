@@ -1,8 +1,8 @@
-package com.kaltsit.controller;
+package com.kaltsit.controller.sys;
 
 import com.kaltsit.annotation.SysLog;
-import com.kaltsit.entity.SysRoleEntity;
-import com.kaltsit.service.impl.SysRoleServiceImpl;
+import com.kaltsit.entity.sys.SysRoleEntity;
+import com.kaltsit.service.sys.impl.SysRoleServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import com.kaltsit.utils.PageUtils;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Api("角色API")
+@Api(tags = "角色API")
 @RestController
 @RequestMapping("/role")
 public class SysRoleController {

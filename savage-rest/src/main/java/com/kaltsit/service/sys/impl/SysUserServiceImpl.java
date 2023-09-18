@@ -1,9 +1,9 @@
-package com.kaltsit.service.impl;
+package com.kaltsit.service.sys.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.kaltsit.entity.SysUserEntity;
-import com.kaltsit.mapper.SysUserMapper;
+import com.kaltsit.entity.sys.SysUserEntity;
+import com.kaltsit.mapper.sys.SysUserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

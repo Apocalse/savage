@@ -1,9 +1,9 @@
-package com.kaltsit.controller;
+package com.kaltsit.controller.sys;
 
 import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
-import com.kaltsit.entity.SysMenuEntity;
-import com.kaltsit.service.impl.SysMenuServiceImpl;
+import com.kaltsit.entity.sys.SysMenuEntity;
+import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
 import io.swagger.annotations.Api;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-@Api("菜单API")
+@Api(tags = "菜单API")
 @RestController
 @RequestMapping("/menu")
 public class SysMenuController {

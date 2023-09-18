@@ -1,4 +1,4 @@
-package com.kaltsit.controller;
+package com.kaltsit.controller.sys;
 
 import com.google.code.kaptcha.Producer;
 import com.kaltsit.utils.DateUtils;

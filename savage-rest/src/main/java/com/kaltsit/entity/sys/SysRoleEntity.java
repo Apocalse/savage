@@ -1,4 +1,4 @@
-package com.kaltsit.entity;
+package com.kaltsit.entity.sys;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.kaltsit.commons.SavageEntity;
