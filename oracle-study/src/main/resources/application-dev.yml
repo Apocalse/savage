@@ -7,11 +7,17 @@ spring:
           url: jdbc:oracle:thin:@180.108.205.115:18083:XFYW
           username: xsm_sys
           password: Xsm_sys_2023
-        xsm_biz:
+        xsm_115_biz:
           driver-class-name: oracle.jdbc.OracleDriver
           url: jdbc:oracle:thin:@180.108.205.115:18083:XFYW
           username: xsm_biz
           password: Xsm_biz_2023
+        xsm_135_szsrk:
+          driver-class-name: oracle.jdbc.OracleDriver
+          url: jdbc:oracle:thin:@2.34.202.135:1521:csxsm
+          username: szsrk
+          password: csrk#2014
+
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER

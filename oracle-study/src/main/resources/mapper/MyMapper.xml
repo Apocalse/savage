@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.savage.mapper.MyMapper">
+
+    <select id="getPhotos" resultType="org.savage.entity.Photo">
+        select rownum, 图象数据 zp, 身份证 zplx from szsrk.szsq_jzz_zp
+        where substr(身份证, 7, 4) =  #{csny}
+          and substr(身份证, 17, 1) in (${xb})
+          and rownum &lt;= ${count}
+    </select>
+</mapper>
