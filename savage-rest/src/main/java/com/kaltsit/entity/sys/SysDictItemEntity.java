@@ -16,7 +16,7 @@ public class SysDictItemEntity extends SavageEntity implements Serializable {
     private static final long serialVersionUID = -6141894753726125905L;
 
     @ApiModelProperty(notes = "字典表id")
-    private String diceId;
+    private String dictId;
 
     @ApiModelProperty(notes = "字典值编码")
     private String itemCode;
@@ -29,6 +29,5 @@ public class SysDictItemEntity extends SavageEntity implements Serializable {
 
     @ApiModelProperty(notes = "排序")
     private String sortOrder;
-
 
 }

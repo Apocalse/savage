@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -78,7 +79,7 @@ public class SysLogAspect {
         logEntity.setMethod(signature.getName());
         //系统登录的时候参数密码参数不存储
         Object[] args = joinPoint.getArgs();
-        if (logAnnotation.type() == SysLogType.LOGIN) {
+        if (Objects.equals(logAnnotation.type(), SysLogType.LOGIN)) {
             if (args.length == 1) {
                 if (SysUserEntity.class.getName().equals(args[0].getClass().getName())) {
                     try {

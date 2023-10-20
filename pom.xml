@@ -11,7 +11,7 @@
     <modules>
 
         <module>savage-rest</module>
-        <module>two-mysql-resources</module>
+        <module>oracle-study</module>
     </modules>
 
     <parent>

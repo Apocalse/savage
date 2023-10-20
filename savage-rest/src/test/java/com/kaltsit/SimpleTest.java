@@ -39,11 +39,6 @@ public class SimpleTest {
     private SysMenuServiceImpl menuService;
     @Autowired
     private SysLogServiceImpl sysLogService;
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
-//    @Autowired
-//    private RedisUtil redisUtil;
 
     @Test
     public void ESTest1() throws IOException {
@@ -77,14 +72,14 @@ public class SimpleTest {
     @Test
     void redisTest() {
         Map<String, Object> dict = new HashMap<>();
-        dict.put("0", "未知");
-        dict.put("1", "新增");
-        dict.put("2", "删除");
-        dict.put("3", "修改");
-        dict.put("4", "查询");
-        dict.put("5", "登录/登出");
-        //RedisUtil.add("SYS:LOG_TYPE", dict);
-        //System.out.println(RedisUtil.getHashEntries("SYS:LOG_TYPE"));
+        dict.put("0", "未知2");
+        //dict.put("1", "新增1");
+        //dict.put("2", "删除1");
+        //dict.put("3", "修改1");
+        //dict.put("4", "查询1");
+        //dict.put("5", "登录1/登出1");
+        RedisUtil.add("SYS:LOG_TYPE", dict);
+        System.out.println(RedisUtil.getHashEntries("SYS:LOG_TYPE"));
     }
 
 
