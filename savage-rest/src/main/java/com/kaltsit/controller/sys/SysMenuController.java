@@ -4,12 +4,12 @@ import com.kaltsit.annotation.SysLog;
 import com.kaltsit.commons.SysLogType;
 import com.kaltsit.entity.sys.SysMenuEntity;
 import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
-import com.kaltsit.utils.JsonResult;
-import com.kaltsit.utils.MapUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.savage.utils.JsonResult;
+import org.savage.utils.MapUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

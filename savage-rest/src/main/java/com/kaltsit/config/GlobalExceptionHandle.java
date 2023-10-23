@@ -2,9 +2,9 @@ package com.kaltsit.config;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.kaltsit.exception.SavageException;
-import com.kaltsit.utils.JsonResult;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthenticatedException;
+import org.savage.utils.JsonResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

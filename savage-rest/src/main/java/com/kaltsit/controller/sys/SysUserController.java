@@ -6,13 +6,13 @@ import com.kaltsit.commons.SysLogType;
 import com.kaltsit.service.sys.impl.SysUserServiceImpl;
 import com.kaltsit.entity.sys.SysUserEntity;
 import com.kaltsit.exception.SavageException;
-import com.kaltsit.utils.CookieUtils;
 import com.kaltsit.utils.JWTUtil;
-import com.kaltsit.utils.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.savage.utils.CookieUtils;
+import org.savage.utils.JsonResult;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

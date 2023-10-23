@@ -1,7 +1,7 @@
 package com.kaltsit.controller.sys;
 
 import com.google.code.kaptcha.Producer;
-import com.kaltsit.utils.DateUtils;
+import org.savage.utils.DateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

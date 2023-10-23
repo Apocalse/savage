@@ -1,4 +1,4 @@
-package com.kaltsit.utils;
+package org.savage.utils;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 

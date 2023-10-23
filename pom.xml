@@ -12,6 +12,7 @@
 
         <module>savage-rest</module>
         <module>oracle-study</module>
+        <module>savage-common</module>
     </modules>
 
     <parent>

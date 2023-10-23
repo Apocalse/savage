@@ -1,4 +1,4 @@
-package com.kaltsit.utils;
+package org.savage.utils;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;

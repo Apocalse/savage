@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.savage.entity.Photo;
 import org.savage.mapper.HyjfJbxxMapper;
 import org.savage.mapper.MyMapper;
+import org.savage.utils.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,7 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.sql.Blob;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @SpringBootTest
@@ -30,7 +33,7 @@ public class MyTest {
 
     @Test
     void myTest2() {
-        downloadPhotos("2000", 0, 100);
+        downloadPhotos("2000", 0, 10);
     }
 
     /**
@@ -45,22 +48,22 @@ public class MyTest {
         String xbnum = "";
         if (xb == 1) xbnum = "'1','3','5','7','9'";
         if (xb == 0) xbnum = "'2','4','6','8','0'";
-        List<Photo> photos = myMapper.getPhotos(csn, xbnum, count);
+        List<Photo> list = myMapper.getPhotos(csn, xbnum, count);
         try {
             File file = new File(path);
             // 判断文件夹路径，没有则创建
             if (!file.exists()) {
                 file.mkdirs();
             }
-            for (int i = 0; i < photos.size(); i++) {
-                byte[] zp = photos.get(i).getZp();
-                OutputStream out = Files.newOutputStream(new File(path + "\\" + (i + 1) + "-" + photos.get(i).getZplx() + ".jpg").toPath());
+            for (Photo photo : list) {
+                byte[] zp = photo.getZp();
+                OutputStream out = Files.newOutputStream(new File(path + "\\" + photo.getNum() + "-" + photo.getName() + ".jpg").toPath());
                 out.write(zp);
                 out.flush();
                 out.close();
             }
         } catch (Exception e) {
-            log.error("异常");
+            e.printStackTrace();
         }
     }
 
