@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryForm" ref="searchForm" @submit.native.prevent>
+    <el-form :inline="true" :model="queryForm" ref="queryForm" @submit.native.prevent>
       <el-row>
         <el-form-item label="用户名:" prop="userId">
           <el-select v-model="queryForm.userId" placeholder="请选择" clearable>
@@ -51,7 +51,7 @@
           </el-button>
         </el-form-item>
         <el-form-item style="float: right">
-          <el-button @click="resetForm('searchForm')">
+          <el-button @click="resetForm('queryForm')">
             重置
           </el-button>
         </el-form-item>
@@ -159,8 +159,9 @@ export default {
       }
       this.$refs.savageTable.getDateList(1)
     },
+
     edit(row){
-      this.$refs.savageTable.edit(row)
+      // this.$refs.savageTable.edit(row)
     },
 
     resetForm(formName) {

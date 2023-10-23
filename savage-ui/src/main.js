@@ -24,6 +24,10 @@ Vue.use(VueCookies);
 // element
 Vue.use(ElementUI);
 
+// 全局注册组件
+import SavageTable from '@/views/common/models/SavageTable.vue'
+Vue.component('SavageTable', SavageTable)
+
 // window.SITE_CONFIG = {};
 // window.SITE_CONFIG['baseUrl'] = "http://localhost:8823/kaltsit";
 

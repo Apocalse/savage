@@ -1,15 +1,13 @@
 <template>
   <div>
     <el-form :inline="true" :model="queryForm" @submit.native.prevent>
-
     </el-form>
-
     <savage-table
         :table-column="tableColumn"
         :table-data="tableData"
     >
       <template v-slot:action="scope">
-        <el-table-column  header-align="center" align="center" label="操作" width="250">
+        <el-table-column header-align="center" align="center" label="操作" width="250">
           <template v-slot="scope">
             <el-button type="text" icon="el-icon-edit" @click="handle(scope.row)">
               编辑
@@ -22,13 +20,14 @@
 </template>
 
 <script>
-import SavageTable from "@/views/common/models/SavageTable.vue";
 
 export default {
-  name: "RoleManagement",
-  components: {SavageTable},
+  name: "DictManagement",
   data() {
     return {
+      url: {
+        search: '/sysLog/pageList',
+      },
       queryForm: {},
       tableColumn: [
         {
@@ -73,11 +72,12 @@ export default {
     }
   },
   methods: {
-    handle(row){
+    handle(row) {
       console.log(row)
     }
   }
 }
+
 </script>
 
 <style scoped>
