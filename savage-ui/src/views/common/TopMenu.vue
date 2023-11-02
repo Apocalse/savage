@@ -4,7 +4,7 @@
       mode="horizontal"
       @select="handleSelect"
       :default-active="$route.path"
-      background-color="#0085d0"
+      background-color="#ffffff"
       text-color="#fff"
       active-text-color="#ffd04b">
 <!--      <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">-->

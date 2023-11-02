@@ -1,7 +1,7 @@
 package com.kaltsit.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kaltsit.entity.sys.SysUserEntity;
+import com.kaltsit.abstracts.sys.SysUserEntity;
 import com.kaltsit.service.sys.impl.SysUserServiceImpl;
 import com.kaltsit.utils.JWTUtil;
 import org.apache.shiro.authc.*;

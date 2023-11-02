@@ -1,7 +1,7 @@
 package com.kaltsit.mapper.sys;
 
 import com.kaltsit.base.SavegeBaseMapper;
-import com.kaltsit.entity.sys.SysMenuEntity;
+import com.kaltsit.abstracts.sys.SysMenuEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

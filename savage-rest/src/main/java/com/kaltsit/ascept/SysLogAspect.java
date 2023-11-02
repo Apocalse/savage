@@ -1,12 +1,13 @@
 package com.kaltsit.ascept;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.kaltsit.annotation.SysLog;
-import com.kaltsit.commons.SysLogType;
-import com.kaltsit.entity.sys.SysLogEntity;
-import com.kaltsit.entity.sys.SysUserEntity;
+import com.kaltsit.ascept.annotation.SysLog;
+import com.kaltsit.constant.CommonConstant;
+import com.kaltsit.abstracts.sys.SysLogEntity;
+import com.kaltsit.abstracts.sys.SysUserEntity;
 import com.kaltsit.service.sys.impl.SysLogServiceImpl;
 import com.kaltsit.service.sys.impl.SysUserServiceImpl;
+import com.kaltsit.utils.HttpContextUtils;
 import com.kaltsit.utils.IPUtils;
 import com.kaltsit.utils.UserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.savage.utils.HttpContextUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -46,7 +46,7 @@ public class SysLogAspect {
     // 记录项目路径长度
     private static int serverContextPathLength = -1;
 
-    @Pointcut("@annotation(com.kaltsit.annotation.SysLog)")
+    @Pointcut("@annotation(com.kaltsit.ascept.annotation.SysLog)")
     public void logPointCut() {
 
     }
@@ -79,7 +79,7 @@ public class SysLogAspect {
         logEntity.setMethod(signature.getName());
         //系统登录的时候参数密码参数不存储
         Object[] args = joinPoint.getArgs();
-        if (Objects.equals(logAnnotation.type(), SysLogType.LOGIN)) {
+        if (Objects.equals(logAnnotation.type(), CommonConstant.SYSLOG_LOGIN)) {
             if (args.length == 1) {
                 if (SysUserEntity.class.getName().equals(args[0].getClass().getName())) {
                     try {

@@ -1,18 +1,18 @@
 package com.kaltsit.controller.sys;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.kaltsit.annotation.SysLog;
-import com.kaltsit.commons.SysLogType;
+import com.kaltsit.ascept.annotation.SysLog;
 import com.kaltsit.service.sys.impl.SysUserServiceImpl;
-import com.kaltsit.entity.sys.SysUserEntity;
+import com.kaltsit.abstracts.sys.SysUserEntity;
 import com.kaltsit.exception.SavageException;
 import com.kaltsit.utils.JWTUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
-import org.savage.utils.CookieUtils;
-import org.savage.utils.JsonResult;
+import com.kaltsit.constant.CommonConstant;
+import com.kaltsit.utils.CookieUtils;
+import com.kaltsit.utils.JsonResult;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +33,7 @@ public class SysUserController {
     private SysUserServiceImpl userService;
 
     @PostMapping("/login")
-    @SysLog(value = THIS_NAME + "登录", type = SysLogType.LOGIN)
+    @SysLog(value = THIS_NAME + "登录", type = CommonConstant.SYSLOG_LOGIN)
     @ApiOperation(value = "登录", notes = "登录" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Map<String, Object>> login(@RequestBody SysUserEntity user) {
         Map<String, Object> map = new HashMap<>();
@@ -59,7 +59,7 @@ public class SysUserController {
     }
 
     @PostMapping("/register")
-    @SysLog(value = THIS_NAME + "注册", type = SysLogType.ADD)
+    @SysLog(value = THIS_NAME + "注册", type = CommonConstant.SYSLOG_ADD)
     @ApiOperation(value = "注册", notes = "注册" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<String> register(@RequestBody SysUserEntity user) {
         boolean isExist = userService.isExist(user.getUsername());
@@ -79,7 +79,7 @@ public class SysUserController {
     }
 
     @PostMapping("/loginOut")
-    @SysLog(value = THIS_NAME + "登出", type = SysLogType.LOGIN)
+    @SysLog(value = THIS_NAME + "登出", type = CommonConstant.SYSLOG_LOGIN)
     @ApiOperation(value = "注销", notes = "注销" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<String> logout(ServletResponse response) {
         CookieUtils.delCookieByName(response, "token");

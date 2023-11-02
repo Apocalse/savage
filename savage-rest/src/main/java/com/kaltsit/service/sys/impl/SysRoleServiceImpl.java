@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kaltsit.exception.SavageException;
 import com.kaltsit.mapper.sys.SysRoleMapper;
-import com.kaltsit.entity.sys.SysRoleEntity;
+import com.kaltsit.abstracts.sys.SysRoleEntity;
 import com.kaltsit.utils.PageUtils;
-import org.savage.utils.MapUtils;
+import com.kaltsit.utils.MapUtils;
 import org.springframework.stereotype.Service;
 
 @Service

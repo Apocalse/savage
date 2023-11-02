@@ -1,15 +1,15 @@
 package com.kaltsit.controller.sys;
 
-import com.kaltsit.annotation.SysLog;
-import com.kaltsit.commons.SysLogType;
-import com.kaltsit.entity.sys.SysMenuEntity;
+import com.kaltsit.ascept.annotation.SysLog;
+import com.kaltsit.abstracts.sys.SysMenuEntity;
 import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.savage.utils.JsonResult;
-import org.savage.utils.MapUtils;
+import com.kaltsit.constant.CommonConstant;
+import com.kaltsit.utils.JsonResult;
+import com.kaltsit.utils.MapUtils;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +41,7 @@ public class SysMenuController {
     }
 
     @PostMapping("/delete/{id}")
-    @SysLog(value = THIS_NAME + " - 删除", type = SysLogType.DELETE)
+    @SysLog(value = THIS_NAME + " - 删除", type = CommonConstant.SYSLOG_DELETE)
     @ApiOperation(value = "删除菜单", notes = "删除" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> deleteByMenuId(@PathVariable String id){
         menuService.deleteByMenuId(id);
@@ -49,14 +49,14 @@ public class SysMenuController {
     }
 
     @GetMapping("/info/{id}")
-    @SysLog(value = THIS_NAME + " - 详情", type = SysLogType.DELETE)
+    @SysLog(value = THIS_NAME + " - 详情", type = CommonConstant.SYSLOG_DELETE)
     @ApiOperation(value = "菜单详情", notes = THIS_NAME + "详情", produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<SysMenuEntity> getMenuInfo(@PathVariable String id){
         return JsonResult.ok(menuService.getById(id));
     }
 
     @PostMapping("/saveOrUpdate")
-    @SysLog(value = THIS_NAME + " - 保存", type = SysLogType.DELETE)
+    @SysLog(value = THIS_NAME + " - 保存", type = CommonConstant.SYSLOG_DELETE)
     @ApiOperation(value = "新增", notes = "新增" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
     public JsonResult<Void> saveMenu(@RequestBody SysMenuEntity sysMenuEntity){
         menuService.saveOrUpdate(sysMenuEntity);

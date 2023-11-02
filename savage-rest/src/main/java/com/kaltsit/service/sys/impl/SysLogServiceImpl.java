@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kaltsit.service.sys.ISysLogService;
-import com.kaltsit.entity.sys.SysLogEntity;
+import com.kaltsit.abstracts.sys.SysLogEntity;
 import com.kaltsit.mapper.sys.SysLogMapper;
+import com.kaltsit.utils.MapUtils;
 import com.kaltsit.utils.PageUtils;
 import com.kaltsit.utils.QueryWrapperUtils;
-import org.savage.utils.MapUtils;
 import org.springframework.stereotype.Service;
 
 @Service

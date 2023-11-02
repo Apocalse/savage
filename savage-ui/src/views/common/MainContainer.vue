@@ -1,12 +1,31 @@
 <template>
     <el-container>
-      <el-header><top-menu></top-menu></el-header>
+      <el-aside width="200px">
+        <side-menu></side-menu>
+      </el-aside>
       <el-container>
-        <el-aside width="200px"><side-menu></side-menu></el-aside>
-        <el-main>
-          <el-card :body-style="siteContentViewHeight">
-            <router-view v-if="isRouterAlive"/>
-          </el-card>
+        <el-header>
+          <el-button icon="el-icon-s-fold"></el-button>
+          <top-menu></top-menu>
+        </el-header>
+        <el-main style="height: calc(100vh - 60px)">
+<!--          <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">-->
+<!--            <router-view v-if="isRouterAlive"/>-->
+<!--          </el-card>-->
+
+          <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
+            <el-tab-pane
+                :key="item.name"
+                v-for="(item, index) in editableTabs"
+                :label="item.title"
+                :name="item.name"
+            >
+              <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">
+                <router-view v-if="isRouterAlive"/>
+              </el-card>
+            </el-tab-pane>
+          </el-tabs>
+
         </el-main>
       </el-container>
 <!--      <el-footer>Footer</el-footer>-->
@@ -34,7 +53,18 @@ export default {
   },
   data () {
     return {
-      isRouterAlive: true
+      isRouterAlive: true,
+      editableTabsValue: '2',
+      editableTabs: [{
+        title: 'Tab 1',
+        name: '1',
+        content: 'Tab 1 content'
+      }, {
+        title: 'Tab 2',
+        name: '2',
+        content: 'Tab 2 content'
+      }],
+      tabIndex: 2
     }
   },
   methods: {
@@ -43,15 +73,44 @@ export default {
       this.$nextTick(function () {
         this.isRouterAlive = true
       })
+    },
+
+    handleTabsEdit(targetName, action) {
+      if (action === 'add') {
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: 'New Tab',
+          name: newTabName,
+          content: 'New Tab content'
+        });
+        this.editableTabsValue = newTabName;
+      }
+      if (action === 'remove') {
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+
+        this.editableTabsValue = activeName;
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      }
     }
   }
 
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .el-header, .el-footer {
-  background-color: #0085d0;
+  //background-color: #0085d0;
   /*color: #333;*/
   text-align: center;
   line-height: 60px;
@@ -67,7 +126,7 @@ export default {
 }
 
 .el-main {
-  background-color: #E9EEF3;
+  background-color: #f0f2f5;
   color: #333;
   /*text-align: center;*/
   /*line-height: 160px;*/

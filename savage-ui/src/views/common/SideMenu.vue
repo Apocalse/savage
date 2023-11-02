@@ -1,46 +1,54 @@
 <template>
-  <el-menu
-      style="overflow: hidden; height: 100%"
-      class="el-menu-vertical-demo"
-      :default-active="defaultRoute"
-      background-color="#262626"
-      text-color="#fff">
-    <template v-for="(item, index) in menuList">
-      <!-- 一级菜单 -->
-      <template v-if="item.children.length===0">
-        <el-menu-item :index="item.url" :key="index" @click="pushRoute(item)">
-          <i :class="item.icon"></i>
-          <span slot="title" style="font-size: 14px">{{ item.nameZh }}</span>
-        </el-menu-item>
-      </template>
-      <!-- 二级菜单 -->
-      <template v-if="item.children.length!==0">
-        <el-submenu :index="item.url" :key="index">
-          <template>
-            <!--            <i :class="item.icon"></i>-->
+  <div class="header">
+    <a href="/">
+      <img src="~@/assets/lxh-logo.png" class="logo" alt="logo">
+      <span class="title">Kal'tsit</span>
+    </a>
+  </div>
+  <div>
+    <el-menu
+        style="overflow: hidden; height: 100%"
+        class="el-menu-vertical-demo"
+        :default-active="defaultRoute"
+        background-color="#262626"
+        text-color="#fff">
+      <template v-for="(item, index) in menuList">
+        <!-- 一级菜单 -->
+        <template v-if="item.children.length===0">
+          <el-menu-item :index="item.url" :key="index" @click="pushRoute(item)">
+            <i :class="item.icon"></i>
             <span slot="title" style="font-size: 14px">{{ item.nameZh }}</span>
-          </template>
-          <template v-for="(subItem, idx) in item.children">
-            <el-menu-item v-if="subItem.children.length===0" :index="subItem.url" :key="idx"
-                          @click="pushRoute(subItem)">
-              <i :class="subItem.icon"></i>
-              <span slot="title" style="font-size: 12px">{{ subItem.nameZh }}</span>
-            </el-menu-item>
-            <!--三级菜单-->
-            <el-submenu v-if="subItem.children.length!==0" :index="subItem.url" :key="idx">
-              <template>
+          </el-menu-item>
+        </template>
+        <!-- 二级菜单 -->
+        <template v-if="item.children.length!==0">
+          <el-submenu :index="item.url" :key="index">
+            <template>
+              <!--            <i :class="item.icon"></i>-->
+              <span slot="title" style="font-size: 14px">{{ item.nameZh }}</span>
+            </template>
+            <template v-for="(subItem, idx) in item.children">
+              <el-menu-item v-if="subItem.children.length===0" :index="subItem.url" :key="idx"
+                            @click="pushRoute(subItem)">
+                <i :class="subItem.icon"></i>
                 <span slot="title" style="font-size: 12px">{{ subItem.nameZh }}</span>
-              </template>
-              <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i"
-                            @click="pushRoute(threeItem)">
-                {{ threeItem.nameZh }}
               </el-menu-item>
-            </el-submenu>
-          </template>
-        </el-submenu>
+              <!--三级菜单-->
+              <el-submenu v-if="subItem.children.length!==0" :index="subItem.url" :key="idx">
+                <template>
+                  <span slot="title" style="font-size: 12px">{{ subItem.nameZh }}</span>
+                </template>
+                <el-menu-item v-for="(threeItem, i) in subItem.children" :index="threeItem.url" :key="i"
+                              @click="pushRoute(threeItem)">
+                  {{ threeItem.nameZh }}
+                </el-menu-item>
+              </el-submenu>
+            </template>
+          </el-submenu>
+        </template>
       </template>
-    </template>
-  </el-menu>
+    </el-menu>
+  </div>
 </template>
 
 <script>
@@ -117,8 +125,8 @@ export default {
 }
 </script>
 
-<style scoped>
-/deep/.el-submenu .el-menu-item{
+<style scoped lang="less">
+/deep/ .el-submenu .el-menu-item {
   background: linear-gradient(270deg, #333333 0%, #333333 100%);
 }
 </style>
