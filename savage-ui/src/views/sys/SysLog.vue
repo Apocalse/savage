@@ -78,12 +78,10 @@
 <script>
 import {getSysLogTypeList, getSysLogTypeMap} from "@/utils/savageUtils";
 import moment from 'moment'
-import SavageTable from "@/views/common/models/SavageTable.vue";
 import {getUserList} from "@/api/sys";
 
 export default {
   name: "SysLog",
-  components: {SavageTable},
 
   mounted() {
     this.getUserList()

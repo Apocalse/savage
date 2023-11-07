@@ -81,38 +81,4 @@ public class SimpleTest {
         System.out.println(RedisUtil.getHashEntries("SYS:LOG_TYPE"));
     }
 
-
-//    private static List converDict(Class objectClass, List data){
-//        HashMap<String, Field> map = new HashMap();
-//        Field[] fields =objectClass.getDeclaredFields();
-//        Arrays.stream(fields).forEach(e->{
-//            ExcelVaild annotation = e.getAnnotation(ExcelVaild.class);
-//            if (null!=annotation){
-//                String s = annotation.dictType();
-//                if (StringUtils.isNotEmpty(s)){
-//                    map.put(s, e);
-//                }
-//            }
-//        });
-//        data.stream().forEach(e->{
-//            try {
-//                for (String key : map.keySet()) {
-//                    Field field = map.get(key);
-//                    field.setAccessible(true);
-//                    String value = field.get(e).toString();
-//                    if (StringUtils.isNotEmpty(value)){
-//                        String labelByCache = DictUtil.getLabelByCache(key, value);
-//                        map.get(key).set(e,labelByCache);
-//                    }
-//                }
-//            }catch (Exception E){
-//                E.getMessage();
-//            }
-//
-//        });
-//
-//        return data;
-//    }
-
-
 }

@@ -7,9 +7,9 @@
       background-color="#ffffff"
       text-color="#fff"
       active-text-color="#ffd04b">
-<!--      <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">-->
-<!--        {{ item.navItem }}-->
-<!--      </el-menu-item>-->
+    <!--      <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">-->
+    <!--        {{ item.navItem }}-->
+    <!--      </el-menu-item>-->
 
   </el-menu>
 </template>

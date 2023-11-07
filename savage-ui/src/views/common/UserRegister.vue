@@ -7,13 +7,15 @@
       <el-input type="text" v-model="registerForm.username" autocomplete="new-password" placeholder="账号"></el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input type="password" v-model="registerForm.password" autocomplete="new-password" placeholder="密码"></el-input>
+      <el-input type="password" v-model="registerForm.password" autocomplete="new-password"
+                placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item prop="mobile">
       <el-input type="text" v-model="registerForm.mobile" autocomplete="new-password" placeholder="手机号"></el-input>
     </el-form-item>
     <el-form-item prop="email">
-      <el-input type="text" v-model="registerForm.email" autocomplete="new-password" placeholder="邮箱(非必填)"></el-input>
+      <el-input type="text" v-model="registerForm.email" autocomplete="new-password"
+                placeholder="邮箱(非必填)"></el-input>
     </el-form-item>
     <el-form-item style="width: 100%">
       <el-button type="primary" style="width: 40%;background: #505458;border: none" @click="register">注册</el-button>

@@ -1,35 +1,51 @@
 <template>
+  <el-container>
+    <el-header>
+      <top-menu></top-menu>
+    </el-header>
     <el-container>
       <el-aside width="200px">
         <side-menu></side-menu>
       </el-aside>
-      <el-container>
-        <el-header>
-          <el-button icon="el-icon-s-fold"></el-button>
-          <top-menu></top-menu>
-        </el-header>
-        <el-main style="height: calc(100vh - 60px)">
-<!--          <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">-->
-<!--            <router-view v-if="isRouterAlive"/>-->
-<!--          </el-card>-->
-
-          <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
-            <el-tab-pane
-                :key="item.name"
-                v-for="(item, index) in editableTabs"
-                :label="item.title"
-                :name="item.name"
-            >
-              <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">
-                <router-view v-if="isRouterAlive"/>
-              </el-card>
-            </el-tab-pane>
-          </el-tabs>
-
-        </el-main>
-      </el-container>
-<!--      <el-footer>Footer</el-footer>-->
+      <el-main>
+        <el-card :body-style="siteContentViewHeight">
+          <router-view v-if="isRouterAlive"/>
+        </el-card>
+      </el-main>
     </el-container>
+    <!--      <el-footer>Footer</el-footer>-->
+  </el-container>
+  <!--    <el-container>-->
+  <!--      <el-aside width="200px">-->
+  <!--        <side-menu></side-menu>-->
+  <!--      </el-aside>-->
+  <!--      <el-container>-->
+  <!--        <el-header>-->
+  <!--          <el-button icon="el-icon-s-fold"></el-button>-->
+  <!--          <top-menu></top-menu>-->
+  <!--        </el-header>-->
+  <!--        <el-main style="height: calc(100vh - 60px)">-->
+  <!--&lt;!&ndash;          <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">&ndash;&gt;-->
+  <!--&lt;!&ndash;            <router-view v-if="isRouterAlive"/>&ndash;&gt;-->
+  <!--&lt;!&ndash;          </el-card>&ndash;&gt;-->
+
+  <!--          <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">-->
+  <!--            <el-tab-pane-->
+  <!--                :key="item.name"-->
+  <!--                v-for="(item, index) in editableTabs"-->
+  <!--                :label="item.title"-->
+  <!--                :name="item.name"-->
+  <!--            >-->
+  <!--              <el-card :body-style="siteContentViewHeight" style="min-width: 1000px">-->
+  <!--                <router-view v-if="isRouterAlive"/>-->
+  <!--              </el-card>-->
+  <!--            </el-tab-pane>-->
+  <!--          </el-tabs>-->
+
+  <!--        </el-main>-->
+  <!--      </el-container>-->
+  <!--&lt;!&ndash;      <el-footer>Footer</el-footer>&ndash;&gt;-->
+  <!--    </el-container>-->
 
 </template>
 
@@ -46,12 +62,12 @@ export default {
       return {minHeight: height + 'px'}
     },
   },
-  provide () {
+  provide() {
     return {
       reload: this.reload
     }
   },
-  data () {
+  data() {
     return {
       isRouterAlive: true,
       editableTabsValue: '2',
@@ -68,7 +84,7 @@ export default {
     }
   },
   methods: {
-    reload () {
+    reload() {
       this.isRouterAlive = false
       this.$nextTick(function () {
         this.isRouterAlive = true
@@ -110,11 +126,11 @@ export default {
 
 <style scoped lang="less">
 .el-header, .el-footer {
-  //background-color: #0085d0;
+  background-color: #0085d0;
   /*color: #333;*/
   text-align: center;
   line-height: 60px;
-  height:100%;
+  height: 100%;
   padding: 0 0
 }
 

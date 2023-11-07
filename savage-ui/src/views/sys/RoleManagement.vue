@@ -22,11 +22,8 @@
 </template>
 
 <script>
-import SavageTable from "@/views/common/models/SavageTable.vue";
-
 export default {
   name: "RoleManagement",
-  components: {SavageTable},
   data() {
     return {
       queryForm: {},
