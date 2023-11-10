@@ -1,4 +1,4 @@
-package com.kaltsit.es;
+package com.kaltsit.controller.es;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
@@ -6,6 +6,7 @@ import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import com.alibaba.fastjson2.JSONObject;
 import com.kaltsit.ascept.annotation.SysLog;
 import com.kaltsit.config.ESBeanConfig;
+import com.kaltsit.entity.es.ESTestUser;
 import com.kaltsit.utils.ESUtils;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;

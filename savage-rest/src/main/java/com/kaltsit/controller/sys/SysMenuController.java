@@ -1,7 +1,7 @@
 package com.kaltsit.controller.sys;
 
 import com.kaltsit.ascept.annotation.SysLog;
-import com.kaltsit.abstracts.sys.SysMenuEntity;
+import com.kaltsit.entity.sys.SysMenuEntity;
 import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,12 +31,12 @@ public class SysMenuController {
     @SysLog(THIS_NAME + " - 查询")
     @ApiOperation(value = "菜单树", notes = "查询" + THIS_NAME + "树", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "rootId", value = "根目录id", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "parentId", value = "根目录id", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "status", value = "状态", paramType = "query", dataType = "string")
     })
     public JsonResult<List<SysMenuEntity>> getMenuList(@RequestParam Map<String, Object> params){
         MapUtils map = MapUtils.getInstance(params);
-        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("rootId"), map.getString("status"));
+        SysMenuEntity menuTree = menuService.getMenuTree(map.getString("parentId"), map.getString("status"));
         return JsonResult.ok(menuTree.getChildren());
     }
 

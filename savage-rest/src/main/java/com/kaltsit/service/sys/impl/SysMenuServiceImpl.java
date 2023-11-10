@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kaltsit.mapper.sys.SysMenuMapper;
-import com.kaltsit.abstracts.sys.SysMenuEntity;
+import com.kaltsit.entity.sys.SysMenuEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,20 +18,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     /**
      * 递归-根据根节点获取菜单对象
-     * @param rootId 根目录
+     * @param parentId 根目录
      * @return 菜单
      */
-    public SysMenuEntity getMenuTree(String rootId, String status) {
-        if(StringUtils.isEmpty(rootId)){
-            rootId = "0";
+    public SysMenuEntity getMenuTree(String parentId, String status) {
+        if(StringUtils.isEmpty(parentId)){
+            parentId = "0";
         }
         String[] arr = status.split(",");
         //TODO SELECT * FROM menu t WHERE t.id = ? and t.id in (...)
-        //根据rootId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
-        SysMenuEntity menu = this.baseMapper.selectById(rootId);
-        //查询rootId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
+        //根据parentId获取节点对象(SELECT * FROM menu t WHERE t.id = ?)
+        SysMenuEntity menu = this.baseMapper.selectById(parentId);
+        //查询parentId下的所有子节点(SELECT * FROM menu WHERE parent_id = ?)
         LambdaQueryWrapper<SysMenuEntity> lqw = new LambdaQueryWrapper<SysMenuEntity>()
-                .eq(SysMenuEntity::getParentId, rootId)
+                .eq(SysMenuEntity::getParentId, parentId)
                 .and(wrapper -> {
                     for (int i = 0; i < arr.length; i++) {
                         wrapper.eq(SysMenuEntity::getStatus, Integer.parseInt(arr[i]));

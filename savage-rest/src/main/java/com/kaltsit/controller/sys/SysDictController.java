@@ -1,7 +1,7 @@
 package com.kaltsit.controller.sys;
 
-import com.kaltsit.abstracts.sys.SysDictEntity;
-import com.kaltsit.abstracts.sys.SysDictItemEntity;
+import com.kaltsit.entity.sys.SysDictEntity;
+import com.kaltsit.entity.sys.SysDictItemEntity;
 import com.kaltsit.service.sys.impl.SysDictItemServiceImpl;
 import com.kaltsit.service.sys.impl.SysDictServiceImpl;
 import io.swagger.annotations.Api;

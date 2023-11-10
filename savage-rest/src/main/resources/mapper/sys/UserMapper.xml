@@ -3,7 +3,7 @@
 
 <mapper namespace="com.kaltsit.mapper.sys.SysUserMapper">
 
-    <select id="getList" resultType="com.kaltsit.abstracts.sys.SysUserEntity">
+    <select id="getList" resultType="com.kaltsit.entity.sys.SysUserEntity">
         select * from user
     </select>
 

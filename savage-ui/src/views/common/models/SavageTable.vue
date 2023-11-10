@@ -123,8 +123,7 @@ export default {
         let url = this.url !== undefined ? this.url.search : this.$parent.url.search
         params['size'] = this.pageConfig.pageSize
         params['page'] = this.pageConfig.pageIndex
-        params['orderColumn'] = this.tableOrder.orderColumn
-        params['sortRule'] = this.tableOrder.sortRule
+        params['column_order'] = this.tableOrder.orderColumn + "-" + this.tableOrder.sortRule
         this.$get(url, params).then(data => {
           this.dataLoading = false
           this.pageConfig.totalPage = data.totalCount

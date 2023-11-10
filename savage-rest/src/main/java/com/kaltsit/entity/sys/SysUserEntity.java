@@ -1,4 +1,4 @@
-package com.kaltsit.abstracts.sys;
+package com.kaltsit.entity.sys;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;

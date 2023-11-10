@@ -65,7 +65,7 @@ router.beforeEach((to, from, next) => {
     try {
         if (localRoutes == null) {
             getMenuList({
-                rootId: '0',
+                parentId: '0',
                 status: '1,2'
             }).then(data => {
                 localStorage.setItem("dynamicMenuRoutes", JSON.stringify(data))

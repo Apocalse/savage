@@ -4,11 +4,15 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kaltsit.config.ESBeanConfig;
-import com.kaltsit.es.ESTestUser;
+import com.kaltsit.entity.es.ESTestUser;
+import com.kaltsit.entity.sys.SysLogEntity;
 import com.kaltsit.service.sys.impl.SysLogServiceImpl;
 import com.kaltsit.service.sys.impl.SysMenuServiceImpl;
 import com.kaltsit.utils.ESUtils;
+import com.kaltsit.utils.QueryWrapperUtils;
 import com.kaltsit.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -80,5 +84,14 @@ public class SimpleTest {
         RedisUtil.add("SYS:LOG_TYPE", dict);
         System.out.println(RedisUtil.getHashEntries("SYS:LOG_TYPE"));
     }
+
+//    @Test
+//    void queryTest(){
+//        String userId = "1";
+//        String uri = "";
+//        QueryWrapper<SysLogEntity> qw = new QueryWrapper<>();
+//        QueryWrapperUtils.initQueryWrapper()
+//
+//    }
 
 }

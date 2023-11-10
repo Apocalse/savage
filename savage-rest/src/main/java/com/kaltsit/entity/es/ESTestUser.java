@@ -1,4 +1,4 @@
-package com.kaltsit.es;
+package com.kaltsit.entity.es;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

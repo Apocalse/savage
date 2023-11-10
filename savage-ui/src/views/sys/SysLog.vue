@@ -1,48 +1,65 @@
 <template>
   <div>
-    <el-form :inline="true" :model="queryForm" ref="queryForm" @submit.native.prevent>
+    <el-form class="form" :inline="true" :model="queryForm" ref="queryForm" @submit.native.prevent>
       <el-row>
-        <el-form-item label="用户名:" prop="userId">
-          <el-select v-model="queryForm.userId" placeholder="请选择" clearable>
-            <el-option
-                v-for="item in userList"
-                :key="item.id"
-                :label="item.userRealName"
-                :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="类型:" prop="type">
-          <el-select v-model="queryForm.type" placeholder="请选择" clearable>
-            <el-option
-                v-for="item in sysLogTypeList"
-                :key="item.key"
-                :label="item.value"
-                :value="item.key"
-            >
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开始时间" prop="startTime">
-          <el-date-picker align="left"
-                          v-model="queryForm.startDate"
-                          type="datetime"
-                          format="yyyy-MM-dd HH:mm:ss"
-                          value-format="yyyy-MM-dd HH:mm:ss">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间" prop="endTime">
-          <el-date-picker align="left"
-                          v-model="queryForm.endDate"
-                          ref="endTime"
-                          type="datetime"
-                          format="yyyy-MM-dd HH:mm:ss"
-                          value-format="yyyy-MM-dd HH:mm:ss">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="操作内容:" prop="searchKey">
-          <el-input v-model.trim="queryForm.searchKey" placeholder="操作内容" clearable></el-input>
-        </el-form-item>
+        <el-col :span="6">
+          <el-form-item label="用户名" prop="userId">
+            <el-select v-model="queryForm.createUserId" placeholder="请选择" clearable filterable>
+              <el-option
+                  v-for="item in userList"
+                  :key="item.id"
+                  :label="item.userRealName"
+                  :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="日志类型" prop="type">
+            <el-select v-model="queryForm.type" placeholder="请选择" clearable>
+              <el-option
+                  v-for="item in sysLogTypeList"
+                  :key="item.key"
+                  :label="item.value"
+                  :value="item.key"
+              >
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="请求uri" prop="requestUri">
+            <el-input v-model.trim="queryForm.requestUri" placeholder="请求uri" clearable></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="操作内容" prop="searchKey">
+            <el-input v-model.trim="queryForm.searchKey" placeholder="操作内容" clearable></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          <el-form-item label="开始时间" prop="createDate_timeStart">
+            <el-date-picker align="left"
+                            v-model="queryForm.createDate_time_start"
+                            type="datetime"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item label="结束时间" prop="createDate_timeEnd">
+            <el-date-picker align="left"
+                            v-model="queryForm.createDate_time_end"
+                            ref="endTime"
+                            type="datetime"
+                            format="yyyy-MM-dd HH:mm:ss"
+                            value-format="yyyy-MM-dd HH:mm:ss">
+            </el-date-picker>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row>
         <el-form-item style="float: right">
@@ -62,15 +79,15 @@
         ref="savageTable"
         :table-column="tableColumn"
     >
-      <template v-slot:action="action">
-        <el-table-column  header-align="center" align="center" label="操作" width="250">
-          <template v-slot="scope">
-            <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">
-              编辑
-            </el-button>
-          </template>
-        </el-table-column>
-      </template>
+      <!--      <template v-slot:action="action">-->
+      <!--        <el-table-column  header-align="center" align="center" label="操作" width="250">-->
+      <!--          <template v-slot="scope">-->
+      <!--            <el-button type="text" icon="el-icon-edit" @click="edit(scope.row)">-->
+      <!--              编辑-->
+      <!--            </el-button>-->
+      <!--          </template>-->
+      <!--        </el-table-column>-->
+      <!--      </template>-->
     </savage-table>
   </div>
 </template>
@@ -92,11 +109,12 @@ export default {
         search: '/sysLog/pageList',
       },
       queryForm: {
-        startDate: null,
-        endDate: null,
-        userId: null,
+        createDate_time_start: null,
+        createDate_time_end: null,
+        createUserId: null,
         searchKey: null,
         type: null,
+        requestUri: null,
       },
       tableColumn: [
         {
@@ -158,7 +176,7 @@ export default {
       this.$refs.savageTable.getDateList(1)
     },
 
-    edit(row){
+    edit(row) {
       // this.$refs.savageTable.edit(row)
     },
 
@@ -176,6 +194,10 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+/deep/ .el-form--inline .el-form-item__label {
+  float: none;
+  display: inline-block;
+  width: 80px;
+}
 </style>

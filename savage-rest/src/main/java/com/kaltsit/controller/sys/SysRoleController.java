@@ -1,7 +1,7 @@
 package com.kaltsit.controller.sys;
 
 import com.kaltsit.ascept.annotation.SysLog;
-import com.kaltsit.abstracts.sys.SysRoleEntity;
+import com.kaltsit.entity.sys.SysRoleEntity;
 import com.kaltsit.service.sys.impl.SysRoleServiceImpl;
 import com.kaltsit.utils.PageUtils;
 import io.swagger.annotations.Api;
