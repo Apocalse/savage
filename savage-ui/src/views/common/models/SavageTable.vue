@@ -61,28 +61,31 @@ export default {
       type: [Array, Object],
       required: false,
       default() {
-        return []
+        return undefined
       }
     },
+    // url
     url: {
       type: Object,
       required: false,
       default() {
-        return {}
+        return undefined
       }
     },
+    // 查询条件
     queryForm: {
       type: [Array, Object],
       required: false,
       default() {
-        return {}
+        return undefined
       }
     },
-    comprehensiveQuery: {
-      type: Object,
+    // 综合查询字段
+    comprehensiveSearchColumns: {
+      type: String,
       required: false,
       default() {
-        return {}
+        return ''
       }
     },
     pageConfig: {
@@ -93,7 +96,7 @@ export default {
           visible: true,
           pageIndex: 1,
           pageSize: 10,
-          totalPage: 10
+          totalPage: 0
         }
       },
     }
@@ -117,22 +120,26 @@ export default {
 
   methods: {
     getDateList(page) {
-      if(page){
+      if (page) {
         this.pageConfig.pageIndex = page
       }
       // 传入已有的数组，不进行分页处理
-      if(this.tableData !== undefined){
+      if (this.tableData !== undefined) {
         this.pageConfig.visible = false
         this.dataList = this.tableData
-      }else{ // 根据接口获取分页列表
+      } else { // 根据接口获取分页列表
         this.dataLoading = true
-        let params = this.queryForm !== undefined ? this.queryForm : this.$parent.queryForm
+        let params = this.queryForm !== undefined ? Object.assign({}, this.queryForm) : Object.assign({}, this.$parent.queryForm)
         let url = this.url !== undefined ? this.url.search : this.$parent.url.search
+        if (this.comprehensiveSearchColumns != null && this.comprehensiveSearchColumns !== '') {
+          params['searchColumns'] = this.comprehensiveSearchColumns
+        }
         params['size'] = this.pageConfig.pageSize
         params['page'] = this.pageConfig.pageIndex
-        params['searchColumns'] = this.searchColumns
-        params['orderColumn'] = this.tableOrder.column
-        params['orderRule'] = this.tableOrder.sortRule
+        if (this.tableOrder.sortRule != null) {
+          params['orderColumn'] = this.tableOrder.column
+          params['orderRule'] = this.tableOrder.sortRule
+        }
         this.$get(url, params).then(data => {
           this.dataLoading = false
           this.pageConfig.totalPage = data.totalCount

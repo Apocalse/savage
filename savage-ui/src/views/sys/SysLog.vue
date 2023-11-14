@@ -34,7 +34,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="操作内容" prop="searchKey">
-            <el-input v-model="queryForm.comprehensiveQuery.searchKey" placeholder="操作内容" clearable></el-input>
+            <el-input v-model="queryForm.searchKey" placeholder="操作内容" clearable></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -78,7 +78,7 @@
     <savage-table
         ref="savageTable"
         :table-column="tableColumn"
-        :search-columns="queryForm.comprehensiveQuery"
+        :comprehensive-search-columns="searchColumns"
     >
       <!--      <template v-slot:action="action">-->
       <!--        <el-table-column  header-align="center" align="center" label="操作" width="250">-->
@@ -109,13 +109,9 @@ export default {
       url: {
         search: '/sysLog/pageList',
       },
-      queryForm: {
-        // 综合查询
-        comprehensiveQuery: {
-          searchKey: '',
-          searchColumns: 'operation'
-        },
-      },
+      // 综合查询字段
+      searchColumns: 'operation',
+      queryForm: {},
       tableColumn: [
         {
           prop: 'username',
@@ -167,8 +163,8 @@ export default {
 
   methods: {
     doSearch() {
-      if (this.queryForm.startDate !== '' && this.queryForm.endDate !== '') {
-        if (moment(this.queryForm.endDate).isBefore(this.queryForm.startDate)) {
+      if (this.queryForm.createDate_begin != null && this.queryForm.createDate_end != null) {
+        if (moment(this.queryForm.createDate_end).isBefore(this.queryForm.createDate_begin)) {
           this.$message.warning('结束时间不能小于开始时间');
           return
         }

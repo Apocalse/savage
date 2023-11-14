@@ -77,7 +77,7 @@ public class QueryWrapperUtils {
 
         // 条件区间组装 简单排序 权限查询
         for (String key : params.keySet()) {
-            if(StringUtils.isEmpty(params.getString(key)) || params.get(key)==null){
+            if(StringUtils.isEmpty(params.getString(key)) || judgedIsUnExistField(params.getString(key))){
                 continue;
             }
             if (fieldColumnMap.containsKey(key.split(SPLIT)[0])) { // 数据库字段
@@ -106,8 +106,8 @@ public class QueryWrapperUtils {
                 }
             } else { // 自定义规则
                 if (key.equals(SEARCH_KEY)) { // 多字段模糊查询筛选条件
-                    if (StringUtils.isNotEmpty(params.getString(SEARCH_KEY)) && StringUtils.isNotEmpty(params.getString(SEARCH_COLUMNS))) {
-                        String searchColumns = params.getString(SEARCH_COLUMNS);
+                    String searchColumns = params.getString(SEARCH_COLUMNS);
+                    if (StringUtils.isNotEmpty(searchColumns)) {
                         String[] split = searchColumns.split(SPLIT_COLUMN);
                         List<String> columns = new ArrayList<>();
                         for (String temp : split){
@@ -119,16 +119,21 @@ public class QueryWrapperUtils {
                     }
                     continue;
                 }
-                if (key.equals(BELONG_DEPART_IDS)) { // 部门处理
+                if (key.equals(BELONG_DEPART_IDS)) { // 所属部门处理
                     continue;
                 }
-                if (key.equals(ORDER_COLUMN)) { // 排序
-                    String orderColumn = params.getString(ORDER_COLUMN);
-                    String orderRule = params.getString(ORDER_RULE);
-                    if(fieldColumnMap.containsKey(orderColumn)) {
-                        order(queryWrapper, orderColumn, orderRule);
-                    }
-                }
+            }
+        }
+        // 自定义排序
+        if(params.containsKey(ORDER_COLUMN) && params.containsKey(ORDER_RULE)){ // 自定义排序
+            String orderColumn = params.getString(ORDER_COLUMN);
+            String orderRule = params.getString(ORDER_RULE);
+            if(fieldColumnMap.containsKey(orderColumn)) {
+                order(queryWrapper, orderColumn, orderRule);
+            }
+        }else{ // 默认排序
+            if(fieldColumnMap.containsKey("createDate")) {
+                order(queryWrapper, "createDate", DESC);
             }
         }
         return queryWrapper;
@@ -208,21 +213,15 @@ public class QueryWrapperUtils {
             queryWrapper.orderByAsc(humpToUnderline(column));
         } else if (DESC.equals(order)) {
             queryWrapper.orderByDesc(humpToUnderline(column));
-        } else {
-            queryWrapper.orderByDesc("createDate");
         }
-
     }
 
     /**
      * 默认按照时间倒排
-     *
-     * @param queryWrapper
-     * @param <T>
      */
     public static <T> void order(QueryWrapper<T> queryWrapper) {
         // 字段排序
-        queryWrapper.orderByDesc("create_date");
+        order(queryWrapper, "createDate", DESC);
     }
 
     private static boolean judgedIsUselessField(String name) {
@@ -230,6 +229,11 @@ public class QueryWrapperUtils {
                 || "page".equals(name) || "size".equals(name)
                 || "sort".equals(name) || "order".equals(name)
                 || "rows".equals(name);
+    }
+
+    private static boolean judgedIsUnExistField(String name) {
+        return "page".equals(name) || "size".equals(name)
+                || ORDER_COLUMN.equals(name) || ORDER_RULE.equals(name);
     }
 
     private static String getTableFieldName(Class<?> clazz, String name) {
