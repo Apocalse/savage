@@ -1,7 +1,7 @@
-package com.kaltsit.filter;
+package com.kaltsit.config.filter;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.kaltsit.shiro.JWTToken;
+import com.kaltsit.config.JWTToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import com.kaltsit.utils.CookieUtils;
 import org.springframework.http.HttpStatus;
@@ -88,10 +88,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
-        //update-begin-author:scott date:20200907 for:issues/I1TAAP 前后端分离，shiro过滤器配置引起的跨域问题
         // 是否允许发送Cookie，默认Cookie不包括在CORS请求之中。设为true时，表示服务器允许Cookie包含在请求中。
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        //update-end-author:scott date:20200907 for:issues/I1TAAP 前后端分离，shiro过滤器配置引起的跨域问题
         return super.preHandle(request, response);
     }
 

@@ -44,7 +44,7 @@ public class SysUserController {
             // 得到 hash 后的密码
             String encodedPassword = new SimpleHash("md5", user.getPassword(), one.getSalt(), 2).toString();
             if (encodedPassword.equals(one.getPassword())) {
-                String token = JWTUtil.createToken(one);
+                String token = JWTUtil.createToken(one.getId(), one.getUsername());
                 map.put("token", token);
                 map.put("username", one.getUsername());
                 map.put("userId", one.getId());

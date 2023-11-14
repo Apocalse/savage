@@ -1,9 +1,9 @@
-package com.kaltsit.base;
+package com.kaltsit.config.mybatis.base;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import com.kaltsit.base.mothods.DeleteWithDelToken;
+import com.kaltsit.config.mybatis.base.mothods.DeleteWithDelToken;
 
 import java.util.List;
 

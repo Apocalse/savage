@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.kaltsit.ascept.annotation.Dict;
+import com.kaltsit.ascept.annotation.Dict2;
 import com.kaltsit.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,13 +16,14 @@ import java.util.Objects;
 
 @Slf4j
 public class DictSerializer extends StdSerializer<Object> implements ContextualSerializer {
+    private static final long serialVersionUID = -5389927536919144414L;
     private transient String dictCode;
 
     private transient String dictType;
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty beanProperty) {
-        Dict dict = beanProperty.getAnnotation(Dict.class);
+        Dict2 dict = beanProperty.getAnnotation(Dict2.class);
         return createContextual(dict.code(), dict.type());
     }
 
@@ -63,7 +64,7 @@ public class DictSerializer extends StdSerializer<Object> implements ContextualS
             }
             gen.writeObject(codeStr);
             // 在需要转换的字段上添加@Dict注解，注明需要引用的code，后端会在返回值中增加filedName_dict的key，前端只需要取对应的filedName_dict就可以直接使用
-            gen.writeFieldName(gen.getOutputContext().getCurrentName() + "_dict");
+            gen.writeFieldName(gen.getOutputContext().getCurrentName() + "_dictText");
             gen.writeObject(label);
         } catch (Exception e) {
             log.error("字典翻译失败:{}", e.getMessage(), e);

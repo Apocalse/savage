@@ -1,15 +1,18 @@
-package com.kaltsit.config;
+package com.kaltsit.config.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.kaltsit.base.SavageSqlInjector;
+import com.kaltsit.config.mybatis.base.SavageSqlInjector;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 分页配置
+ */
 @Configuration
-@MapperScan("com.kaltsit.mapper")
+@MapperScan("com.kaltsit.mapper.*")
 public class SavageMybatisPlusConfig {
 
     /**

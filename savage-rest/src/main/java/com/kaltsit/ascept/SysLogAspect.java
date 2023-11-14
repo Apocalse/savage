@@ -41,6 +41,7 @@ public class SysLogAspect {
     private SysLogServiceImpl sysLogService;
     @Resource
     private SysUserServiceImpl userService;
+
     @Value ("${server.servlet.context-path:#{''}}")
     private String contextPath;
     // 记录项目路径长度

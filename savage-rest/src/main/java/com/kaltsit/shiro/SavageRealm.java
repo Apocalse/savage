@@ -1,10 +1,14 @@
 package com.kaltsit.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.kaltsit.config.JWTToken;
 import com.kaltsit.entity.sys.SysUserEntity;
 import com.kaltsit.service.sys.impl.SysUserServiceImpl;
 import com.kaltsit.utils.JWTUtil;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

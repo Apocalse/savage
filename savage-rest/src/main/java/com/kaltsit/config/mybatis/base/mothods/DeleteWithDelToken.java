@@ -1,4 +1,4 @@
-package com.kaltsit.base.mothods;
+package com.kaltsit.config.mybatis.base.mothods;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;

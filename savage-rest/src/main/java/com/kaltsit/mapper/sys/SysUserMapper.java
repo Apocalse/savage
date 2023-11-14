@@ -1,6 +1,6 @@
 package com.kaltsit.mapper.sys;
 
-import com.kaltsit.base.SavegeBaseMapper;
+import com.kaltsit.config.mybatis.base.SavegeBaseMapper;
 import com.kaltsit.entity.sys.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 

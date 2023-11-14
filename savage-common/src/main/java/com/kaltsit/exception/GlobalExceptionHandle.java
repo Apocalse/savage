@@ -1,4 +1,4 @@
-package com.kaltsit.config;
+package com.kaltsit.exception;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.kaltsit.exception.SavageException;

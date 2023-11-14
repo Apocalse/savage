@@ -5,7 +5,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.kaltsit.entity.sys.SysUserEntity;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ public class JWTUtil {
     //token的密钥
     private static final String SECRET = "savage";
 
-    public static String createToken(SysUserEntity user){
+    public static String createToken(String userId, String username){
         //token过期时间
         Date date = new Date(System.currentTimeMillis() + EXPIRE);
         //jwt的header部分
@@ -27,8 +26,8 @@ public class JWTUtil {
         //使用jwt的api生成token
         String token = JWT.create()
                 .withHeader(map)
-                .withClaim("username", user.getUsername())//私有声明
-                .withClaim("userId", user.getId())
+                .withClaim("username", username)//私有声明
+                .withClaim("userId", userId)
                 .withExpiresAt(date)//过期时间
                 .withIssuedAt(new Date())//签发时间
                 .sign(Algorithm.HMAC256(SECRET));//签名

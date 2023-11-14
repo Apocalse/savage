@@ -1,4 +1,4 @@
-package com.kaltsit.shiro;
+package com.kaltsit.config;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

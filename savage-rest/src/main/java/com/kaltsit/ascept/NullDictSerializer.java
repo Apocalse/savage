@@ -6,16 +6,17 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.kaltsit.ascept.annotation.Dict;
+import com.kaltsit.ascept.annotation.Dict2;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class NullDictSerializer extends StdSerializer<Object> implements ContextualSerializer {
+    private static final long serialVersionUID = -5694609910991678271L;
     private transient String dictCode;
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty beanProperty) {
-        Dict dict = beanProperty.getAnnotation(Dict.class);
+        Dict2 dict = beanProperty.getAnnotation(Dict2.class);
         return createContextual(dict.code());
     }
 

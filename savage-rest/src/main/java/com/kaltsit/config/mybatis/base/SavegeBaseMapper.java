@@ -1,4 +1,4 @@
-package com.kaltsit.base;
+package com.kaltsit.config.mybatis.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

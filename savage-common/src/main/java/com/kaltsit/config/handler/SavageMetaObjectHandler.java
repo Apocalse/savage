@@ -1,4 +1,4 @@
-package com.kaltsit.handler;
+package com.kaltsit.config.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.kaltsit.utils.UserUtils;
