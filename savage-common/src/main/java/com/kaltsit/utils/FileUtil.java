@@ -1,9 +1,14 @@
 package com.kaltsit.utils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.ibatis.reflection.ExceptionUtil;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Slf4j
 public class FileUtil {
 
 
@@ -49,7 +54,7 @@ public class FileUtil {
             byte[] btImg = readInputStream(inStream);//得到图片的二进制数据
             return btImg;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
         }
         return null;
     }

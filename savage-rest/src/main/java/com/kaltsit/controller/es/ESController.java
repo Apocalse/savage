@@ -10,6 +10,8 @@ import com.kaltsit.entity.es.ESTestUser;
 import com.kaltsit.utils.ESUtils;
 import com.kaltsit.utils.JsonResult;
 import com.kaltsit.utils.MapUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/es")
 public class ESController {
@@ -36,7 +39,7 @@ public class ESController {
             String s = esUtils.requestGet(new JSONObject(), "/test_1" + "/_search");
             return JsonResult.ok(JSONObject.parse(s).toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return JsonResult.error();
         }
     }
@@ -48,7 +51,7 @@ public class ESController {
             GetIndexResponse test = esBeanConfig.elasticsearchClient().indices().get(getIndex -> getIndex.index("test_1"));
             return JsonResult.ok(test);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return JsonResult.error();
         }
     }

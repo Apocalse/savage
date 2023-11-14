@@ -1,5 +1,7 @@
 package com.kaltsit.utils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,7 @@ import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 public class RedisUtil {
 
@@ -174,7 +177,7 @@ public class RedisUtil {
         try {
             return staticRedisTemplate.opsForSet().size(key);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return 0;
         }
     }
@@ -190,7 +193,7 @@ public class RedisUtil {
         try {
             return staticRedisTemplate.opsForSet().isMember(key, value);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return false;
         }
     }
@@ -205,7 +208,7 @@ public class RedisUtil {
         try {
             return staticRedisTemplate.opsForSet().isMember(key, obj);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return false;
         }
 
@@ -404,7 +407,7 @@ public class RedisUtil {
         try {
             return staticRedisTemplate.opsForList().size(key);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             return 0;
         }
     }

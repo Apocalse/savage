@@ -34,15 +34,15 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label="操作内容" prop="searchKey">
-            <el-input v-model.trim="queryForm.searchKey" placeholder="操作内容" clearable></el-input>
+            <el-input v-model="queryForm.comprehensiveQuery.searchKey" placeholder="操作内容" clearable></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="6">
-          <el-form-item label="开始时间" prop="createDate_timeStart">
+          <el-form-item label="开始时间" prop="createDate_begin">
             <el-date-picker align="left"
-                            v-model="queryForm.createDate_time_start"
+                            v-model="queryForm.createDate_begin"
                             type="datetime"
                             format="yyyy-MM-dd HH:mm:ss"
                             value-format="yyyy-MM-dd HH:mm:ss">
@@ -50,9 +50,9 @@
           </el-form-item>
         </el-col>
         <el-col :span="6">
-          <el-form-item label="结束时间" prop="createDate_timeEnd">
+          <el-form-item label="结束时间" prop="createDate_end">
             <el-date-picker align="left"
-                            v-model="queryForm.createDate_time_end"
+                            v-model="queryForm.createDate_end"
                             ref="endTime"
                             type="datetime"
                             format="yyyy-MM-dd HH:mm:ss"
@@ -78,6 +78,7 @@
     <savage-table
         ref="savageTable"
         :table-column="tableColumn"
+        :search-columns="queryForm.comprehensiveQuery"
     >
       <!--      <template v-slot:action="action">-->
       <!--        <el-table-column  header-align="center" align="center" label="操作" width="250">-->
@@ -109,12 +110,11 @@ export default {
         search: '/sysLog/pageList',
       },
       queryForm: {
-        createDate_time_start: null,
-        createDate_time_end: null,
-        createUserId: null,
-        searchKey: null,
-        type: null,
-        requestUri: null,
+        // 综合查询
+        comprehensiveQuery: {
+          searchKey: '',
+          searchColumns: 'operation'
+        },
       },
       tableColumn: [
         {
@@ -181,6 +181,7 @@ export default {
     },
 
     resetForm(formName) {
+      this.queryForm = {}
       this.$refs[formName].resetFields()
     },
 

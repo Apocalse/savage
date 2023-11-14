@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> implements ISysLogService {
 
     public PageUtils<SysLogEntity> queryPage(MapUtils params){
-        QueryWrapper<SysLogEntity> qw = QueryWrapperUtils.createQueryWrapper(new SysLogEntity(), params,  "operation");
+        QueryWrapper<SysLogEntity> qw = QueryWrapperUtils.createQueryWrapper(new SysLogEntity(), params);
         Page<SysLogEntity> page = new Page<>(params.getInteger("page", 1), params.getInteger("size", 10));
         IPage<SysLogEntity> result = this.page(page, qw);
         return new PageUtils<>(result);

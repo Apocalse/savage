@@ -2,6 +2,8 @@ package com.kaltsit.config.filter;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.kaltsit.config.JWTToken;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import com.kaltsit.utils.CookieUtils;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     /**
@@ -23,7 +26,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             executeLogin(request, response);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(ExceptionUtils.getStackTrace(e));
             // 认证失败时，清除token
             CookieUtils.delCookieByName(response, "token");
             return false;

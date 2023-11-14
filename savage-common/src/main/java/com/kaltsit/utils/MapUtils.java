@@ -52,33 +52,6 @@ public class MapUtils extends LinkedHashMap<String, Object> {
         return val == null ? defaultValue : val;
     }
 
-    public Long getLong(String key) {
-        String value = getString(key);
-        if (StringUtils.isNotBlank(value)) {
-            return Long.parseLong(value);
-        }
-        return null;
-    }
-
-    public Long getLong(String key, Long defaultValue) {
-        Long val = getLong(key);
-        return val == null ? defaultValue : val;
-    }
-
-    public Double getDouble(String key) {
-        String value = getString(key);
-        if (StringUtils.isNotBlank(value)) {
-            return Double.parseDouble(value);
-        }
-        return null;
-    }
-
-    public Double getDouble(String key, Long defaultValue) {
-        Double val = getDouble(key);
-        return val == null ? defaultValue : val;
-    }
-
-
     /**
      * 获取map实例
      * 创建一个新的map

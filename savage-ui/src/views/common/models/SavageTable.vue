@@ -61,25 +61,32 @@ export default {
       type: [Array, Object],
       required: false,
       default() {
-        return undefined
+        return []
       }
     },
     url: {
-      type: [Object],
+      type: Object,
       required: false,
       default() {
-        return undefined
+        return {}
       }
     },
     queryForm: {
       type: [Array, Object],
       required: false,
       default() {
-        return undefined
+        return {}
+      }
+    },
+    comprehensiveQuery: {
+      type: Object,
+      required: false,
+      default() {
+        return {}
       }
     },
     pageConfig: {
-      type: [Object],
+      type: Object,
       required: false,
       default() {
         return {
@@ -102,7 +109,7 @@ export default {
       loadingText: '',
       dataList: [],
       tableOrder: {
-        orderColumn: null,
+        column: null,
         sortRule: null
       }
     }
@@ -123,7 +130,9 @@ export default {
         let url = this.url !== undefined ? this.url.search : this.$parent.url.search
         params['size'] = this.pageConfig.pageSize
         params['page'] = this.pageConfig.pageIndex
-        params['column_order'] = this.tableOrder.orderColumn + "-" + this.tableOrder.sortRule
+        params['searchColumns'] = this.searchColumns
+        params['orderColumn'] = this.tableOrder.column
+        params['orderRule'] = this.tableOrder.sortRule
         this.$get(url, params).then(data => {
           this.dataLoading = false
           this.pageConfig.totalPage = data.totalCount
@@ -148,11 +157,11 @@ export default {
     changeTableSort(column) {
       if (column.column.sortable === 'custom') {
         this.tableOrder.sortRule = column.order;
-        this.tableOrder.orderColumn = column.prop;
+        this.tableOrder.column = column.prop;
         this.getDateList()
       } else {
         this.tableOrder.sortRule = null;
-        this.tableOrder.orderColumn = null;
+        this.tableOrder.column = null;
       }
     }
   }

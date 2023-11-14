@@ -39,8 +39,8 @@ public class SysLogController {
             @ApiImplicitParam(name = "createUserId", value = "用户id", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "requestUri", value = "uri", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "type", value = "类型，0-未知 1-新增 2-删除 3-修改 4-查询 5-登录/登出", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "createDate_timeStart", value = "开始时间", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "createDate_timeEnd", value = "结束时间", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "createDate_begin", value = "开始时间", paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "createDate_end", value = "结束时间", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "orderColumn", value = "排序字段", paramType = "query", dataType = "string")
     })
