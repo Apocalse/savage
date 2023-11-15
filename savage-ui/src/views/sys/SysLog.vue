@@ -178,7 +178,7 @@ export default {
 
     resetForm(formName) {
       this.queryForm = {}
-      this.$refs[formName].resetFields()
+      // this.$refs[formName].resetFields()
     },
 
     getUserList() {
