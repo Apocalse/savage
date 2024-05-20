@@ -1,7 +1,7 @@
 package com.kaltsit.entity.sys;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.kaltsit.abstracts.SavageEntity;
+import com.kaltsit.entity.SavageEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;

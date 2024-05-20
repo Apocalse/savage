@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author nieqiurong 2018-08-10 22:54:15.
  */
 @SpringBootApplication
-public class OracleStudyApplication {
+public class SavageOracleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OracleStudyApplication.class, args);
+        SpringApplication.run(SavageOracleApplication.class, args);
     }
 
 }

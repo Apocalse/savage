@@ -1,7 +1,7 @@
 package com.kaltsit.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.kaltsit.abstracts.Photo;
+import com.kaltsit.entity.Photo;
 import org.apache.ibatis.annotations.Mapper;
 import com.kaltsit.constant.DataSourceConstant;
 

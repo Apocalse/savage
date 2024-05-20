@@ -8,6 +8,7 @@
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.kaltsit.ascept.annotation.Dict;
 //import com.kaltsit.entity.sys.DictModel;
+//import com.kaltsit.utils.ConvertUtils;
 //import com.kaltsit.utils.JsonResult;
 //import lombok.extern.slf4j.Slf4j;
 //import org.aspectj.lang.ProceedingJoinPoint;
@@ -124,9 +125,9 @@
 //                    //update-begin--Author:scott -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
 //                    //for (Field field : record.getClass().getDeclaredFields()) {
 //                    // 遍历所有字段，把字典Code取出来，放到 map 里
-//                    for (Field field : oConvertUtils.getAllFields(record)) {
+//                    for (Field field : ConvertUtils.getAllFields(record)) {
 //                        String value = item.getString(field.getName());
-//                        if (oConvertUtils.isEmpty(value)) {
+//                        if (ConvertUtils.isEmpty(value)) {
 //                            continue;
 //                        }
 //                    //update-end--Author:scott  -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
@@ -173,7 +174,7 @@
 //                        }
 //
 //                        String value = record.getString(field.getName());
-//                        if (oConvertUtils.isNotEmpty(value)) {
+//                        if (ConvertUtils.isNotEmpty(value)) {
 //                            List<DictModel> dictModels = translText.get(fieldDictCode);
 //                            if(dictModels==null || dictModels.isEmpty()){
 //                                continue;
@@ -239,7 +240,7 @@
 //                    String keyString = String.format("sys:cache:dictTable::SimpleKey [%s,%s]", dictCode, data);
 //                    if (redisTemplate.hasKey(keyString)) {
 //                        try {
-//                            String text = oConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
+//                            String text = ConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
 //                            List<DictModel> list = translText.computeIfAbsent(dictCode, k -> new ArrayList<>());
 //                            list.add(new DictModel(data, text));
 //                        } catch (Exception e) {
@@ -253,7 +254,7 @@
 //                    String keyString = String.format("sys:cache:dict::%s:%s", dictCode, data);
 //                    if (redisTemplate.hasKey(keyString)) {
 //                        try {
-//                            String text = oConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
+//                            String text = ConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
 //                            List<DictModel> list = translText.computeIfAbsent(dictCode, k -> new ArrayList<>());
 //                            list.add(new DictModel(data, text));
 //                        } catch (Exception e) {
@@ -358,7 +359,7 @@
 //     */
 //    @Deprecated
 //    private String translateDictValue(String code, String text, String table, String key) {
-//    	if(oConvertUtils.isEmpty(key)) {
+//    	if(ConvertUtils.isEmpty(key)) {
 //    		return null;
 //    	}
 //        StringBuffer textValue=new StringBuffer();
@@ -375,7 +376,7 @@
 //                String keyString = String.format("sys:cache:dictTable::SimpleKey [%s,%s,%s,%s]",table,text,code,k.trim());
 //                    if (redisTemplate.hasKey(keyString)){
 //                    try {
-//                        tmpValue = oConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
+//                        tmpValue = ConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
 //                    } catch (Exception e) {
 //                        log.warn(e.getMessage());
 //                    }
@@ -386,7 +387,7 @@
 //                String keyString = String.format("sys:cache:dict::%s:%s",code,k.trim());
 //                if (redisTemplate.hasKey(keyString)){
 //                    try {
-//                        tmpValue = oConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
+//                        tmpValue = ConvertUtils.getString(redisTemplate.opsForValue().get(keyString));
 //                    } catch (Exception e) {
 //                       log.warn(e.getMessage());
 //                    }
@@ -413,9 +414,9 @@
 //     * @return
 //     */
 //    private Boolean checkHasDict(List<Object> records){
-//        if(oConvertUtils.isNotEmpty(records) && records.size()>0){
-//            for (Field field : oConvertUtils.getAllFields(records.get(0))) {
-//                if (oConvertUtils.isNotEmpty(field.getAnnotation(Dict.class))) {
+//        if(ConvertUtils.isNotEmpty(records) && records.size()>0){
+//            for (Field field : ConvertUtils.getAllFields(records.get(0))) {
+//                if (ConvertUtils.isNotEmpty(field.getAnnotation(Dict.class))) {
 //                    return true;
 //                }
 //            }

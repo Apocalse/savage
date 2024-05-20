@@ -1,4 +1,4 @@
-package com.kaltsit.abstracts;
+package com.kaltsit.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

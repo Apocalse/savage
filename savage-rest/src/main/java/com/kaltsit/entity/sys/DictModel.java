@@ -35,18 +35,4 @@ public class DictModel implements Serializable{
 	 */
 	private String text;
 
-	/**
-	 * 特殊用途： JgEditableTable
-	 * @return
-	 */
-	public String getTitle() {
-		return this.text;
-	}
-	/**
-	 * 特殊用途： vue3 Select组件
-	 */
-	public String getLabel() {
-		return this.text;
-	}
-
 }

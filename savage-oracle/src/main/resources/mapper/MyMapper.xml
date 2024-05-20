@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kaltsit.mapper.MyMapper">
 
-    <select id="getPhotos" resultType="com.kaltsit.abstracts.Photo">
+    <select id="getPhotos" resultType="com.kaltsit.entity.Photo">
         select rownum num, 图象数据 zp, 身份证 name from szsrk.szsq_jzz_zp
         where substr(身份证, 7, 4) =  #{csny}
           and substr(身份证, 17, 1) in (${xb})

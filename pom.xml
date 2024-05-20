@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>savage-rest</module>
-        <module>oracle-study</module>
+        <module>savage-oracle</module>
         <module>savage-common</module>
     </modules>
 
@@ -162,7 +162,14 @@
             <artifactId>jakarta.json-api</artifactId>
             <version>${jakarta.json-api.version}</version>
         </dependency>
-<!--        <dependency>-->
+        <!--图片压缩-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
+        <!--        <dependency>-->
 <!--            <groupId>org.apache.tomcat</groupId>-->
 <!--            <artifactId>tomcat-annotations-api</artifactId>-->
 <!--            <version>8.5.23</version>-->

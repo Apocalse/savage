@@ -2,7 +2,7 @@ package com.kaltsit.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kaltsit.abstracts.HyjfJbxxEntity;
+import com.kaltsit.entity.HyjfJbxxEntity;
 import org.apache.ibatis.annotations.Mapper;
 import com.kaltsit.constant.DataSourceConstant;
 
