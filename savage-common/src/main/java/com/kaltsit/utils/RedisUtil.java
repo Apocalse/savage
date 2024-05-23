@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ public class RedisUtil {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
-    private static RedisTemplate<String,Object> staticRedisTemplate;
+    private static RedisTemplate<String, Object> staticRedisTemplate;
 
     @PostConstruct
     public void init() {
@@ -438,5 +439,12 @@ public class RedisUtil {
      */
     public static void rightPop(String key, long timeout, TimeUnit unit) {
         staticRedisTemplate.opsForList().rightPop(key, timeout, unit);
+    }
+
+    /**
+     * 删除缓存
+     */
+    public static void delete(String key) {
+        staticRedisTemplate.delete(key);
     }
 }

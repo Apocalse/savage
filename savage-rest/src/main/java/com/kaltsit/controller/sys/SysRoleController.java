@@ -22,7 +22,6 @@ import java.util.Map;
 public class SysRoleController {
 
     private final static String THIS_NAME = "角色";
-
     @Resource
     private SysRoleServiceImpl sysRoleService;
 

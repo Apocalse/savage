@@ -69,7 +69,7 @@ export default {
     register() {
       this.$refs['registerForm'].validate((valid) => {
         if (valid) {
-          this.$post('/user/register', {
+          this.$post('/register', {
             username: this.registerForm.username,
             password: this.registerForm.password,
             mobile: this.registerForm.mobile,

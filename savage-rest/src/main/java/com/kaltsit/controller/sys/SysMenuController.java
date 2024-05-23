@@ -23,7 +23,6 @@ import java.util.Map;
 public class SysMenuController {
 
     private static final String THIS_NAME = "菜单";
-
     @Resource
     private SysMenuServiceImpl menuService;
 

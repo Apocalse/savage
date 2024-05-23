@@ -5,6 +5,10 @@ import org.apache.shiro.subject.Subject;
 
 public class UserUtils {
 
+    /**
+     * 获取当前登录人账号
+     * @return username
+     */
     public static String getCurrentUserName(){
         try{
             Subject subject = SecurityUtils.getSubject();
@@ -15,6 +19,10 @@ public class UserUtils {
         }
     }
 
+    /**
+     * 获取当前登录人id
+     * @return userId
+     */
     public static String getCurrentUserId(){
         try{
             Subject subject = SecurityUtils.getSubject();
@@ -23,7 +31,6 @@ public class UserUtils {
         }catch (Exception e){
             return "-1";
         }
-
     }
 
 

@@ -65,22 +65,23 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
         filters.put("jwt", new JWTFilter());
         factoryBean.setFilters(filters);
-        //自定义url规则 http://shiro.apache.org/web.html#urls-
+        // 自定义url规则 http://shiro.apache.org/web.html#urls-
         Map<String, String> filterRuleMap = new HashMap<>();
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
-        // 访问401和404页面不通过我们的Filter
+        // 访问401和404页面不通过Filter
         filterRuleMap.put("/401", "anon");
-        filterRuleMap.put("/user/login", "anon");
-        filterRuleMap.put("/user/register", "anon");
+        filterRuleMap.put("/login", "anon");
+        filterRuleMap.put("/register", "anon");
         filterRuleMap.put("/user/isExit", "anon");
-        //swagger配置放行
+        // swagger配置放行
         filterRuleMap.put("/swagger-ui.html", "anon");
         filterRuleMap.put("/swagger-resources/**", "anon");
         filterRuleMap.put("/v2/**", "anon");
-        filterRuleMap.put("/webjars/**", "anon");
-        filterRuleMap.put("/","anon");
-        filterRuleMap.put("/csrf","anon");
+//        filterRuleMap.put("/webjars/**", "anon");
+//        filterRuleMap.put("/","anon");
+//        filterRuleMap.put("/csrf","anon");
+        // 图形验证码
         filterRuleMap.put("/captcha.jpg","anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;

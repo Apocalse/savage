@@ -37,7 +37,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Savage")
+                .title("Savage 接口文档")
                 .description("my project")
                 .version("1.0.0")
                 .build();

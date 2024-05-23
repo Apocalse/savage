@@ -26,7 +26,6 @@ import java.util.Map;
 public class SysLogController {
 
     private static final String THIS_NAME = "系统日志";
-
     @Resource
     private SysLogServiceImpl sysLogService;
 

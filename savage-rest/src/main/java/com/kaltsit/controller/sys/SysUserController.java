@@ -28,65 +28,8 @@ import java.util.Map;
 public class SysUserController {
 
     private static final String THIS_NAME = "用户";
-
     @Resource
     private SysUserServiceImpl userService;
-
-    @PostMapping("/login")
-    @SysLog(value = THIS_NAME + "登录", type = CommonConstant.SYSLOG_LOGIN)
-    @ApiOperation(value = "登录", notes = "登录" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JsonResult<Map<String, Object>> login(@RequestBody SysUserEntity user) {
-        Map<String, Object> map = new HashMap<>();
-        LambdaQueryWrapper<SysUserEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUserEntity::getUsername, user.getUsername());
-        SysUserEntity one = userService.getOne(queryWrapper);
-        if (one != null) {
-            // 得到 hash 后的密码
-            String encodedPassword = new SimpleHash("md5", user.getPassword(), one.getSalt(), 2).toString();
-            if (encodedPassword.equals(one.getPassword())) {
-                String token = JWTUtil.createToken(one.getId(), one.getUsername());
-                map.put("token", token);
-                map.put("username", one.getUsername());
-                map.put("userId", one.getId());
-                return JsonResult.ok(map);
-            } else {
-                throw new SavageException("登陆失败，请检查账号或密码是否正确");
-            }
-        }else {
-            throw new SavageException("登陆失败，请检查账号或密码是否正确");
-        }
-
-    }
-
-    @PostMapping("/register")
-    @SysLog(value = THIS_NAME + "注册", type = CommonConstant.SYSLOG_ADD)
-    @ApiOperation(value = "注册", notes = "注册" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JsonResult<String> register(@RequestBody SysUserEntity user) {
-        boolean isExist = userService.isExist(user.getUsername());
-        if (isExist) {
-            return JsonResult.error("账号已存在");
-        }
-        // 生成盐,默认长度 16 位
-        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-        // 设置 hash 算法迭代次数
-        int times = 2;
-        // 得到 hash 后的密码
-        String encodedPassword = new SimpleHash("md5", user.getPassword(), salt, times).toString();
-        user.setSalt(salt);
-        user.setPassword(encodedPassword);
-        userService.save(user);
-        return JsonResult.ok();
-    }
-
-    @PostMapping("/loginOut")
-    @SysLog(value = THIS_NAME + "登出", type = CommonConstant.SYSLOG_LOGIN)
-    @ApiOperation(value = "注销", notes = "注销" + THIS_NAME, produces = MediaType.APPLICATION_JSON_VALUE)
-    public JsonResult<String> logout(ServletResponse response) {
-        CookieUtils.delCookieByName(response, "token");
-        CookieUtils.delCookieByName(response, "username");
-        CookieUtils.delCookieByName(response, "userId");
-        return JsonResult.ok();
-    }
 
     @GetMapping("/isExit")
     @SysLog(value = "判断" + THIS_NAME + "是否存在")

@@ -18,16 +18,9 @@ export default {
   },
   methods: {
     loginOut(){
-      // this.$post('/user/loginOut').then(data =>{
-      //   localStorage.removeItem('dynamicMenuRoutes')
-      //   this.$router.push('login')
-      // })
-      this.$get('/role/pageList',{
-        page: 1,
-        size: 10,
-      }).then(data =>{
-        // localStorage.removeItem('dynamicMenuRoutes')
-        // this.$router.push('login')
+      this.$post('/loginOut').then(data =>{
+        localStorage.removeItem('dynamicMenuRoutes')
+        this.$router.push('login')
       })
     }
   }

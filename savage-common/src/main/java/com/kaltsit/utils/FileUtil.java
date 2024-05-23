@@ -11,34 +11,6 @@ import java.net.URL;
 @Slf4j
 public class FileUtil {
 
-
-    public static void main(String[] args) throws IOException {
-        // URL of the image to download
-        String imageUrl = "http://www.cs090.com/uploads/userup/a/701493/2023/1E2256435-3955O2_2000x2000.jpg";
-
-        // Create URL object and open input stream to the image
-        URL url = new URL(imageUrl);
-        InputStream inputStream = url.openStream();
-
-
-        // Output stream to save the image to file
-        FileOutputStream outputStream = new FileOutputStream("image.jpg");
-
-        // Read bytes from the input stream and write to the output stream
-        byte[] buffer = new byte[2048];
-        int length;
-        while ((length = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, length);
-        }
-
-        // Close streams
-        inputStream.close();
-        outputStream.close();
-
-        System.out.println("Image downloaded successfully.");
-    }
-
-
     /**
      * 得到文件流
      * @param url  网络图片URL地址
@@ -74,6 +46,26 @@ public class FileUtil {
         }
         inStream.close();
         return outStream.toByteArray();
+    }
+
+    public static void main(String[] args) throws IOException {
+        // URL of the image to download
+        String imageUrl = "http://www.cs090.com/uploads/userup/a/701493/2023/1E2256435-3955O2_2000x2000.jpg";
+        // Create URL object and open input stream to the image
+        URL url = new URL(imageUrl);
+        InputStream inputStream = url.openStream();
+        // Output stream to save the image to file
+        FileOutputStream outputStream = new FileOutputStream("image.jpg");
+        // Read bytes from the input stream and write to the output stream
+        byte[] buffer = new byte[2048];
+        int length;
+        while ((length = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, length);
+        }
+        // Close streams
+        inputStream.close();
+        outputStream.close();
+        System.out.println("Image downloaded successfully.");
     }
 
 }

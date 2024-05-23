@@ -1,5 +1,6 @@
 package com.kaltsit.utils;
 
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -12,21 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 public class HttpContextUtils implements ApplicationContextAware {
     /**
      * 上下文对象实例
+     * -- GETTER --
+     *  获取applicationContext
+     *
+     * @return
      */
+    @Getter
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
         HttpContextUtils.applicationContext = applicationContext;
-    }
-
-    /**
-     * 获取applicationContext
-     *
-     * @return
-     */
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
     }
 
     /**

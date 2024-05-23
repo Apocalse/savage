@@ -12,15 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @Api(tags = "字典API")
 @RestController
 @RequestMapping("/sysDict")
 public class SysDictController {
 
-    @Autowired
+    @Resource
     private SysDictServiceImpl sysDictService;
-
-    @Autowired
+    @Resource
     private SysDictItemServiceImpl sysDictItemService;
 
     @PostMapping("/addOrUpdate")
@@ -33,7 +34,6 @@ public class SysDictController {
     public JsonResult<Void> addOrUpdateItem(@RequestBody SysDictItemEntity sysDictItemEntity){
         sysDictItemService.saveOrUpdate(sysDictItemEntity);
         SysDictEntity byId = sysDictService.getById(sysDictItemEntity.getDictId());
-
         return JsonResult.ok();
     }
 
