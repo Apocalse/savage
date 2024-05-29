@@ -3,7 +3,7 @@ server:
     uri-encoding: UTF-8
     max-threads: 1000
     min-spare-threads: 30
-  port: 8833
+  port: 8834
   #connection-timeout: 5000ms
   servlet:
     #tomcat访问路径，类似tomcat/webapps下的项目名称
@@ -26,11 +26,11 @@ spring:
     # Redis服务器端口号
     port: 6379
     # 使用的数据库索引，默认是0
-    database: 5
+    database: 0
     # 连接超时时间
     timeout:
     # 设置密码
-    password:
+    password: Re!8823
 
 mybatis-plus:
   # mybatis xml配置文件扫描

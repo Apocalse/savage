@@ -7,8 +7,6 @@
         <artifactId>savage</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <!--    <groupId>org.savage</groupId>-->
-    <!--    <version>1.0-SNAPSHOT</version>-->
     <modelVersion>4.0.0</modelVersion>
     <artifactId>savage-rest</artifactId>
 
@@ -54,6 +52,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
