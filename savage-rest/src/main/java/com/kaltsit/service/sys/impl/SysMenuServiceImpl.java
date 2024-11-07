@@ -98,7 +98,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     public void getAllChildrenIds(SysMenuEntity menu, Set<String> set){
-        if(menu.getChildren().size() > 0){
+        if(!menu.getChildren().isEmpty()){
             for (SysMenuEntity m : menu.getChildren()){
                 getAllChildrenIds(m, set);
             }
